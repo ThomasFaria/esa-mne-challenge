@@ -1,0 +1,25 @@
+[project]
+name = "esa-mne-challenge"
+version = "0.1.0"
+description = "Repository for ESA MNE discovery and extraction challenge"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+authors = [
+  {name="Thomas Faria", email="thomas.faria@insee.fr"}
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.0",
+    "pre-commit>=4.2.0",
+]
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.uv]
+default-groups = ["dev"]
