@@ -1,6 +1,8 @@
 import logging
 import os
+from typing import List
 
+import pandas as pd
 import s3fs
 
 logger = logging.getLogger(__name__)
@@ -34,3 +36,16 @@ def get_file_system(token=None) -> s3fs.S3FileSystem:
         options["token"] = token
 
     return s3fs.S3FileSystem(**options)
+
+
+def load_mnes(path: str, sep: str = ";") -> List[str]:
+    fs = get_file_system()
+    try:
+        with fs.open(path) as f:
+            df = pd.read_csv(f, sep=sep)
+        mnes = df["NAME"].dropna().unique().tolist()
+        logger.info(f"Loaded {len(mnes)} MNEs from {path}")
+        return mnes
+    except Exception:
+        logger.exception(f"Failed to load MNEs from {path}")
+        raise

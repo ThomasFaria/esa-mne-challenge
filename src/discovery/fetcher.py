@@ -5,6 +5,7 @@ from typing import List, Optional
 from duckduckgo_search import DDGS
 from openai import AsyncOpenAI
 from tenacity import AsyncRetrying, retry_if_exception_type, stop_after_attempt, wait_exponential
+from tqdm.asyncio import tqdm
 
 from src.discovery.models import AnnualReport
 from src.discovery.prompts import SYS_PROMPT
@@ -39,9 +40,8 @@ class AnnualReportFetcher:
             reraise=True,
         ):
             with attempt:
-                loop = asyncio.get_running_loop()
-                results = await loop.run_in_executor(
-                    None, lambda: list(DDGS().text(query, max_results=self.max_results, region="us-en"))
+                results = await asyncio.to_thread(
+                    lambda: list(self.searcher.text(query, max_results=self.max_results, region="us-en"))
                 )
                 if not results:
                     logger.warning(f"No search results for '{mne}'")
@@ -78,7 +78,7 @@ class AnnualReportFetcher:
         block = "\n\n".join(items)
         return f"## Search Results for {mne}\n\n{block}"
 
-    async def fetch_for(self, mne: str) -> Optional[AnnualReport]:
+    async def async_fetch_for(self, mne: str) -> Optional[AnnualReport]:
         """High-level: search + parse for one MNE name."""
         async with self._semaphore:
             try:
@@ -91,7 +91,16 @@ class AnnualReportFetcher:
                 logger.error(f"Error fetching for '{mne}': {e}")
                 return None
 
+    def fetch_for(self, mne: str) -> Optional[AnnualReport]:
+        return asyncio.run(self.async_fetch_for(mne))
+        # try:
+        #     return asyncio.run(self.async_fetch_for(mne))
+        # except RuntimeError as e:
+        #     # Fallback for environments where event loop is already running
+        #     logger.warning("Event loop already running; using asyncio.create_task workaround.")
+        #     return asyncio.get_event_loop().run_until_complete(self.async_fetch_for(mne))
+
     async def fetch_batch(self, mnes: List[str]) -> List[Optional[AnnualReport]]:
         """Fetch annual reports for a batch of MNEs asynchronously."""
-        tasks = [self.fetch_for(mne) for mne in mnes]
-        return await asyncio.gather(*tasks)
+        tasks = [self.async_fetch_for(mne) for mne in mnes]
+        return await tqdm.gather(*tasks)
