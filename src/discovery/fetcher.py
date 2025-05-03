@@ -2,8 +2,9 @@ import asyncio
 import logging
 from typing import List, Optional
 
-from duckduckgo_search import AsyncDDGS
+from duckduckgo_search import DDGS
 from openai import AsyncOpenAI
+from tenacity import AsyncRetrying, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from src.discovery.models import AnnualReport
 from src.discovery.prompts import SYS_PROMPT
@@ -20,7 +21,7 @@ class AnnualReportFetcher:
         max_results: int = 6,
         concurrency_limit: int = 5,
     ):
-        self.searcher = AsyncDDGS()
+        self.searcher = DDGS()
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
         self.model = model
         self.max_results = max_results
@@ -28,28 +29,45 @@ class AnnualReportFetcher:
 
     async def _search(self, mne: str) -> List[dict]:
         """Perform DuckDuckGo search for annual report PDFs."""
-        logger.info(f"Searching DuckDuckGo for {mne} reports")
         query = f"{mne} annual report filetype:pdf"
-        results = await self.searcher.text(query, max_results=self.max_results, region="us-en")
-        results = list(results or [])
-        if not results:
-            logger.warning(f"No results for {mne}")
-        return results
+        logger.info(f"Searching DuckDuckGo for '{query}'")
+
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(3),
+            wait=wait_exponential(multiplier=1, min=1, max=10),
+            retry=retry_if_exception_type(Exception),
+            reraise=True,
+        ):
+            with attempt:
+                loop = asyncio.get_running_loop()
+                results = await loop.run_in_executor(
+                    None, lambda: list(DDGS().text(query, max_results=self.max_results, region="us-en"))
+                )
+                if not results:
+                    logger.warning(f"No search results for '{mne}'")
+                return results
 
     async def _call_llm(self, mne: str, prompt: str) -> Optional[AnnualReport]:
         """Call the LLM to parse out the PDF URL and year."""
         logger.info(f"Querying LLM for {mne}")
-        response = await self.client.beta.chat.completions.parse(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": SYS_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
-            response_format=AnnualReport,
-        )
-        parsed = response.choices[0].message.parsed
-        logger.info(f"LLM returned: {parsed.json()}")
-        return parsed
+        async for attempt in AsyncRetrying(
+            stop=stop_after_attempt(2),
+            wait=wait_exponential(multiplier=1, min=1, max=5),
+            retry=retry_if_exception_type(Exception),
+            reraise=True,
+        ):
+            with attempt:
+                response = await self.client.beta.chat.completions.parse(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": SYS_PROMPT},
+                        {"role": "user", "content": prompt},
+                    ],
+                    response_format=AnnualReport,
+                )
+                parsed = response.choices[0].message.parsed
+                logger.info(f"LLM parsed result for '{mne}': {parsed}")
+                return parsed
 
     def _make_prompt(self, mne: str, results: List[dict]) -> str:
         """Turn raw search results into the markdown prompt expected by the LLM."""
