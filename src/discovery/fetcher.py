@@ -49,6 +49,7 @@ class AnnualReportFetcher:
                 {"role": "user", "content": prompt},
             ],
             response_format=AnnualReport,
+            extra_body=dict(guided_decoding_backend="auto"),
         )
         parsed = response.choices[0].message.parsed
 
@@ -80,7 +81,7 @@ class AnnualReportFetcher:
                 logger.error(f"Error fetching for '{mne['NAME']}': {e}")
                 return None
 
-    def fetch_for(self, mne: str) -> Optional[AnnualReport]:
+    def fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         return asyncio.run(self.async_fetch_for(mne))
         # try:
         #     return asyncio.run(self.async_fetch_for(mne))
