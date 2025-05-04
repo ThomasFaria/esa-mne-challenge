@@ -43,7 +43,7 @@ def load_mnes(path: str, sep: str = ";") -> List[str]:
     try:
         with fs.open(path) as f:
             df = pd.read_csv(f, sep=sep)
-        mnes = df["NAME"].dropna().unique().tolist()
+        mnes = df.loc[:, ["ID", "NAME"]].drop_duplicates().to_dict(orient="records")
         logger.info(f"Loaded {len(mnes)} MNEs from {path}")
         return mnes
     except Exception:

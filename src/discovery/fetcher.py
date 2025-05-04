@@ -28,9 +28,9 @@ class AnnualReportFetcher:
         self.max_results = max_results
         self._semaphore = asyncio.Semaphore(concurrency_limit)
 
-    async def _search(self, mne: str) -> List[dict]:
+    async def _search(self, mne: dict) -> List[dict]:
         """Perform DuckDuckGo search for annual report PDFs."""
-        query = f"{mne} annual report filetype:pdf"
+        query = f"{mne['NAME']} annual report filetype:pdf"
         logger.info(f"Searching DuckDuckGo for '{query}'")
 
         async for attempt in AsyncRetrying(
@@ -44,12 +44,11 @@ class AnnualReportFetcher:
                     lambda: list(self.searcher.text(query, max_results=self.max_results, region="us-en"))
                 )
                 if not results:
-                    logger.warning(f"No search results for '{mne}'")
+                    logger.warning(f"No search results for '{mne['NAME']}'")
                 return results
 
-    async def _call_llm(self, mne: str, prompt: str) -> Optional[AnnualReport]:
-        """Call the LLM to parse out the PDF URL and year."""
-        logger.info(f"Querying LLM for {mne}")
+    async def _call_llm(self, mne: dict, prompt: str) -> Optional[AnnualReport]:
+        logger.info(f"Querying LLM for {mne['NAME']}")
         async for attempt in AsyncRetrying(
             stop=stop_after_attempt(2),
             wait=wait_exponential(multiplier=1, min=1, max=5),
@@ -66,19 +65,23 @@ class AnnualReportFetcher:
                     response_format=AnnualReport,
                 )
                 parsed = response.choices[0].message.parsed
-                logger.info(f"LLM parsed result for '{mne}': {parsed}")
+
+                # Inject raw mne metadata
+                parsed.mne_name = mne["NAME"]
+                parsed.mne_id = mne["ID"]
+
+                logger.info(f"LLM parsed result for '{mne['NAME']}': {parsed}")
                 return parsed
 
-    def _make_prompt(self, mne: str, results: List[dict]) -> str:
-        """Turn raw search results into the markdown prompt expected by the LLM."""
+    def _make_prompt(self, mne: dict, results: List[dict]) -> str:
         items = [
             f"{i}. [{r.get('title', '').strip()}]({r.get('href', '').strip()})\n{r.get('body', '').strip().replace('\\n', ' ')}"
             for i, r in enumerate(results)
         ]
         block = "\n\n".join(items)
-        return f"## Search Results for {mne}\n\n{block}"
+        return f"## Search Results for {mne['NAME']}\n\n{block}"
 
-    async def async_fetch_for(self, mne: str) -> Optional[AnnualReport]:
+    async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         """High-level: search + parse for one MNE name."""
         async with self._semaphore:
             try:
@@ -88,7 +91,7 @@ class AnnualReportFetcher:
                 prompt = self._make_prompt(mne, results)
                 return await self._call_llm(mne, prompt)
             except Exception as e:
-                logger.error(f"Error fetching for '{mne}': {e}")
+                logger.error(f"Error fetching for '{mne['NAME']}': {e}")
                 return None
 
     def fetch_for(self, mne: str) -> Optional[AnnualReport]:
@@ -100,7 +103,7 @@ class AnnualReportFetcher:
         #     logger.warning("Event loop already running; using asyncio.create_task workaround.")
         #     return asyncio.get_event_loop().run_until_complete(self.async_fetch_for(mne))
 
-    async def fetch_batch(self, mnes: List[str]) -> List[Optional[AnnualReport]]:
+    async def fetch_batch(self, mnes: List[dict]) -> List[Optional[AnnualReport]]:
         """Fetch annual reports for a batch of MNEs asynchronously."""
         tasks = [self.async_fetch_for(mne) for mne in mnes]
         return await tqdm.gather(*tasks)
