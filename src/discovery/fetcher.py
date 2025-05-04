@@ -4,7 +4,6 @@ from typing import List, Optional
 
 from duckduckgo_search import DDGS
 from openai import AsyncOpenAI
-from tenacity import AsyncRetrying, retry_if_exception_type, stop_after_attempt, wait_exponential
 from tqdm.asyncio import tqdm
 
 from src.discovery.models import AnnualReport
@@ -33,45 +32,32 @@ class AnnualReportFetcher:
         query = f"{mne['NAME']} annual report filetype:pdf"
         logger.info(f"Searching DuckDuckGo for '{query}'")
 
-        async for attempt in AsyncRetrying(
-            stop=stop_after_attempt(3),
-            wait=wait_exponential(multiplier=1, min=1, max=10),
-            retry=retry_if_exception_type(Exception),
-            reraise=True,
-        ):
-            with attempt:
-                results = await asyncio.to_thread(
-                    lambda: list(self.searcher.text(query, max_results=self.max_results, region="us-en"))
-                )
-                if not results:
-                    logger.warning(f"No search results for '{mne['NAME']}'")
-                return results
+        results = await asyncio.to_thread(
+            lambda: list(self.searcher.text(query, max_results=self.max_results, region="us-en"))
+        )
+        if not results:
+            logger.warning(f"No search results for '{mne['NAME']}'")
+        return results
 
     async def _call_llm(self, mne: dict, prompt: str) -> Optional[AnnualReport]:
         logger.info(f"Querying LLM for {mne['NAME']}")
-        async for attempt in AsyncRetrying(
-            stop=stop_after_attempt(2),
-            wait=wait_exponential(multiplier=1, min=1, max=5),
-            retry=retry_if_exception_type(Exception),
-            reraise=True,
-        ):
-            with attempt:
-                response = await self.client.beta.chat.completions.parse(
-                    model=self.model,
-                    messages=[
-                        {"role": "system", "content": SYS_PROMPT},
-                        {"role": "user", "content": prompt},
-                    ],
-                    response_format=AnnualReport,
-                )
-                parsed = response.choices[0].message.parsed
 
-                # Inject raw mne metadata
-                parsed.mne_name = mne["NAME"]
-                parsed.mne_id = mne["ID"]
+        response = await self.client.beta.chat.completions.parse(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": SYS_PROMPT},
+                {"role": "user", "content": prompt},
+            ],
+            response_format=AnnualReport,
+        )
+        parsed = response.choices[0].message.parsed
 
-                logger.info(f"LLM parsed result for '{mne['NAME']}': {parsed}")
-                return parsed
+        # Inject raw mne metadata
+        parsed.mne_name = mne["NAME"]
+        parsed.mne_id = mne["ID"]
+
+        logger.info(f"LLM parsed result for '{mne['NAME']}': {parsed}")
+        return parsed
 
     def _make_prompt(self, mne: dict, results: List[dict]) -> str:
         items = [
