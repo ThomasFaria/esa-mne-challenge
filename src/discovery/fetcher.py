@@ -1,11 +1,11 @@
 import asyncio
 import logging
-from typing import List, Optional
+from typing import List, Optional, Union
 
-from duckduckgo_search import DDGS
 from openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
 
+from src.common.websearch.base import WebSearch
 from src.discovery.models import AnnualReport
 from src.discovery.prompts import SYS_PROMPT
 
@@ -15,25 +15,27 @@ logger = logging.getLogger(__name__)
 class AnnualReportFetcher:
     def __init__(
         self,
+        searcher: Union[WebSearch, List[WebSearch]],
         api_key: str = "EMPTY",
         model: str = "mistralai/Mistral-Small-24B-Instruct-2501",
         base_url: str = "https://vllm-generation.user.lab.sspcloud.fr/v1",
-        max_results: int = 6,
     ):
-        self.searcher = DDGS()
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
         self.model = model
-        self.max_results = max_results
+        if isinstance(searcher, list):
+            self.searchers = searcher
+        else:
+            self.searchers = [searcher]
 
-    def _search(self, mne: dict) -> List[dict]:
-        """Perform DuckDuckGo search for annual report PDFs."""
+    async def _search(self, mne: dict) -> List[dict]:
+        """Perform Web search for annual report PDFs."""
         query = f"{mne['NAME']} annual report filetype:pdf"
-        logger.info(f"Searching DuckDuckGo for '{query}'")
 
-        results = list(self.searcher.text(query, max_results=self.max_results, region="us-en"))
-        if not results:
-            logger.warning(f"No search results for '{mne['NAME']}'")
-        return results
+        search_tasks = [searcher.search(query) for searcher in self.searchers]
+        results = await asyncio.gather(*search_tasks, return_exceptions=True)
+
+        # Return flattened results
+        return list({item.url: item for sublist in results for item in sublist}.values())
 
     async def _call_llm(self, mne: dict, prompt: str) -> Optional[AnnualReport]:
         logger.info(f"Querying LLM for {mne['NAME']}")
@@ -56,17 +58,14 @@ class AnnualReportFetcher:
         return parsed
 
     def _make_prompt(self, mne: dict, results: List[dict]) -> str:
-        items = [
-            f"{i}. [{r.get('title', '').strip()}]({r.get('href', '').strip()})\n{r.get('body', '').strip().replace('\\n', ' ')}"
-            for i, r in enumerate(results)
-        ]
+        items = [f"{i}. [{r.title.strip()}]({r.url})\n{r.description.strip()}" for i, r in enumerate(results)]
         block = "\n\n".join(items)
         return f"## Search Results for {mne['NAME']}\n\n{block}"
 
     async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         """High-level: search + parse for one MNE name."""
         try:
-            results = self._search(mne)
+            results = await self._search(mne)
             if not results:
                 return None
             prompt = self._make_prompt(mne, results)
