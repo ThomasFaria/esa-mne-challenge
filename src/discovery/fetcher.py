@@ -2,6 +2,7 @@ import asyncio
 import logging
 from typing import List, Optional, Union
 
+import aiohttp
 import requests
 from openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
@@ -58,8 +59,32 @@ class AnnualReportFetcher:
         logger.info(f"LLM parsed result for '{mne['NAME']}': {parsed}")
         return parsed
 
-    def _make_prompt(self, mne: dict, results: List[dict]) -> str:
-        items = [f"{i}. [{r.title.strip()}]({r.url})\n{r.description.strip()}" for i, r in enumerate(results)]
+    async def get_url_responses(self, urls: List[str]) -> List[requests.Response]:
+        """Get responses for a list of URLs."""
+        async with aiohttp.ClientSession(headers={"User-Agent": "Mozilla/5.0"}) as session:
+
+            async def fetch(url):
+                try:
+                    async with session.get(
+                        url, allow_redirects=True, timeout=aiohttp.ClientTimeout(total=5), ssl=False
+                    ) as resp:
+                        return resp.status
+                except Exception as e:
+                    return e
+
+            responses = await asyncio.gather(*(fetch(url) for url in urls), return_exceptions=True)
+        return responses
+
+    async def _make_prompt(self, mne: dict, results: List[dict]) -> str:
+        # Make a prompt for the LLM to extract the annual report URL
+        # Make sure the URL is valid and the PDF is accessible
+
+        url_responses = await self.get_url_responses([str(r.url) for r in results])
+        items = [
+            f"{i}. [{r.title.strip()}]({r.url})\n{r.description.strip()}"
+            for i, (r, resp) in enumerate(zip(results, url_responses))
+            if resp == 200
+        ]
         block = "\n\n".join(items)
         return f"## Search Results for {mne['NAME']}\n\n{block}"
 
@@ -70,9 +95,8 @@ class AnnualReportFetcher:
             results = await self._search(query, mne)
             if not results:
                 return None
-            prompt = self._make_prompt(mne, results)
+            prompt = await self._make_prompt(mne, results)
             annual_report = await self._call_llm(mne, prompt)
-            assert requests.get(annual_report.pdf_url, headers={"User-Agent": "Mozilla/5.0"}).status_code == 200
             return annual_report
         except AssertionError as e:
             logger.error(f"Url extracted does not reply 200 response : {e}")
