@@ -49,3 +49,38 @@ def load_mnes(path: str, sep: str = ";") -> List[str]:
     except Exception:
         logger.exception(f"Failed to load MNEs from {path}")
         raise
+
+
+def generate_discovery_submission(reports):
+    """
+    Generate a submission DataFrame combining FIN_REP and duplicated OTHER types.
+
+    Parameters:
+    - reports: list of pydantic or dict-like objects with attributes: mne_id, mne_name, pdf_url, year.
+    """
+    # Create initial DataFrame from reports
+    fin_rep = pd.DataFrame([r.dict() for r in reports]).rename(
+        columns={
+            "mne_id": "ID",
+            "mne_name": "NAME",
+            "pdf_url": "SRC",
+            "year": "REFYEAR",
+        }
+    )
+    fin_rep["TYPE"] = "FIN_REP"
+    fin_rep = fin_rep[["ID", "NAME", "TYPE", "SRC", "REFYEAR"]]
+
+    # Create OTHER rows by duplicating ID, NAME, TYPE
+    other = pd.concat([fin_rep[["ID", "NAME", "TYPE"]]] * 5, ignore_index=True)
+    other["TYPE"] = "OTHER"
+
+    # Combine and sort final submission
+    submission = pd.concat([fin_rep, other], ignore_index=True).sort_values(by=["ID", "TYPE"]).reset_index(drop=True)
+
+    # Format REFYEAR column
+    submission["REFYEAR"] = submission["REFYEAR"].astype("Int64")
+
+    # Export to CSV
+    submission.to_csv("data/discovery/discovery.csv", sep=";", index=False)
+
+    return submission

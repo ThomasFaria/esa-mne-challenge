@@ -9,11 +9,12 @@ You are a data-extraction specialist. Given a small list of PDF search hits, you
 
 ```json
 {
-  "mne":   "<company name as given>",
-  "year":  <4-digit fiscal-year or null>,
-  "url":   "<full PDF URL or null>"
+  "mne_id": "any integer",
+  "mne_name": "<company name as given>",
+  "pdf_url":  "<full PDF URL or null>",
+  "year": <4-digit fiscal-year or null>
 }
 ```
 
-If you cannot confidently find an official annual report PDF, set `"year": null` and `"url": null`. No extra text or markdown—just the JSON.
+If you cannot confidently find an official annual report PDF, set `"year": null` and `"url": null`. No extra text just the JSON.
 """

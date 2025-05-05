@@ -19,22 +19,18 @@ class AnnualReportFetcher:
         model: str = "mistralai/Mistral-Small-24B-Instruct-2501",
         base_url: str = "https://vllm-generation.user.lab.sspcloud.fr/v1",
         max_results: int = 6,
-        concurrency_limit: int = 5,
     ):
         self.searcher = DDGS()
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
         self.model = model
         self.max_results = max_results
-        self._semaphore = asyncio.Semaphore(concurrency_limit)
 
-    async def _search(self, mne: dict) -> List[dict]:
+    def _search(self, mne: dict) -> List[dict]:
         """Perform DuckDuckGo search for annual report PDFs."""
         query = f"{mne['NAME']} annual report filetype:pdf"
         logger.info(f"Searching DuckDuckGo for '{query}'")
 
-        results = await asyncio.to_thread(
-            lambda: list(self.searcher.text(query, max_results=self.max_results, region="us-en"))
-        )
+        results = list(self.searcher.text(query, max_results=self.max_results, region="us-en"))
         if not results:
             logger.warning(f"No search results for '{mne['NAME']}'")
         return results
@@ -49,7 +45,6 @@ class AnnualReportFetcher:
                 {"role": "user", "content": prompt},
             ],
             response_format=AnnualReport,
-            extra_body=dict(guided_decoding_backend="auto"),
         )
         parsed = response.choices[0].message.parsed
 
@@ -70,25 +65,18 @@ class AnnualReportFetcher:
 
     async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         """High-level: search + parse for one MNE name."""
-        async with self._semaphore:
-            try:
-                results = await self._search(mne)
-                if not results:
-                    return None
-                prompt = self._make_prompt(mne, results)
-                return await self._call_llm(mne, prompt)
-            except Exception as e:
-                logger.error(f"Error fetching for '{mne['NAME']}': {e}")
+        try:
+            results = self._search(mne)
+            if not results:
                 return None
+            prompt = self._make_prompt(mne, results)
+            return await self._call_llm(mne, prompt)
+        except Exception as e:
+            logger.error(f"Error fetching for '{mne['NAME']}': {e}")
+            return None
 
     def fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         return asyncio.run(self.async_fetch_for(mne))
-        # try:
-        #     return asyncio.run(self.async_fetch_for(mne))
-        # except RuntimeError as e:
-        #     # Fallback for environments where event loop is already running
-        #     logger.warning("Event loop already running; using asyncio.create_task workaround.")
-        #     return asyncio.get_event_loop().run_until_complete(self.async_fetch_for(mne))
 
     async def fetch_batch(self, mnes: List[dict]) -> List[Optional[AnnualReport]]:
         """Fetch annual reports for a batch of MNEs asynchronously."""

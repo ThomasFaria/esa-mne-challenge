@@ -1,8 +1,9 @@
 import logging
+import os
 
-import pandas as pd
+from tqdm import tqdm
 
-from src.common.data import get_file_system
+from src.common.data import generate_discovery_submission, load_mnes
 from src.discovery.fetcher import AnnualReportFetcher
 from src.discovery.paths import DATA_DISCOVERY_PATH
 
@@ -10,16 +11,16 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] [%(name)s] %(message)s",
 )
+logger = logging.getLogger(__name__)
 
-fs = get_file_system()
 
-with fs.open(DATA_DISCOVERY_PATH) as f:
-    df = pd.read_csv(f, sep=";")
+mnes = load_mnes(DATA_DISCOVERY_PATH)
+fetcher = AnnualReportFetcher(
+    model="gemma3:27b", base_url="https://llm.lab.sspcloud.fr/ollama/v1", api_key=os.environ["OPENAI_API_KEY"]
+)
 
-mnes = df["NAME"].unique().tolist()
+reports = []
+for mne in tqdm(mnes):
+    reports.append(fetcher.fetch_for(mne))
 
-fetcher = AnnualReportFetcher()
-
-report = fetcher.fetch_for(mnes[43])
-
-report
+generate_discovery_submission(reports)
