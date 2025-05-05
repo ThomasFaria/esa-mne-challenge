@@ -2,6 +2,7 @@ import asyncio
 import logging
 from typing import List, Optional, Union
 
+import requests
 from openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
 
@@ -27,9 +28,8 @@ class AnnualReportFetcher:
         else:
             self.searchers = [searcher]
 
-    async def _search(self, mne: dict) -> List[dict]:
+    async def _search(self, query: str, mne: dict) -> List[dict]:
         """Perform Web search for annual report PDFs."""
-        query = f"{mne['NAME']} annual report filetype:pdf"
 
         search_tasks = [searcher.search(query) for searcher in self.searchers]
         results = await asyncio.gather(*search_tasks, return_exceptions=True)
@@ -47,6 +47,7 @@ class AnnualReportFetcher:
                 {"role": "user", "content": prompt},
             ],
             response_format=AnnualReport,
+            temperature=0.1,
         )
         parsed = response.choices[0].message.parsed
 
@@ -65,13 +66,16 @@ class AnnualReportFetcher:
     async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         """High-level: search + parse for one MNE name."""
         try:
-            results = await self._search(mne)
+            query = f"{mne['NAME']} annual report filetype:pdf"
+            results = await self._search(query, mne)
             if not results:
                 return None
             prompt = self._make_prompt(mne, results)
-            return await self._call_llm(mne, prompt)
-        except Exception as e:
-            logger.error(f"Error fetching for '{mne['NAME']}': {e}")
+            annual_report = await self._call_llm(mne, prompt)
+            assert requests.get(annual_report.pdf_url, headers={"User-Agent": "Mozilla/5.0"}).status_code == 200
+            return annual_report
+        except AssertionError as e:
+            logger.error(f"Url extracted does not reply 200 response : {e}")
             return None
 
     def fetch_for(self, mne: dict) -> Optional[AnnualReport]:
