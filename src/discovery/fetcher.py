@@ -4,7 +4,8 @@ from typing import List, Optional, Union
 
 import aiohttp
 import requests
-from openai import AsyncOpenAI
+from langfuse.decorators import observe
+from langfuse.openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
 
 from src.common.websearch.base import WebSearch
@@ -38,6 +39,7 @@ class AnnualReportFetcher:
         # Return flattened results
         return list({item.url: item for sublist in results for item in sublist}.values())
 
+    @observe()
     async def _call_llm(self, mne: dict, prompt: str) -> Optional[AnnualReport]:
         logger.info(f"Querying LLM for {mne['NAME']}")
 

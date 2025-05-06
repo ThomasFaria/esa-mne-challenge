@@ -15,7 +15,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 mnes = load_mnes(DATA_DISCOVERY_PATH)
 fetcher = AnnualReportFetcher(
     searcher=[
@@ -23,12 +22,12 @@ fetcher = AnnualReportFetcher(
         DuckDuckGoSearch(),
     ],
     model="gemma3:27b",
-    base_url="https://llm.lab.sspcloud.fr/ollama/v1",
+    base_url="https://llm.lab.sspcloud.fr/api",
     api_key=os.environ["OPENAI_API_KEY"],
 )
 
 reports = []
-for mne in tqdm(mnes):
+for mne in tqdm(mnes, desc="Fetching annual reports"):
     reports.append(fetcher.fetch_for(mne))
 
 generate_discovery_submission(reports)
