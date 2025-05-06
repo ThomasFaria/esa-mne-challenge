@@ -25,15 +25,16 @@ class DuckDuckGoSearch(WebSearch):
     async def search(self, query: str) -> List[Dict]:
         logger.info(f"Searching DuckDuckGo for '{query}'")
 
-        def get_random_headers():
-            return {"User-Agent": random.choice(USER_AGENTS)}
-
+        # Randomly select a user agent for the request
+        ua1 = random.choice(USER_AGENTS)
         try:
-            results = list(DDGS().text(query, max_results=self.max_results))
+            results = list(DDGS(headers={"User-Agent": ua1}).text(query, max_results=self.max_results))
         except Exception:
             logger.warning("DuckDuckGo blocked initial search. Retrying with new headers.")
             try:
-                results = list(DDGS(headers=get_random_headers()).text(query, max_results=self.max_results))
+                # Retry with a different user agent
+                ua2 = random.choice([ua for ua in USER_AGENTS if ua != ua1])
+                results = list(DDGS(headers={"User-Agent": ua2}).text(query, max_results=self.max_results))
             except Exception:
                 logger.error("Retry also failed.")
                 return []
