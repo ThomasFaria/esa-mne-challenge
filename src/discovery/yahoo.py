@@ -1,5 +1,7 @@
+import asyncio
 import logging
 import random
+from typing import Optional
 
 import requests
 import yfinance as yf
@@ -84,3 +86,6 @@ class YahooFetcher:
             else:
                 logger.error(f"Yahoo Finance page not found for ticker: {ticker}")
                 return None
+
+    def fetch_for(self, mne: dict) -> Optional[OtherSources]:
+        return asyncio.run(self.fetch_yahoo_page(mne))
