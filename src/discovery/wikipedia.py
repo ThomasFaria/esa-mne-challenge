@@ -64,4 +64,5 @@ class WikipediaFetcher:
         except wikipedia.exceptions.DisambiguationError:
             wiki_url = f"https://en.wikipedia.org/wiki/{wiki_name}"
 
-        return OtherSources(mne_id=mne["ID"], mne_name=mne["NAME"], source_name="Wikipedia", url=wiki_url)
+        # We always specify the year as 2024 but will make it consistent with the year of the report retrieved
+        return OtherSources(mne_id=mne["ID"], mne_name=mne["NAME"], source_name="Wikipedia", url=wiki_url, year=2024)
