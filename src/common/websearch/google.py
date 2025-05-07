@@ -11,13 +11,22 @@ logger = logging.getLogger(__name__)
 
 
 class GoogleSearch(WebSearch):
-    def __init__(self, max_results: int = 5):
+    def __init__(self, max_results: int = 5, region: str = None, sleep_interval: int = 0):
         self.max_results = max_results
+        self.region = region
+        self.sleep_interval = sleep_interval
 
     async def search(self, query: str) -> List[Dict]:
         logger.info(f"Searching Google for '{query}'")
         raw_results = list(
-            google_search(query, num_results=self.max_results, proxy=None, advanced=True, sleep_interval=0)
+            google_search(
+                query,
+                num_results=self.max_results,
+                proxy=None,
+                advanced=True,
+                sleep_interval=self.sleep_interval,
+                region=self.region,
+            )
         )
 
         if not raw_results:
