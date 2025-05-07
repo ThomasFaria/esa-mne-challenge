@@ -10,6 +10,13 @@ class AnnualReport(BaseModel):
     year: Optional[int] = Field(..., description="Fiscal year of annual financial report")
 
 
+class OtherSources(BaseModel):
+    mne_id: int = Field(..., description="Company identifier")
+    mne_name: str = Field(..., description="Company name")
+    source_name: str = Field(..., description="Name of the source (e.g., Google, Wikipedia, Yahoo)")
+    url: HttpUrl = Field(..., description="Website URL")
+
+
 class SearchResult(BaseModel):
     url: HttpUrl = Field(..., description="Website URL")
     title: str = Field(..., description="Website title")

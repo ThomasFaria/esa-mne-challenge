@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "asyncio>=3.4.3",
-    "crawl4ai>=0.6.2",
     "duckduckgo-search>=8.0.1",
     "googlesearch-python>=1.3.0",
     "langfuse>=2.60.3",
@@ -14,6 +13,7 @@ dependencies = [
     "pandas>=2.2.3",
     "s3fs>=2025.3.2",
     "tqdm>=4.67.1",
+    "wikipedia>=1.4.0",
 ]
 authors = [
   {name="Thomas Faria", email="thomas.faria@insee.fr"}
