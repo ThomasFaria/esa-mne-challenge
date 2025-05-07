@@ -26,7 +26,7 @@ class WikipediaFetcher:
         """
         wikipedia.set_lang("en")
 
-    async def fetch_wikipedia_page(self, mne):
+    async def fetch_wikipedia_page(self, mne: dict) -> OtherSources:
         """
         Fetch the Wikipedia page for a given MNE.
         """
