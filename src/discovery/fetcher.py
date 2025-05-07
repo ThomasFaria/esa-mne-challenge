@@ -4,13 +4,13 @@ from typing import List, Optional, Union
 
 import aiohttp
 import requests
+from langfuse import Langfuse
 from langfuse.decorators import observe
 from langfuse.openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
 
 from src.common.websearch.base import WebSearch
 from src.discovery.models import AnnualReport
-from src.discovery.prompts import SYS_PROMPT
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +25,8 @@ class AnnualReportFetcher:
     ):
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
         self.model = model
+        self.prompt = Langfuse().get_prompt("annual-report-extractor", label="production")
+
         if isinstance(searcher, list):
             self.searchers = searcher
         else:
@@ -43,15 +45,15 @@ class AnnualReportFetcher:
         return list({item.url: item for sublist in results for item in sublist}.values())
 
     @observe()
-    async def _call_llm(self, mne: dict, prompt: str) -> Optional[AnnualReport]:
+    async def _call_llm(self, mne: dict, list_urls: str) -> Optional[AnnualReport]:
         logger.info(f"Querying LLM for {mne['NAME']}")
 
+        messages = self.prompt.compile(mne_name=mne["NAME"], proposed_urls=list_urls)
+
         response = await self.client.beta.chat.completions.parse(
+            name="annual_report_extractor",
             model=self.model,
-            messages=[
-                {"role": "system", "content": SYS_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
+            messages=messages,
             response_format=AnnualReport,
             temperature=0.1,
         )
@@ -80,7 +82,7 @@ class AnnualReportFetcher:
             responses = await asyncio.gather(*(fetch(url) for url in urls), return_exceptions=True)
         return responses
 
-    async def _make_prompt(self, mne: dict, results: List[dict]) -> str:
+    async def _format_urls(self, mne: dict, results: List[dict]) -> str:
         # Make a prompt for the LLM to extract the annual report URL
         # Make sure the URL is valid and the PDF is accessible
 
@@ -91,7 +93,7 @@ class AnnualReportFetcher:
             if resp == 200
         ]
         block = "\n\n".join(items)
-        return f"## Search Results for {mne['NAME']}\n\n{block}"
+        return f"\n\n{block}"
 
     async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         """High-level: search + parse for one MNE name."""
@@ -100,8 +102,8 @@ class AnnualReportFetcher:
             results = await self._search(query)
             if not results:
                 return None
-            prompt = await self._make_prompt(mne, results)
-            annual_report = await self._call_llm(mne, prompt)
+            list_urls = await self._format_urls(mne, results)
+            annual_report = await self._call_llm(mne, list_urls)
             return annual_report
         except AssertionError as e:
             logger.error(f"Url extracted does not reply 200 response : {e}")
