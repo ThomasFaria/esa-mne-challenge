@@ -30,7 +30,10 @@ class AnnualReportFetcher:
         else:
             self.searchers = [searcher]
 
-    async def _search(self, query: str, mne: dict) -> List[dict]:
+    async def _search(
+        self,
+        query: str,
+    ) -> List[dict]:
         """Perform Web search for annual report PDFs."""
 
         search_tasks = [searcher.search(query) for searcher in self.searchers]
@@ -94,7 +97,7 @@ class AnnualReportFetcher:
         """High-level: search + parse for one MNE name."""
         try:
             query = f"{mne['NAME']} annual report filetype:pdf"
-            results = await self._search(query, mne)
+            results = await self._search(query)
             if not results:
                 return None
             prompt = await self._make_prompt(mne, results)
