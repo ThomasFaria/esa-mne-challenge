@@ -49,7 +49,8 @@ class YahooFetcher:
     def _save_cache(self, cache_path: str):
         try:
             with open(cache_path, "w", encoding="utf-8") as f:
-                json.dump(self.ticker_cache, f, indent=2, ensure_ascii=False)
+                sorted_cache = dict(sorted(self.ticker_cache.items()))
+                json.dump(sorted_cache, f, indent=2, ensure_ascii=False)
         except Exception as e:
             logger.error(f"Failed to write cache: {e}")
 
