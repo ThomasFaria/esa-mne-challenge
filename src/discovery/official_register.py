@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 class OfficialRegisterFetcher:
     async def async_fetch_for(self, mne: dict) -> Optional[OtherSources]:
         country = await get_country_for_mne(mne["NAME"])
+        if not country:
+            logger.error(f"Could not resolve country for MNE: {mne['NAME']}")
+            return None
         try:
             fetcher = OfficialRegisterFetcherFactory.get_fetcher(country)
             return await fetcher.async_fetch_for(mne)
