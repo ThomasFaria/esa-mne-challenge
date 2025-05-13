@@ -69,5 +69,8 @@ class WikipediaFetcher:
         # We always specify the year as 2024 but will make it consistent with the year of the report retrieved
         return OtherSources(mne_id=mne["ID"], mne_name=mne["NAME"], source_name="Wikipedia", url=wiki_url, year=2024)
 
+    async def async_fetch_for(self, mne: dict) -> Optional[OtherSources]:
+        return await self.fetch_wikipedia_page(mne)
+
     def fetch_for(self, mne: dict) -> Optional[OtherSources]:
         return asyncio.run(self.fetch_wikipedia_page(mne))

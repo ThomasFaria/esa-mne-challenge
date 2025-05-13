@@ -1,9 +1,11 @@
 import logging
 import os
-from typing import List
+from typing import List, Union
 
 import pandas as pd
 import s3fs
+
+from src.discovery.models import AnnualReport, OtherSources
 
 logger = logging.getLogger(__name__)
 
@@ -51,15 +53,25 @@ def load_mnes(path: str, sep: str = ";") -> List[str]:
         raise
 
 
-def generate_discovery_submission(reports):
+def pad_to_five(group):
+    missing = 5 - len(group)
+    if missing > 0:
+        filler = pd.DataFrame([{}] * missing)
+        return pd.concat([group, filler], ignore_index=True)
+    return group
+
+
+def generate_discovery_submission(mne_infos: List[List[Union[AnnualReport, OtherSources]]]) -> pd.DataFrame:
     """
-    Generate a submission DataFrame combining FIN_REP and duplicated OTHER types.
+    Generate a submission DataFrame combining FIN_REP and OTHER types.
 
     Parameters:
     - reports: list of pydantic or dict-like objects with attributes: mne_id, mne_name, pdf_url, year.
     """
     # Create initial DataFrame from reports
-    fin_rep = pd.DataFrame([r.dict() for r in reports]).rename(
+    fin_rep = pd.DataFrame(
+        [src.model_dump() for sources in mne_infos for src in sources if isinstance(src, AnnualReport)]
+    ).rename(
         columns={
             "mne_id": "ID",
             "mne_name": "NAME",
@@ -67,15 +79,47 @@ def generate_discovery_submission(reports):
             "year": "REFYEAR",
         }
     )
+
     fin_rep["TYPE"] = "FIN_REP"
     fin_rep = fin_rep[["ID", "NAME", "TYPE", "SRC", "REFYEAR"]]
 
-    # Create OTHER rows by duplicating ID, NAME, TYPE
-    other = pd.concat([fin_rep[["ID", "NAME", "TYPE"]]] * 5, ignore_index=True)
-    other["TYPE"] = "OTHER"
+    other_src = pd.DataFrame(
+        [src.model_dump() for sources in mne_infos for src in sources if isinstance(src, OtherSources)]
+    ).rename(
+        columns={
+            "mne_id": "ID",
+            "mne_name": "NAME",
+            "url": "SRC",
+        }
+    )
+
+    other_src["TYPE"] = "OTHER"
+    other_src = other_src[
+        [
+            "ID",
+            "NAME",
+            "TYPE",
+            "SRC",
+        ]
+    ]
+
+    # Pad other sources to 5 entries per group
+    other_src = (
+        other_src.groupby(["ID", "NAME", "TYPE"], group_keys=False)
+        .apply(
+            lambda g: pad_to_five(g.drop(columns=["ID", "NAME", "TYPE"])).assign(
+                ID=g.iloc[0]["ID"], NAME=g.iloc[0]["NAME"], TYPE=g.iloc[0]["TYPE"]
+            )
+        )
+        .reset_index(drop=True)
+        .merge(fin_rep.loc[:, ["ID", "REFYEAR"]], on="ID", how="right")
+        .loc[:, ["ID", "NAME", "TYPE", "SRC", "REFYEAR"]]
+    )
 
     # Combine and sort final submission
-    submission = pd.concat([fin_rep, other], ignore_index=True).sort_values(by=["ID", "TYPE"]).reset_index(drop=True)
+    submission = (
+        pd.concat([fin_rep, other_src], ignore_index=True).sort_values(by=["ID", "TYPE"]).reset_index(drop=True)
+    )
 
     # Format REFYEAR column
     submission["REFYEAR"] = submission["REFYEAR"].astype("Int64")

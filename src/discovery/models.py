@@ -16,6 +16,9 @@ class OtherSources(BaseModel):
     source_name: str = Field(..., description="Name of the source (e.g., Google, Wikipedia, Yahoo)")
     url: HttpUrl = Field(..., description="Website URL")
     year: int = Field(..., description="Reference year of the source")
+    mne_website: Optional[HttpUrl] = Field(None, description="Company website URL")
+    mne_national_id: Optional[str] = Field(None, description="Company National ID")
+    mne_activity: Optional[str] = Field(None, description="Company NACE code")
 
 
 class SearchResult(BaseModel):

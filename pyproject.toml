@@ -11,6 +11,7 @@ dependencies = [
     "langfuse>=2.60.3",
     "openai>=1.76.2",
     "pandas>=2.2.3",
+    "pycountry>=24.6.1",
     "s3fs>=2025.3.2",
     "tqdm>=4.67.1",
     "wikipedia>=1.4.0",

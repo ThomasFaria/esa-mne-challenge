@@ -1,5 +1,7 @@
 import asyncio
+import json
 import logging
+import os
 import random
 from typing import Optional
 
@@ -29,11 +31,34 @@ class YahooFetcher:
         Initialize the YahooFetcher.
         """
         self.URL_BASE = "https://query2.finance.yahoo.com/v1/finance/search"
+        self.CACHE_PATH = "cache/tickers_cache.json"
+        self.ticker_cache = self._load_cache(self.CACHE_PATH)
+
+    def _load_cache(self, cache_path: str) -> dict:
+        if not os.path.exists("cache"):
+            os.makedirs("cache")
+        if os.path.exists(cache_path):
+            try:
+                with open(cache_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.error(f"Failed to read cache: {e}")
+                return {}
+        return {}
+
+    def _save_cache(self, cache_path: str):
+        try:
+            with open(cache_path, "w", encoding="utf-8") as f:
+                json.dump(self.ticker_cache, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.error(f"Failed to write cache: {e}")
 
     async def get_yahoo_ticker(self, mne_name: str) -> str:
         """
         Get the Yahoo ticker symbol for a given company name.
         """
+        if mne_name in self.ticker_cache:
+            return self.ticker_cache[mne_name]
         # Randomly select a user agent for the request
         headers = {"User-Agent": random.choice(USER_AGENTS)}
         params = {
@@ -47,8 +72,12 @@ class YahooFetcher:
             return None
 
         try:
-            return response.json()["quotes"][0]["symbol"]
+            ticker = response.json()["quotes"][0]["symbol"]
+            self.ticker_cache[mne_name] = ticker
+            self._save_cache(self.CACHE_PATH)
+            return ticker
         except (IndexError, KeyError):
+            logger.error(f"Failed to parse Yahoo ticker for {mne_name}: {response.text}")
             return None
 
     async def fetch_yahoo_page(self, mne: dict) -> OtherSources:
@@ -86,6 +115,9 @@ class YahooFetcher:
             else:
                 logger.error(f"Yahoo Finance page not found for ticker: {ticker}")
                 return None
+
+    async def async_fetch_for(self, mne: dict) -> Optional[OtherSources]:
+        return await self.fetch_yahoo_page(mne)
 
     def fetch_for(self, mne: dict) -> Optional[OtherSources]:
         return asyncio.run(self.fetch_yahoo_page(mne))
