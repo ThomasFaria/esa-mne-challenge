@@ -1,5 +1,7 @@
 import asyncio
+import json
 import logging
+import os
 from typing import List, Optional, Union
 
 import aiohttp
@@ -26,11 +28,33 @@ class AnnualReportFetcher:
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
         self.model = model
         self.prompt = Langfuse().get_prompt("annual-report-extractor", label="production")
+        self.CACHE_PATH = "cache/reports_cache.json"
+        self.reports_cache = self._load_cache(self.CACHE_PATH)
 
         if isinstance(searcher, list):
             self.searchers = searcher
         else:
             self.searchers = [searcher]
+
+    def _load_cache(self, cache_path: str) -> dict:
+        if not os.path.exists("cache"):
+            os.makedirs("cache")
+        if os.path.exists(cache_path):
+            try:
+                with open(cache_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.error(f"Failed to read cache: {e}")
+                return {}
+        return {}
+
+    def _save_cache(self, cache_path: str):
+        try:
+            with open(cache_path, "w", encoding="utf-8") as f:
+                sorted_cache = dict(sorted(self.reports_cache.items()))
+                json.dump(sorted_cache, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.error(f"Failed to write cache: {e}")
 
     async def _search(
         self,
@@ -97,6 +121,15 @@ class AnnualReportFetcher:
 
     async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
         """High-level: search + parse for one MNE name."""
+        # Check if the MNE is already in the cache
+        if mne["NAME"] in self.reports_cache:
+            logger.info(f"Annual report for {mne['NAME']} already in cache.")
+            return AnnualReport(
+                mne_id=mne["ID"],
+                mne_name=mne["NAME"],
+                pdf_url=self.reports_cache[mne["NAME"]][1],
+                year=self.reports_cache[mne["NAME"]][0],
+            )
         try:
             query = f"{mne['NAME']} annual report filetype:pdf"
             results = await self._search(query)
@@ -104,6 +137,10 @@ class AnnualReportFetcher:
                 return None
             list_urls = await self._format_urls(mne, results)
             annual_report = await self._call_llm(mne, list_urls)
+
+            # Update the cache with the new annual report
+            self.reports_cache[annual_report.mne_name] = [annual_report.year, str(annual_report.pdf_url)]
+            self._save_cache(self.CACHE_PATH)
             return annual_report
         except AssertionError as e:
             logger.error(f"Url extracted does not reply 200 response : {e}")
