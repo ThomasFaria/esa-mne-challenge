@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 mnes = load_mnes(DATA_DISCOVERY_PATH)
 fetcher = AnnualReportFetcher(
     searcher=[
-        GoogleSearch(),
+        GoogleSearch(max_results=10),
         DuckDuckGoSearch(),
     ],
     model="gemma3:27b",
