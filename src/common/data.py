@@ -115,6 +115,7 @@ def generate_discovery_submission(mne_infos: List[List[Union[AnnualReport, Other
         .merge(fin_rep.loc[:, ["ID", "REFYEAR"]], on="ID", how="right")
         .loc[:, ["ID", "NAME", "TYPE", "SRC", "REFYEAR"]]
     )
+    other_src.loc[other_src["SRC"].isna(), "REFYEAR"] = pd.NA
 
     # Combine and sort final submission
     submission = (
