@@ -97,9 +97,9 @@ class AnnualReportFetcher:
             async def fetch(url):
                 try:
                     async with session.get(
-                        url, allow_redirects=True, timeout=aiohttp.ClientTimeout(total=5), ssl=False
+                        url, allow_redirects=True, timeout=aiohttp.ClientTimeout(total=30), ssl=False
                     ) as resp:
-                        return resp.status
+                        return (resp.status == 200) and (resp.content_type == "application/pdf")
                 except Exception as e:
                     return e
 
@@ -114,7 +114,7 @@ class AnnualReportFetcher:
         items = [
             f"{i}. [{r.title.strip()}]({r.url})\n{r.description.strip()}"
             for i, (r, resp) in enumerate(zip(results, url_responses))
-            if resp == 200
+            if resp
         ]
         block = "\n\n".join(items)
         return f"\n\n{block}"
@@ -131,7 +131,7 @@ class AnnualReportFetcher:
                 year=self.reports_cache[mne["NAME"]][0],
             )
         try:
-            query = f"{mne['NAME']} annual report filetype:pdf"
+            query = f"{mne['NAME']} annual report (2024 OR 2023) filetype:pdf"
             results = await self._search(query)
             if not results:
                 return None
