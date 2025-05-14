@@ -139,8 +139,9 @@ class AnnualReportFetcher:
             annual_report = await self._call_llm(mne, list_urls)
 
             # Update the cache with the new annual report
-            self.reports_cache[annual_report.mne_name] = [annual_report.year, str(annual_report.pdf_url)]
-            self._save_cache(self.CACHE_PATH)
+            if annual_report.pdf_url:
+                self.reports_cache[annual_report.mne_name] = [annual_report.year, str(annual_report.pdf_url)]
+                self._save_cache(self.CACHE_PATH)
             return annual_report
         except AssertionError as e:
             logger.error(f"Url extracted does not reply 200 response : {e}")
