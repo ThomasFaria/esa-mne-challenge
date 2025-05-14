@@ -139,7 +139,7 @@ class AnnualReportFetcher:
             annual_report = await self._call_llm(mne, list_urls)
 
             # Update the cache with the new annual report
-            if annual_report.pdf_url:
+            if annual_report.pdf_url and annual_report.year >= 2024:
                 self.reports_cache[annual_report.mne_name] = [annual_report.year, str(annual_report.pdf_url)]
                 self._save_cache(self.CACHE_PATH)
             return annual_report
