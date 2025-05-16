@@ -1,20 +1,10 @@
 import asyncio
-import re
 from typing import Optional
 
 import wikipedia
 
 from src.discovery.models import OtherSources
-
-words_to_remove = [
-    "GEBR",
-    "PUBLIC LIMITED COMPANY",
-    "PLC",
-    "AKTIEBOLAGET",
-    "PARTICIPATIONS",
-    "AG",
-    "TOVARNA ZDRAVIL DD NOVO MESTO",
-]
+from src.discovery.utils import clean_mne_name
 
 
 class WikipediaFetcher:
@@ -32,24 +22,9 @@ class WikipediaFetcher:
         """
         Fetch the Wikipedia page for a given MNE.
         """
-        # Clean the MNE name
-        mne_short = re.sub(
-            r"\s+",
-            " ",
-            re.sub(
-                r"\b(?:" + "|".join(words_to_remove) + r")\b",
-                "",
-                re.sub(
-                    r"\.",
-                    "",  # Remove dots
-                    re.sub(r"\([^)]*\)", "", mne["NAME"]),  # Remove parenthesis
-                ),
-                flags=re.IGNORECASE,
-            ),
-        ).strip()
 
-        # Replace "L " with "L'"
-        mne_short = re.sub(r"^L\s+", "L'", mne_short)
+        # Clean the MNE name
+        mne_short = clean_mne_name(mne["NAME"])
 
         # Add "(group)" for certain MNEs with ambiguous names
         if mne["NAME"] in ["FCC", "ETEX", "THALES", "CANON INCORPORATED", "EDIZIONE", "FERRERO"]:

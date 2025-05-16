@@ -9,6 +9,7 @@ import requests
 import yfinance as yf
 
 from src.discovery.models import OtherSources
+from src.discovery.utils import clean_mne_name
 
 logger = logging.getLogger(__name__)
 
@@ -60,10 +61,18 @@ class YahooFetcher:
         """
         if mne_name in self.ticker_cache:
             return self.ticker_cache[mne_name]
+
+        # Clean the MNE name
+        mne_name_cleaned = clean_mne_name(mne_name)
+        if any(keyword in mne_name_cleaned for keyword in ["GEELY", "WIENERBERGER", "STRABAG", "FLETCHER"]):
+            mne_name_cleaned = mne_name_cleaned.split(" ")[0]
+        if "SWIRE" in mne_name_cleaned:
+            mne_name_cleaned = mne_name_cleaned.split(" ")[1]
+
         # Randomly select a user agent for the request
         headers = {"User-Agent": random.choice(USER_AGENTS)}
         params = {
-            "q": mne_name,
+            "q": mne_name_cleaned,
             "quotes_count": 1,
         }
         response = requests.get(self.URL_BASE, headers=headers, params=params)
@@ -78,7 +87,9 @@ class YahooFetcher:
             self._save_cache(self.CACHE_PATH)
             return ticker
         except (IndexError, KeyError):
-            logger.error(f"Failed to parse Yahoo ticker for {mne_name}: {response.text}")
+            logger.error(
+                f"Could not find a valid Yahoo Finance ticker for '{mne_name}'. Ensure the company is publicly traded and has a profile on Yahoo Finance."
+            )
             return None
 
     async def fetch_yahoo_page(self, mne: dict) -> OtherSources:
