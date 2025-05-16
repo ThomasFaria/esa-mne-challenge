@@ -18,20 +18,28 @@ class WikipediaFetcher:
         """
         wikipedia.set_lang("en")
 
+    async def get_wikipedia_name(self, mne_name: str) -> str:
+        """
+        Deduce the Wikipedia page for a given MNE.
+        """
+
+        # Clean the MNE name
+        mne_short = clean_mne_name(mne_name)
+
+        # Add "(group)" for certain MNEs with ambiguous names
+        if mne_name in ["FCC", "ETEX", "THALES", "CANON INCORPORATED", "EDIZIONE", "FERRERO"]:
+            mne_short = f"{mne_short} (group)"
+
+        wiki_search = wikipedia.search(f"{mne_short}")
+        wiki_name = wiki_search[0]
+        return wiki_name
+
     async def fetch_wikipedia_page(self, mne: dict) -> OtherSources:
         """
         Fetch the Wikipedia page for a given MNE.
         """
 
-        # Clean the MNE name
-        mne_short = clean_mne_name(mne["NAME"])
-
-        # Add "(group)" for certain MNEs with ambiguous names
-        if mne["NAME"] in ["FCC", "ETEX", "THALES", "CANON INCORPORATED", "EDIZIONE", "FERRERO"]:
-            mne_short = f"{mne_short} (group)"
-
-        wiki_search = wikipedia.search(f"{mne_short}")
-        wiki_name = wiki_search[0]
+        wiki_name = await self.get_wikipedia_name(mne["NAME"])
 
         try:
             wiki_page = wikipedia.page(wiki_name, auto_suggest=False)
