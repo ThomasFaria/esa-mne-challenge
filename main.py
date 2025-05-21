@@ -1,3 +1,8 @@
+"""
+Main pipeline script for fetching annual report URLs and complementary sources
+for multinational enterprises (MNEs).
+"""
+
 import asyncio
 import logging
 import os
@@ -13,13 +18,18 @@ from src.discovery.paths import DATA_DISCOVERY_PATH
 from src.discovery.wikipedia import WikipediaFetcher
 from src.discovery.yahoo import YahooFetcher
 
+# Logging setup
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] [%(name)s] %(message)s",
 )
 logger = logging.getLogger(__name__)
 
+# Load MNE data from the challenge starting kit
 mnes = load_mnes(DATA_DISCOVERY_PATH)
+
+# Setup fetchers
+# Fetcher for Annual Report (LLM-BASED)
 fetcher = AnnualReportFetcher(
     searcher=[
         GoogleSearch(max_results=10),
@@ -29,12 +39,27 @@ fetcher = AnnualReportFetcher(
     base_url="https://llm.lab.sspcloud.fr/api",
     api_key=os.environ["OPENAI_API_KEY"],
 )
+
+# Fetcher for Wikipedia website
 wiki = WikipediaFetcher()
+
+# Fetcher for Yahoo Finance website
 yahoo = YahooFetcher()
+
+# Fetcher for country specific website
 official_register = OfficialRegisterFetcher()
 
 
 async def fetch_sources_for_mne(mne):
+    """
+    Fetch all sources of information for a single MNE.
+
+    Args:
+        mne (dict): A multinational enterprise entry.
+
+    Returns:
+        list: Aggregated results from all sources.
+    """
     return await asyncio.gather(
         fetcher.async_fetch_for(mne),
         yahoo.async_fetch_for(mne),
@@ -44,6 +69,9 @@ async def fetch_sources_for_mne(mne):
 
 
 async def main():
+    """
+    Main async function to fetch data for all MNEs.
+    """
     mne_infos = []
     for mne in tqdm(mnes, desc="Fetching annual reports"):
         results = await fetch_sources_for_mne(mne)
@@ -52,5 +80,6 @@ async def main():
     return mne_infos
 
 
-mne_infos = asyncio.run(main())
-generate_discovery_submission(mne_infos)
+if __name__ == "__main__":
+    mne_infos = asyncio.run(main())
+    generate_discovery_submission(mne_infos)
