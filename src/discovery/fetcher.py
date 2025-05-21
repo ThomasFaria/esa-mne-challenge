@@ -18,6 +18,11 @@ logger = logging.getLogger(__name__)
 
 
 class AnnualReportFetcher:
+    """
+    Fetches the most recent annual report PDF URLs for multinational enterprises (MNEs),
+    using a combination of search engines, LLM parsing, and URL validation.
+    """
+
     def __init__(
         self,
         searcher: Union[WebSearch, List[WebSearch]],
@@ -37,6 +42,15 @@ class AnnualReportFetcher:
             self.searchers = [searcher]
 
     def _load_cache(self, cache_path: str) -> dict:
+        """
+        Load previously fetched annual reports from a local JSON cache if it exists, otherwise, it creates one.
+
+        Args:
+            cache_path (str): Path to the JSON cache file.
+
+        Returns:
+            dict: A dictionary mapping MNE names to [year, pdf_url].
+        """
         if not os.path.exists("cache"):
             os.makedirs("cache")
         if os.path.exists(cache_path):
@@ -49,6 +63,12 @@ class AnnualReportFetcher:
         return {}
 
     def _save_cache(self, cache_path: str):
+        """
+        Save the current report cache to a local file.
+
+        Args:
+            cache_path (str): Path to the JSON cache file.
+        """
         try:
             with open(cache_path, "w", encoding="utf-8") as f:
                 sorted_cache = dict(sorted(self.reports_cache.items()))
@@ -60,20 +80,85 @@ class AnnualReportFetcher:
         self,
         query: str,
     ) -> List[dict]:
-        """Perform Web search for annual report PDFs."""
+        """
+        Perform a web search using all configured search engines.
 
+        Args:
+            query (str): The search query string.
+
+        Returns:
+            List[dict]: A list of unique search result objects (de-duplicated by URL).
+        """
         search_tasks = [searcher.search(query) for searcher in self.searchers]
         results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
-        # Return flattened results
+        # Return search results and handle deduplication (2 identical URLs are given once)
         return list({item.url: item for sublist in results for item in sublist}.values())
+
+    async def get_url_responses(self, urls: List[str]) -> List[requests.Response]:
+        """
+        Send HTTP GET requests to each URL to verify accessibility and content type.
+
+        Args:
+            urls (List[str]): A list of URL strings.
+
+        Returns:
+            List[bool | Exception]: A list where each entry is True (valid PDF), False, or an Exception.
+        """
+        async with aiohttp.ClientSession(headers={"User-Agent": "Mozilla/5.0"}) as session:
+
+            async def fetch(url):
+                try:
+                    async with session.get(
+                        url, allow_redirects=True, timeout=aiohttp.ClientTimeout(total=30), ssl=False
+                    ) as resp:
+                        return (resp.status == 200) and (resp.content_type == "application/pdf")
+                except Exception as e:
+                    return e
+
+            responses = await asyncio.gather(*(fetch(url) for url in urls), return_exceptions=True)
+        return responses
+
+    async def _format_urls(self, mne: dict, results: List[dict]) -> str:
+        """
+        Format the search results into a markdown-style string with numbered links,
+        filtering for only accessible PDF URLs.
+
+        Args:
+            mne (dict): Dictionary representing a single MNE.
+            results (List[dict]): List of search result objects.
+
+        Returns:
+            str: Formatted markdown string with accessible report candidates.
+        """
+
+        url_responses = await self.get_url_responses([str(r.url) for r in results])
+        items = [
+            f"{i}. [{r.title.strip()}]({r.url})\n{r.description.strip()}"
+            for i, (r, resp) in enumerate(zip(results, url_responses))
+            if resp
+        ]
+        block = "\n\n".join(items)
+        return f"\n\n{block}"
 
     @observe()
     async def _call_llm(self, mne: dict, list_urls: str) -> Optional[AnnualReport]:
+        """
+        Call the LLM with the MNE name and list of candidate URLs to extract the correct one.
+
+        Args:
+            mne (dict): MNE information.
+            list_urls (str): Formatted string of search results.
+
+        Returns:
+            Optional[AnnualReport]: Parsed annual report object or None if parsing fails.
+        """
         logger.info(f"Querying LLM for {mne['NAME']}")
 
+        # The prompt is stored in Langfuse so that it can be properly versionned
         messages = self.prompt.compile(mne_name=mne["NAME"], proposed_urls=list_urls)
 
+        # Making the call to the LLM by specifying the message, the model to use, the format of the response and the temperature (very low to get consistent results)
         response = await self.client.beta.chat.completions.parse(
             name="annual_report_extractor",
             model=self.model,
@@ -90,40 +175,21 @@ class AnnualReportFetcher:
         logger.info(f"LLM parsed result for '{mne['NAME']}': {parsed}")
         return parsed
 
-    async def get_url_responses(self, urls: List[str]) -> List[requests.Response]:
-        """Get responses for a list of URLs."""
-        async with aiohttp.ClientSession(headers={"User-Agent": "Mozilla/5.0"}) as session:
-
-            async def fetch(url):
-                try:
-                    async with session.get(
-                        url, allow_redirects=True, timeout=aiohttp.ClientTimeout(total=30), ssl=False
-                    ) as resp:
-                        return (resp.status == 200) and (resp.content_type == "application/pdf")
-                except Exception as e:
-                    return e
-
-            responses = await asyncio.gather(*(fetch(url) for url in urls), return_exceptions=True)
-        return responses
-
-    async def _format_urls(self, mne: dict, results: List[dict]) -> str:
-        # Make a prompt for the LLM to extract the annual report URL
-        # Make sure the URL is valid and the PDF is accessible
-
-        url_responses = await self.get_url_responses([str(r.url) for r in results])
-        items = [
-            f"{i}. [{r.title.strip()}]({r.url})\n{r.description.strip()}"
-            for i, (r, resp) in enumerate(zip(results, url_responses))
-            if resp
-        ]
-        block = "\n\n".join(items)
-        return f"\n\n{block}"
-
     async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
-        """High-level: search + parse for one MNE name."""
+        """
+        Asynchronously fetch the annual report for a single MNE.
+        Uses search + LLM + validation pipeline.
+
+        Args:
+            mne (dict): MNE metadata.
+
+        Returns:
+            Optional[AnnualReport]: Resulting annual report or None.
+        """
         # Check if the MNE is already in the cache
         if mne["NAME"] in self.reports_cache:
             logger.info(f"Annual report for {mne['NAME']} already in cache.")
+            # If in the cache, returns info from the cache
             return AnnualReport(
                 mne_id=mne["ID"],
                 mne_name=mne["NAME"],
@@ -131,11 +197,16 @@ class AnnualReportFetcher:
                 year=self.reports_cache[mne["NAME"]][0],
             )
         try:
+            # Define the web query
             query = f"{mne['NAME']} annual report (2024 OR 2023) filetype:pdf"
+            # Make the websearch
             results = await self._search(query)
             if not results:
                 return None
+            # Format the urls obtained from the web search into a markdown prompt
             list_urls = await self._format_urls(mne, results)
+
+            # Send the prompt to a LLM in order to find the best URL
             annual_report = await self._call_llm(mne, list_urls)
 
             # Update the cache with the new annual report
@@ -148,9 +219,26 @@ class AnnualReportFetcher:
             return None
 
     def fetch_for(self, mne: dict) -> Optional[AnnualReport]:
+        """
+        Synchronous wrapper for `async_fetch_for`, for compatibility with sync code.
+
+        Args:
+            mne (dict): MNE metadata.
+
+        Returns:
+            Optional[AnnualReport]: Resulting annual report or None.
+        """
         return asyncio.run(self.async_fetch_for(mne))
 
     async def fetch_batch(self, mnes: List[dict]) -> List[Optional[AnnualReport]]:
-        """Fetch annual reports for a batch of MNEs asynchronously."""
+        """
+        Asynchronously fetch annual reports for a list of MNEs.
+
+        Args:
+            mnes (List[dict]): List of MNEs.
+
+        Returns:
+            List[Optional[AnnualReport]]: List of annual report results, one per MNE.
+        """
         tasks = [self.async_fetch_for(mne) for mne in mnes]
         return await tqdm.gather(*tasks)
