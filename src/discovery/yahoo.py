@@ -33,7 +33,23 @@ class YahooFetcher:
         """
         self.URL_BASE = "https://query2.finance.yahoo.com/v1/finance/search"
         self.CACHE_PATH = "cache/tickers_cache.json"
-        self.EXCHANGE_LIST = ["CXE", "NYQ", "FRA", "PAR", "GER", "VIE", "SHZ", "BUD", "OQX", "SHH", "OEM", "IOB", "CPH"]
+        self.EXCHANGE_LIST = [
+            "CXE",
+            "NYQ",
+            "FRA",
+            "PAR",
+            "GER",
+            "VIE",
+            "SHZ",
+            "BUD",
+            "OQX",
+            "SHH",
+            "OEM",
+            "IOB",
+            "CPH",
+            "HEL",
+            "MCE",
+        ]
         self.ticker_cache = self._load_cache(self.CACHE_PATH)
 
     def _load_cache(self, cache_path: str) -> dict:
@@ -78,6 +94,7 @@ class YahooFetcher:
                 "HENKEL",
                 "CANON INCORPORATED",
                 "ANDRITZ",
+                "JBS",
             ]
         ):
             mne_name_cleaned = mne_name_cleaned.split(" ")[0]
@@ -87,7 +104,13 @@ class YahooFetcher:
             mne_name_cleaned = mne_name_cleaned.split(" ")[-1]
         if "MOL HUNGARIAN" in mne_name_cleaned:
             mne_name_cleaned = " ".join(mne_name_cleaned.split(" ")[:2])
-        if "ASSECO" in mne_name_cleaned:
+        if any(
+            keyword in mne_name_cleaned
+            for keyword in [
+                "ASSECO",
+                "GI GROUP",
+            ]
+        ):
             mne_name_cleaned = f"{mne_name_cleaned} POLAND"
 
         # Randomly select a user agent for the request
