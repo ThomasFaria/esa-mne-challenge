@@ -33,6 +33,7 @@ class YahooFetcher:
         """
         self.URL_BASE = "https://query2.finance.yahoo.com/v1/finance/search"
         self.CACHE_PATH = "cache/tickers_cache.json"
+        self.EXCHANGE_LIST = ["CXE", "NYQ", "FRA", "PAR", "GER", "VIE", "SHZ", "BUD", "OQX", "SHH", "OEM", "IOB", "CPH"]
         self.ticker_cache = self._load_cache(self.CACHE_PATH)
 
     def _load_cache(self, cache_path: str) -> dict:
@@ -64,16 +65,36 @@ class YahooFetcher:
 
         # Clean the MNE name
         mne_name_cleaned = clean_mne_name(mne_name)
-        if any(keyword in mne_name_cleaned for keyword in ["GEELY", "WIENERBERGER", "STRABAG", "FLETCHER"]):
+        if any(
+            keyword in mne_name_cleaned
+            for keyword in [
+                "GEELY",
+                "WIENERBERGER",
+                "STRABAG",
+                "FLETCHER",
+                "VOESTALPINE",
+                "HBIS",
+                "NESTLE",
+                "HENKEL",
+                "CANON INCORPORATED",
+                "ANDRITZ",
+            ]
+        ):
             mne_name_cleaned = mne_name_cleaned.split(" ")[0]
         if "SWIRE" in mne_name_cleaned:
             mne_name_cleaned = mne_name_cleaned.split(" ")[1]
+        if "MAERSK" in mne_name_cleaned:
+            mne_name_cleaned = mne_name_cleaned.split(" ")[-1]
+        if "MOL HUNGARIAN" in mne_name_cleaned:
+            mne_name_cleaned = " ".join(mne_name_cleaned.split(" ")[:2])
+        if "ASSECO" in mne_name_cleaned:
+            mne_name_cleaned = f"{mne_name_cleaned} POLAND"
 
         # Randomly select a user agent for the request
         headers = {"User-Agent": random.choice(USER_AGENTS)}
         params = {
             "q": mne_name_cleaned,
-            "quotes_count": 1,
+            "quotes_count": 10,
         }
         response = requests.get(self.URL_BASE, headers=headers, params=params)
         # Check if the request was successful
@@ -82,7 +103,11 @@ class YahooFetcher:
             return None
 
         try:
-            ticker = response.json()["quotes"][0]["symbol"]
+            ticker = [
+                r
+                for r in response.json()["quotes"]
+                if r["quoteType"] == "EQUITY" and r["exchange"] in self.EXCHANGE_LIST
+            ][0]["symbol"]
             self.ticker_cache[mne_name] = ticker
             self._save_cache(self.CACHE_PATH)
             return ticker
