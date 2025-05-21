@@ -60,12 +60,29 @@ async def fetch_sources_for_mne(mne):
     Returns:
         list: Aggregated results from all sources.
     """
-    return await asyncio.gather(
-        fetcher.async_fetch_for(mne),
-        yahoo.async_fetch_for(mne),
-        wiki.async_fetch_for(mne),
-        official_register.async_fetch_for(mne),
-    )
+    try:
+        results = await asyncio.gather(
+            fetcher.async_fetch_for(mne),
+            yahoo.async_fetch_for(mne),
+            wiki.async_fetch_for(mne),
+            official_register.async_fetch_for(mne),
+            return_exceptions=True,
+        )
+
+        flattened = []
+        for result in results:
+            if isinstance(result, Exception):
+                logger.warning(f"Error fetching for {mne['name']}: {result}")
+                continue
+            if isinstance(result, list):
+                flattened.extend(result)
+            else:
+                flattened.append(result)
+
+        return flattened
+    except Exception as e:
+        logger.error(f"Unexpected error fetching for {mne['name']}: {e}")
+        return []
 
 
 async def main():
@@ -74,9 +91,8 @@ async def main():
     """
     mne_infos = []
     for mne in tqdm(mnes, desc="Fetching annual reports"):
-        results = await fetch_sources_for_mne(mne)
-        flattened = [elem for item in results for elem in (item if isinstance(item, list) else [item])]
-        mne_infos.append(flattened)
+        mne_result = await fetch_sources_for_mne(mne)
+        mne_infos.append(mne_result)
     return mne_infos
 
 
