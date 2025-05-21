@@ -9,18 +9,26 @@ from src.discovery.utils import clean_mne_name
 
 class WikipediaFetcher:
     """
-    A class to fetch Wikipedia pages for MNEs.
+    Fetches the Wikipedia page URL for a given multinational enterprise (MNE).
+
+    Uses the Wikipedia Python API to search for the most relevant page based on the MNE name.
     """
 
     def __init__(self):
         """
-        Initialize the WikipediaFetcher.
+        Initialize the WikipediaFetcher with English as the default language.
         """
         wikipedia.set_lang("en")
 
     async def get_wikipedia_name(self, mne_name: str) -> str:
         """
-        Deduce the Wikipedia page for a given MNE.
+        Deduce the Wikipedia page title for a given MNE name using the Wikipedia API.
+
+        Args:
+            mne_name (str): The full name of the MNE.
+
+        Returns:
+            str: The best-matching Wikipedia page title.
         """
 
         # Clean the MNE name
@@ -36,7 +44,15 @@ class WikipediaFetcher:
 
     async def fetch_wikipedia_page(self, mne: dict) -> OtherSources:
         """
-        Fetch the Wikipedia page for a given MNE.
+        Retrieve the Wikipedia page URL for the given MNE.
+
+        Performs a Wikipedia search and constructs a valid URL from the page titles.
+
+        Args:
+            mne (dict): Dictionary with keys "ID" and "NAME".
+
+        Returns:
+            OtherSources: An object containing the Wikipedia source URL and metadata.
         """
 
         wiki_name = await self.get_wikipedia_name(mne["NAME"])
@@ -53,7 +69,25 @@ class WikipediaFetcher:
         return OtherSources(mne_id=mne["ID"], mne_name=mne["NAME"], source_name="Wikipedia", url=wiki_url, year=2024)
 
     async def async_fetch_for(self, mne: dict) -> Optional[OtherSources]:
+        """
+        Async wrapper for fetching the Wikipedia page for an MNE.
+
+        Args:
+            mne (dict): MNE metadata.
+
+        Returns:
+            Optional[OtherSources]: Wikipedia URL or None.
+        """
         return await self.fetch_wikipedia_page(mne)
 
     def fetch_for(self, mne: dict) -> Optional[OtherSources]:
+        """
+        Synchronous wrapper for async Wikipedia page fetch.
+
+        Args:
+            mne (dict): MNE metadata.
+
+        Returns:
+            Optional[OtherSources]: Wikipedia URL or None.
+        """
         return asyncio.run(self.fetch_wikipedia_page(mne))
