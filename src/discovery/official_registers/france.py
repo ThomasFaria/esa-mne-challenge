@@ -1,5 +1,6 @@
 import logging
 import random
+from typing import Optional
 
 import requests
 
@@ -17,10 +18,27 @@ USER_AGENTS = [
 
 
 class AnnuaireEntrepriseFetcher:
+    """
+    A fetcher class that queries the French government's 'Annuaire des Entreprises' API
+    to retrieve structured company information (e.g., SIREN, activity) for a given MNE.
+    """
+
     def __init__(self):
+        """
+        Initialize the base URL for the API endpoint.
+        """
         self.URL_BASE = "https://recherche-entreprises.api.gouv.fr/search"
 
-    async def fetch_page(self, mne: dict) -> OtherSources:
+    async def fetch_page(self, mne: dict) -> Optional[OtherSources]:
+        """
+        Fetches the official company page from Annuaire des Entreprises using the SIREN identifier.
+
+        Args:
+            mne (dict): A dictionary containing at least "ID" and "NAME" for the multinational.
+
+        Returns:
+            Optional[OtherSources]: Structured source metadata if a match is found, otherwise None.
+        """
         headers = {"User-Agent": random.choice(USER_AGENTS)}
         mne_cleaned = self.clean_mne_name(mne)
         params = {"q": mne_cleaned, "categorie_entreprise": "GE"}
@@ -50,8 +68,26 @@ class AnnuaireEntrepriseFetcher:
             return None
 
     def clean_mne_name(self, mne: dict) -> str:
+        """
+        Cleans the MNE name by removing formatting artifacts (e.g., "S A").
+
+        Args:
+            mne (dict): MNE dictionary with a "NAME" field.
+
+        Returns:
+            str: A cleaned company name suitable for query.
+        """
         name = mne["NAME"].replace("S A", "").strip()
         return name
 
-    async def async_fetch_for(self, mne: dict):
+    async def async_fetch_for(self, mne: dict) -> Optional[OtherSources]:
+        """
+        Async wrapper for fetching company data from the official Annuaire des Entreprises.
+
+        Args:
+            mne (dict): MNE dictionary.
+
+        Returns:
+            Optional[OtherSources]: Resulting company source data or None.
+        """
         return await self.fetch_page(mne)
