@@ -63,6 +63,10 @@
     2024,
     "https://www.andritz.com/resource/blob/621030/9b073db5f0c2199a357210ff2163950b/andritz-annual-report-2024-web-data.pdf"
   ],
+  "ANHEUSER-BUSCH INBEV": [
+    2024,
+    "https://cdn.builder.io/o/assets%2F2e5c7fb020194c1a8ee80f743d0b923e%2Ffa283055d37b49a2814094325ca5abf1?alt=media&token=35f21c06-7ae0-4c9c-b6bf-85d79a306575&apiKey=2e5c7fb020194c1a8ee80f743d0b923e"
+  ],
   "ARCELORMITTAL": [
     2024,
     "https://corporate-cm-prod.arcelormittal.com/media/if0baqyg/annual-report-2024.pdf"
@@ -71,13 +75,17 @@
     2024,
     "https://www.assaabloy.com/group/en/documents/investors/annual-reports/2024/Annual%20Report%202024.pdf"
   ],
+  "ASSECO": [
+    2024,
+    "https://inwestor.asseco.com/files/investor/uploads/Management_Board_s_report_on_operations_of_the_Asseco_Group_and_Asseco_Poland_SA_2024.pdf"
+  ],
   "ATLAS COPCO AKTIEBOLAG": [
     2024,
     "https://www.atlascopcogroup.com/content/dam/atlas-copco/group/documents/investors/financial-publications/english/20250320-annual-report-2024-incl-sustainability-report-and-corporate-governance-report-copy-of-the-official-ESEF-format.pdf"
   ],
   "ATOS SE": [
     2024,
-    "https://ml-eu.globenewswire.com/Resource/Download/68dc2e73-3e8d-4327-83f0-fe2e13f200a7"
+    "https://atos.net/content/investors-documents/2025/atos-universal-registration-document-2024.pdf"
   ],
   "BASF": [
     2024,
@@ -93,11 +101,11 @@
   ],
   "BMW": [
     2024,
-    "https://www.bmwgroup.com/content/dam/grpw/websites/bmwgroup_com/ir/downloads/en/2025/bericht/BMW-Group-Report-2024-en.pdf"
+    "https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf"
   ],
   "BOLLORE PARTICIPATIONS SE": [
     2024,
-    "https://www.bollore.com/bollo-content/uploads/2025/03/2025-03-17-bol-res-fy24-uk.pdf"
+    "https://www.bollore.com/bollo-content/uploads/2025/05/0520_bollore_ra2024_gb_mel.pdf"
   ],
   "BOSCH": [
     2024,
@@ -153,7 +161,7 @@
   ],
   "COMPAGNIE DE SAINT GOBAIN": [
     2024,
-    "https://www.saint-gobain.com/sites/saint-gobain.com/files/media/document/Saint-Gobain_2024_DEU_VA.pdf"
+    "https://www.saint-gobain.com/sites/saint-gobain.com/files/media/document/comptes_conso_31-12-2024_eng.pdf"
   ],
   "COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN": [
     2024,
@@ -169,7 +177,7 @@
   ],
   "DANONE": [
     2024,
-    "https://www.danone.com/content/dam/corp/global/danonecom/investors/en-all-publications/2024/registrationdocuments/urd2024accessibleversion.pdf"
+    "https://www.danone.com/content/dam/corp/global/danonecom/investors/en-all-publications/2025/registrationdocuments/urd2024accessibleversion.pdf"
   ],
   "DELL TECHNOLOGIES INC.": [
     2024,
@@ -205,7 +213,7 @@
   ],
   "EDP": [
     2024,
-    "https://edpr-investors.com/sites/edpr-investors/files/document/2025-03/EDPR_AnnualReport2024.pdf"
+    "https://www.edp.com/sites/default/files/document/2025-03/Integrated_annual_Resport_2024.pdf"
   ],
   "ENEL SPA": [
     2024,
@@ -218,6 +226,10 @@
   "ENI S P A": [
     2024,
     "https://www.eni.com/content/dam/enicom/documents/eng/reports/2024/ar-2024/Annual-Report-2024.pdf"
+  ],
+  "ESSILORLUXOTTICA": [
+    2024,
+    "https://www.essilorluxottica.com/en/cap/content/247426/"
   ],
   "ESSITY": [
     2024,
@@ -234,10 +246,6 @@
   "EXXON MOBIL CORP": [
     2024,
     "https://investor.exxonmobil.com/sec-filings/annual-reports/content/0001193125-25-073990/0001193125-25-073990.pdf"
-  ],
-  "FCC": [
-    2024,
-    "https://www.fcc.gov/sites/default/files/FCC-Agency-Financial-Report-FY-2024-508.pdf"
   ],
   "FLETCHER GROUP": [
     2024,
@@ -293,11 +301,15 @@
   ],
   "IKEA": [
     2024,
-    "https://www.inter.ikea.com/-/media/interikea/igi/financial-reports/fy24-financial-reports/inter_ikea_group_financial_summary_fy24.pdf?rev=76f8481fd2e14a63a8359eeda8eefdbd"
+    "https://www.inter.ikea.com/-/media/interikea/igi/financial-reports/fy24-financial-reports/inter-ikea-holding-bv-annual-report-fy24.pdf?rev=2212fa15a98048f7b08b0c6a6be79421&sc_lang=en"
   ],
   "INDITEX": [
     2024,
     "https://www.inditex.com/itxcomweb/api/media/604197b9-50de-4f4f-ab84-c1e379cb3fd0/Inditex_Group_Annual_Report_2024.pdf?t=1741989136588"
+  ],
+  "INTERNATIONAL BUSINESS MACHINES CORP(IBM)": [
+    2024,
+    "https://www.ibm.com/downloads/documents/us-en/1227c12d3a38b173"
   ],
   "INTERTEK GROUP PLC": [
     2024,
@@ -325,7 +337,7 @@
   ],
   "JOHNSON CONTROLS INTERNATIONAL PUBLIC LIMITED COMPANY": [
     2024,
-    "https://investors.johnsoncontrols.com/~/media/Files/J/Johnson-Controls-IR-V2/quarterly-reports/2024/fy2024-form-10-k-jci-plc.pdf"
+    "https://investors.johnsoncontrols.com/~/media/Files/J/Johnson-Controls-IR-V2/annual-meeting-materials/annual-reports/2024-annual-report-proxy-statement.pdf"
   ],
   "KONE": [
     2024,
@@ -357,7 +369,7 @@
   ],
   "L OREAL": [
     2024,
-    "https://www.loreal-finance.com/system/files/2025-03/LOREAL_2024_Annual_Report.pdf"
+    "https://www.loreal.com/-/media/project/loreal/brand-sites/corp/master/lcorp/2-group/annual-reports/loreal2024annualreport.pdf?rev=60be90d75fdb49aba373457b5c0d720e"
   ],
   "LEONARDO SOCIETA PER AZIONI": [
     2024,
@@ -413,7 +425,7 @@
   ],
   "NESTLE S.A.": [
     2024,
-    "https://www.nestle.com/sites/default/files/2025-02/2024-financial-statements-en.pdf"
+    "https://www.nestle.com/sites/default/files/2025-02/corp-governance-compensation-financial-statements-2024-en.pdf"
   ],
   "NIPPON STEEL CORPORATION": [
     2024,
@@ -503,6 +515,10 @@
     2024,
     "https://www.schaeffler.com/remotemedien/media/_shared_media_rwd/08_investor_relations/reports/2024_ar/2024_schaeffler_annual_report_en_4lcd3b.pdf"
   ],
+  "SCHNEIDER ELECTRIC SE": [
+    2024,
+    "https://s28.q4cdn.com/901178831/files/doc_financials/2024/ar/Schneider-Annual-Report_2024.pdf"
+  ],
   "SECURITAS AB": [
     2024,
     "https://www.securitas.com/globalassets/com/files/annual-reports/eng/securitas_ar2024_eng.pdf"
@@ -513,7 +529,7 @@
   ],
   "SIEMENS": [
     2024,
-    "https://assets.new.siemens.com/siemens/assets/api/uuid:ae46683e-14dd-4455-a882-09d4184457c7/Annual-Financial-Report-FY2024.pdf"
+    "https://assets.new.siemens.com/siemens/assets/api/uuid:b00f75f6-a8c8-484a-97b8-6fbb7e7b8d1f/Annual-Financial-Report-FY2024.pdf"
   ],
   "SIGNIFY NV": [
     2024,
@@ -525,7 +541,7 @@
   ],
   "SOLVAY": [
     2024,
-    "https://www.solvay.com/sites/g/files/srpend616/files/2025-04/20250403%20-%202024%20Annual%20Report%20PR_EN.pdf"
+    "https://www.solvay.com/sites/g/files/srpend616/files/2025-04/Solvay_AIR_2024_EN_BD.pdf"
   ],
   "SONOVA": [
     2025,
@@ -549,7 +565,7 @@
   ],
   "SUMITOMO CORPORATION": [
     2024,
-    "https://www.sumitomocorp.com/jp/-/media/Files/hq/ir/report/investors-guide/2024/ar2024en_all.pdf"
+    "https://www.sumitomocorp.com/-/media/Files/hq/ir/report/investors-guide/2024/ar2024en_all.pdf"
   ],
   "TELEFONAKTIEBOLAGET LM ERICSSON": [
     2024,
@@ -561,7 +577,7 @@
   ],
   "THERMO FISHER SCIENTIFIC INC.": [
     2024,
-    "https://ir.thermofisher.com/files/doc_financials/2024/ar/2024-Annual-Report.pdf"
+    "https://s27.q4cdn.com/797047529/files/doc_financials/2024/ar/2024-Annual-Report.pdf"
   ],
   "THYSSENKRUPP": [
     2024,
@@ -583,6 +599,10 @@
     2024,
     "https://www.unilever.com/files/unilever-annual-report-and-accounts-2024.pdf"
   ],
+  "VEOLIA ENVIRONNEMENT": [
+    2024,
+    "https://www.veolia.com/sites/g/files/dvc4206/files/document/2024/04/integrated-report-2023-2024-veolia.pdf"
+  ],
   "VESTAS WIND SYSTEMS A/S": [
     2024,
     "https://www.vestas.com/content/dam/vestas-com/global/en/investor/reports-and-presentations/financial/2024/fy-2024/Vestas%20Annual%20Report%202024.pdf.coredownload.inline.pdf"
@@ -591,9 +611,13 @@
     2024,
     "https://www.vinci.com/publi/vinci/vinci_consolidated-financial-statements-at-31-december-2024.pdf"
   ],
+  "VODAFONE GROUP PLC": [
+    2024,
+    "https://www.aspecthuntley.com.au/asxdata/20240527/pdf/02810592.pdf"
+  ],
   "VOESTALPINE GROUP": [
     2024,
-    "https://reports.voestalpine.com/2324/ar/_assets/downloads/grp-group-va-ar2324.pdf"
+    "https://www.voestalpine.com/group/static/sites/group/.downloads/en/publications-2023-24/2023-24-annual-report.pdf"
   ],
   "VOLKSWAGEN": [
     2024,
@@ -609,7 +633,7 @@
   ],
   "WIENERBERGER GROUP": [
     2024,
-    "https://www.wienerberger.com/content/dam/corp/corporate-website/downloads/investors-downloads/2024/2024-wienerberger-Annual-Report.pdf"
+    "https://annualreport.wienerberger.com/2024/_assets/downloads/entire-wb-ar24.pdf?h=9hrHuzaf"
   ],
   "WURTH": [
     2024,
