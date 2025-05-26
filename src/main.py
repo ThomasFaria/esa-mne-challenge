@@ -9,14 +9,14 @@ import os
 
 from tqdm import tqdm
 
-from src.common.data import generate_discovery_submission, load_mnes
-from src.common.websearch.duckduckgo import DuckDuckGoSearch
-from src.common.websearch.google import GoogleSearch
-from src.discovery.fetcher import AnnualReportFetcher
-from src.discovery.official_register import OfficialRegisterFetcher
-from src.discovery.paths import DATA_DISCOVERY_PATH
-from src.discovery.wikipedia import WikipediaFetcher
-from src.discovery.yahoo import YahooFetcher
+from common.data import generate_discovery_submission, load_mnes
+from common.websearch.duckduckgo import DuckDuckGoSearch
+from common.websearch.google import GoogleSearch
+from discovery.fetcher import AnnualReportFetcher
+from discovery.official_register import OfficialRegisterFetcher
+from discovery.paths import DATA_DISCOVERY_PATH
+from discovery.wikipedia import WikipediaFetcher
+from discovery.yahoo import YahooFetcher
 
 # Logging setup
 logging.basicConfig(
@@ -32,10 +32,10 @@ mnes = load_mnes(DATA_DISCOVERY_PATH)
 # Fetcher for Annual Report (LLM-BASED)
 fetcher = AnnualReportFetcher(
     searcher=[
-        GoogleSearch(max_results=10),
+        GoogleSearch(max_results=15),
         DuckDuckGoSearch(),
     ],
-    model="gemma3:27b",
+    model="devstral:latest",
     base_url="https://llm.lab.sspcloud.fr/api",
     api_key=os.environ["OPENAI_API_KEY"],
 )
@@ -90,7 +90,7 @@ async def main():
     Main async function to fetch data for all MNEs.
     """
     mne_infos = []
-    for mne in tqdm(mnes, desc="Fetching annual reports"):
+    for mne in tqdm(mnes[:2], desc="Fetching annual reports"):
         mne_result = await fetch_sources_for_mne(mne)
         mne_infos.append(mne_result)
     return mne_infos

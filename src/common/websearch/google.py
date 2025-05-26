@@ -4,8 +4,8 @@ from typing import Dict, List
 from googlesearch import search as google_search
 from pydantic import ValidationError
 
-from src.common.websearch.base import WebSearch
-from src.discovery.models import SearchResult
+from common.websearch.base import WebSearch
+from discovery.models import SearchResult
 
 logger = logging.getLogger(__name__)
 

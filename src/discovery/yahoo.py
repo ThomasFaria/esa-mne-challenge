@@ -8,8 +8,8 @@ from typing import List, Optional
 import requests
 import yfinance as yf
 
-from src.discovery.models import OtherSources
-from src.discovery.utils import clean_mne_name
+from discovery.models import OtherSources
+from discovery.utils import clean_mne_name
 
 logger = logging.getLogger(__name__)
 

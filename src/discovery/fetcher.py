@@ -11,8 +11,8 @@ from langfuse.decorators import observe
 from langfuse.openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
 
-from src.common.websearch.base import WebSearch
-from src.discovery.models import AnnualReport
+from common.websearch.base import WebSearch
+from discovery.models import AnnualReport
 
 logger = logging.getLogger(__name__)
 
