@@ -9,6 +9,7 @@ import os
 
 from tqdm import tqdm
 
+import config
 from common.data import generate_discovery_submission, load_mnes
 from common.websearch.duckduckgo import DuckDuckGoSearch
 from common.websearch.google import GoogleSearch
@@ -24,7 +25,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] [%(name)s] %(message)s",
 )
 logger = logging.getLogger(__name__)
-
+config.setup()
 # Load MNE data from the challenge starting kit
 mnes = load_mnes(DATA_DISCOVERY_PATH)
 
@@ -90,7 +91,7 @@ async def main():
     Main async function to fetch data for all MNEs.
     """
     mne_infos = []
-    for mne in tqdm(mnes[:2], desc="Fetching annual reports"):
+    for mne in tqdm(mnes, desc="Fetching annual reports"):
         mne_result = await fetch_sources_for_mne(mne)
         mne_infos.append(mne_result)
     return mne_infos

@@ -1,13 +1,8 @@
 import base64
 import os
 
-from dotenv import load_dotenv
-
 
 def setup_langfuse():
-    # Load variables from .env into os.environ
-    load_dotenv()
-
     # Validate required environment variables
     required_vars = ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST", "OPENAI_API_KEY"]
     missing = [var for var in required_vars if not os.environ.get(var)]
