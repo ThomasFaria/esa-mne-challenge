@@ -10,6 +10,6 @@ class ExtractedInfo(BaseModel):
         ..., description="Variable name ('Country', 'Employees', 'Turnover', 'Assets', 'Website', 'Activity')"
     )
     source_url: HttpUrl = Field(..., description="Source URL")
-    value: str = Field(..., description="Extracted value")
-    currency: Optional[str] = Field(None, description="Currency of the value, if applicable")
+    value: str | int = Field(..., description="Extracted value")
+    currency: Optional[str] = Field("N/A", description="Currency of the value, if applicable")
     year: Optional[int] = Field(..., description="Fiscal year of the extracted information")

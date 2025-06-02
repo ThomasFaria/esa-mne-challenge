@@ -5,18 +5,10 @@ from typing import Optional
 import pycountry
 import yfinance as yf
 
-from discovery.models import OtherSources
 from discovery.yahoo import YahooFetcher
+from extraction.models import ExtractedInfo
 
 logger = logging.getLogger(__name__)
-
-USER_AGENTS = [
-    "Mozilla/5.0",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
-    "Mozilla/5.0 (X11; Linux x86_64)",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:112.0) Gecko/20100101 Firefox/112.0",
-]
 
 
 class YahooExtractor:
@@ -31,7 +23,7 @@ class YahooExtractor:
         self.URL_BASE = "https://query2.finance.yahoo.com/v1/finance/search"
         self.fetcher = fetcher
 
-    def extract_yahoo_infos(self, mne: dict) -> Optional[OtherSources]:
+    async def extract_yahoo_infos(self, mne: dict) -> Optional[ExtractedInfo]:
         """
         Extract financial information from Yahoo Finance for a given MNE.
 
@@ -39,24 +31,73 @@ class YahooExtractor:
             mne (dict): MNE metadata.
 
         Returns:
-            Optional[OtherSources]: Financial information or None.
+            Optional[ExtractedInfo]: Financial information or None.
         """
+        mne_name = mne.get("NAME")
+        mne_id = mne.get("ID")
 
         # Get the Yahoo ticker symbol
-        ticker = await self.get_yahoo_ticker(mne["NAME"])
+        yahoo_symbol = await self.fetcher.get_yahoo_ticker(mne_name)
 
-        if ticker:
-            ticker = yf.Ticker(ticker)
-            # Get fiscal year
-            year = await self.get_year(ticker)
-            # Get country ISO2 code
-            country = await self.get_country(ticker)
-            return year, country
-        else:
-            logger.error(f"Yahoo Finance page not found for ticker: {ticker}")
+        if not yahoo_symbol:
+            logger.error(f"Yahoo Finance page not found for ticker: {yahoo_symbol}")
             return None
 
-    async def get_year(ticker: yf.Ticker) -> int:
+        ticker = yf.Ticker(yahoo_symbol)
+
+        try:
+            tasks = [
+                self.get_year(ticker),  # 0
+                self.get_country(ticker),  # 1
+                self.get_website(ticker),  # 2
+                self.get_employees(ticker),  # 3
+                self.get_turnover(ticker),  # 4
+                self.get_assets(ticker),  # 5
+                self.get_currency(ticker),  # 6
+                self.get_activity(ticker),  # 7
+            ]
+            results = await asyncio.gather(*tasks, return_exceptions=True)
+
+            # Handle exceptions in results
+            infos = []
+            for idx, result in enumerate(results):
+                if isinstance(result, Exception):
+                    logger.error(f"Error in task {idx} for MNE {mne_name}: {result}")
+                    infos.append(None)
+                else:
+                    infos.append(result)
+
+            year, country, website, employees, turnover, assets, currency, activity = infos
+
+            variables = [
+                ("COUNTRY", country, "profile", "N/A"),
+                ("EMPLOYEES", employees, "profile", "N/A"),
+                ("TURNOVER", turnover, "financials", currency),
+                ("ASSETS", assets, "financials", currency),
+                ("WEBSITE", website, "profile", "N/A"),
+                ("ACTIVITY", activity, "profile", "N/A"),
+            ]
+
+            results = [
+                ExtractedInfo(
+                    mne_id=mne_id,
+                    mne_name=mne_name,
+                    variable=var,
+                    source_url=f"https://finance.yahoo.com/quote/{yahoo_symbol}/{page}/",
+                    value=val,
+                    currency=curr,
+                    year=year,
+                )
+                for var, val, page, curr in variables
+                if val is not None
+            ]
+            return results if results else None
+
+        except Exception as e:
+            logger.exception(f"Unhandled error extracting info for {mne_name}: {e}")
+            return None
+
+    async def get_year(self, ticker: yf.Ticker) -> int:
         """
         Get the fiscal year for a given ticker symbol of a MNE.
         Args:
@@ -65,11 +106,11 @@ class YahooExtractor:
             int: Fiscal year or None if not found.
         """
         try:
-            return ticker.info.get("fiscalYearEnd")
+            return ticker.financials.columns[0].year
         except KeyError:
             return None
 
-    async def get_country(ticker: yf.Ticker) -> str:
+    async def get_country(self, ticker: yf.Ticker) -> str:
         """
         Get the country ISO2 code for a given ticker symbol of a MNE.
         Args:
@@ -77,14 +118,100 @@ class YahooExtractor:
         Returns:
             str: Country ISO2 code or None if not found.
         """
-        tick = yf.Ticker(ticker)
-        country_name = tick.info.get("country")
+        country_name = ticker.info.get("country")
         if not country_name:
             return None
 
         return pycountry.countries.search_fuzzy(country_name)[0].alpha_2
 
-    async def async_extract_for(self, mne: dict) -> Optional[OtherSources]:
+    async def get_website(self, ticker: yf.Ticker) -> str:
+        """
+        Get the official website for a given ticker symbol of a MNE.
+        Args:
+            ticker (yf.Ticker): Ticker object.
+        Returns:
+            str: Official website URL or None if not found.
+        """
+        try:
+            return ticker.info.get("website")
+        except KeyError:
+            return None
+
+    async def get_employees(self, ticker: yf.Ticker) -> int:
+        """
+        Get the number of employees for a given ticker symbol of a MNE.
+        Args:
+            ticker (yf.Ticker): Ticker object.
+        Returns:
+            int: Number of employees or None if not found.
+        """
+        try:
+            return ticker.info.get("fullTimeEmployees")
+        except KeyError:
+            return None
+
+    async def get_turnover(self, ticker: yf.Ticker) -> int:
+        """
+        Get the total revenue (turnover) for a given ticker symbol of a MNE.
+        Args:
+            ticker (yf.Ticker): Ticker object.
+        Returns:
+            int: Total revenue or None if not found.
+        """
+        try:
+            return ticker.financials.loc["Total Revenue"].iloc[0]
+        except KeyError:
+            return None
+
+    async def get_assets(self, ticker: yf.Ticker) -> int:
+        """
+        Get the total revenue (turnover) for a given ticker symbol of a MNE.
+        Args:
+            ticker (yf.Ticker): Ticker object.
+        Returns:
+            int: Total revenue or None if not found.
+        """
+        try:
+            return ticker.balance_sheet.loc["Total Assets"].iloc[0]
+        except KeyError:
+            return None
+
+    async def get_currency(self, ticker: yf.Ticker) -> str:
+        """
+        Get the financial currency for a given ticker symbol of a MNE.
+        Args:
+            ticker (yf.Ticker): Ticker object.
+        Returns:
+            str: Financial currency code or None if not found.
+        """
+        try:
+            return ticker.info.get("financialCurrency")
+        except KeyError:
+            return None
+
+    async def get_activity(self, ticker: yf.Ticker) -> str:
+        """
+        Get the main activity of a given ticker symbol of a MNE.
+        Args:
+            ticker (yf.Ticker): Ticker object.
+        Returns:
+            str: Main activity description or None if not found.
+        """
+        try:
+            return "\n".join(
+                [
+                    f"{v}: {ticker.info.get(k)}"
+                    for k, v in {
+                        "sector": "Sector",
+                        "industry": "Industry",
+                        "longBusinessSummary": "Description",
+                    }.items()
+                ]
+            )
+        except KeyError:
+            return None
+
+    async def async_extract_for(self, mne: dict) -> Optional[ExtractedInfo]:
         """
         Async wrapper to extract financial informations from Yahoo Finance page for a given MNE.
 
@@ -92,18 +219,19 @@ class YahooExtractor:
             mne (dict): MNE metadata.
 
         Returns:
-            Optional[List[OtherSources]]: List of sources or None.
+            Optional[List[ExtractedInfo]]: List of extracted informations or None.
         """
+
         return await self.extract_yahoo_infos(mne)
 
-    def extract_for(self, mne: dict) -> Optional[OtherSources]:
+    def extract_for(self, mne: dict) -> Optional[ExtractedInfo]:
         """
-        Sync wrapper around the async Yahoo fetcher.
+        Sync wrapper around the async Yahoo Extractor.
 
         Args:
             mne (dict): MNE metadata.
 
         Returns:
-            Optional[List[OtherSources]]: List of sources or None.
+            Optional[List[ExtractedInfo]]: List of extracted informations or None.
         """
         return asyncio.run(self.extract_yahoo_infos(mne))
