@@ -18,9 +18,8 @@ class YahooExtractor:
 
     def __init__(self, fetcher: Optional[YahooFetcher] = None):
         """
-        Initialize the YahooExtractor with API endpoint
+        Initialize the YahooExtractor with the fetcher.
         """
-        self.URL_BASE = "https://query2.finance.yahoo.com/v1/finance/search"
         self.fetcher = fetcher
 
     async def extract_yahoo_infos(self, mne: dict) -> Optional[ExtractedInfo]:
