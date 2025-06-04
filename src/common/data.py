@@ -147,29 +147,32 @@ def generate_extraction_submission(mne_infos: List[ExtractedInfo]) -> pd.DataFra
         }
     )
 
-    submission = (
-        extraction.groupby(
-            [
-                "ID",
-                "NAME",
-            ],
-            group_keys=False,
-        )
-        .apply(
-            lambda g: pad_to_five(
-                g.drop(
-                    columns=[
-                        "ID",
-                        "NAME",
-                    ]
-                )
-            ).assign(ID=g.iloc[0]["ID"], NAME=g.iloc[0]["NAME"])
-        )
-        .reset_index(drop=True)
-        .loc[:, ["ID", "NAME", "VARIABLE", "SRC", "VALUE", "CURRENCY", "REFYEAR"]]
-    )
+    complete_rows = []
+    for (mne_id, mne_name), group in extraction.groupby(["ID", "NAME"]):
+        existing_variables = set(group["VARIABLE"])
 
-    submission.loc[extraction["SRC"].isna(), "REFYEAR"] = pd.NA
+        for variable in ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]:
+            if variable in existing_variables:
+                # Keep the first matching row for the variable
+                row = group[group["VARIABLE"] == variable].iloc[0].to_dict()
+                complete_rows.append(row)
+            else:
+                # Create a row with NaNs except for ID, NAME, VARIABLE
+                empty_row = {
+                    "ID": mne_id,
+                    "NAME": mne_name,
+                    "VARIABLE": variable,
+                    "SRC": pd.NA,
+                    "VALUE": pd.NA,
+                    "CURRENCY": pd.NA,
+                    "REFYEAR": pd.NA,
+                }
+                complete_rows.append(empty_row)
+
+    # Build the completed DataFrame
+    submission = pd.DataFrame(complete_rows)
+
+    submission.loc[submission["SRC"].isna(), "REFYEAR"] = pd.NA
 
     # Format REFYEAR column
     submission["REFYEAR"] = submission["REFYEAR"].astype("Int64")
