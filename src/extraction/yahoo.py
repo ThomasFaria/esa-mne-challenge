@@ -39,7 +39,6 @@ class YahooExtractor:
         yahoo_symbol = await self.fetcher.get_yahoo_ticker(mne_name)
 
         if not yahoo_symbol:
-            logger.error(f"Yahoo Finance page not found for ticker: {yahoo_symbol}")
             return None
 
         ticker = yf.Ticker(yahoo_symbol)

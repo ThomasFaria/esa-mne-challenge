@@ -6,6 +6,7 @@ import pandas as pd
 import s3fs
 
 from discovery.models import AnnualReport, OtherSources
+from extraction.models import ExtractedInfo
 
 logger = logging.getLogger(__name__)
 
@@ -128,4 +129,51 @@ def generate_discovery_submission(mne_infos: List[List[Union[AnnualReport, Other
     # Export to CSV
     submission.to_csv("data/discovery/discovery.csv", sep=";", index=False)
 
+    return submission
+
+
+def generate_extraction_submission(mne_infos: List[ExtractedInfo]) -> pd.DataFrame:
+    extraction = pd.DataFrame(
+        [info.model_dump() for infos in mne_infos for info in infos if isinstance(info, ExtractedInfo)]
+    ).rename(
+        columns={
+            "mne_id": "ID",
+            "mne_name": "NAME",
+            "variable": "VARIABLE",
+            "source_url": "SRC",
+            "value": "VALUE",
+            "currency": "CURRENCY",
+            "year": "REFYEAR",
+        }
+    )
+
+    submission = (
+        extraction.groupby(
+            [
+                "ID",
+                "NAME",
+            ],
+            group_keys=False,
+        )
+        .apply(
+            lambda g: pad_to_five(
+                g.drop(
+                    columns=[
+                        "ID",
+                        "NAME",
+                    ]
+                )
+            ).assign(ID=g.iloc[0]["ID"], NAME=g.iloc[0]["NAME"])
+        )
+        .reset_index(drop=True)
+        .loc[:, ["ID", "NAME", "VARIABLE", "SRC", "VALUE", "CURRENCY", "REFYEAR"]]
+    )
+
+    submission.loc[extraction["SRC"].isna(), "REFYEAR"] = pd.NA
+
+    # Format REFYEAR column
+    submission["REFYEAR"] = submission["REFYEAR"].astype("Int64")
+
+    # Export to CSV
+    submission.to_csv("data/extraction/extraction.csv", sep=";", index=False)
     return submission
