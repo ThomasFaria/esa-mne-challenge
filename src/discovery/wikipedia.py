@@ -35,8 +35,26 @@ class WikipediaFetcher:
         mne_short = clean_mne_name(mne_name)
 
         # Add "(group)" for certain MNEs with ambiguous names
-        if mne_name in ["FCC", "ETEX", "THALES", "CANON INCORPORATED", "EDIZIONE", "FERRERO"]:
+        if mne_name in [
+            "FCC",
+            "ETEX",
+            "THALES",
+            "CANON INCORPORATED",
+            "EDIZIONE",
+            "FERRERO",
+            "ORANGE",
+            "CRH PLC",
+            "TUI",
+            "EDP",
+            "SGS",
+            "SOLVAY",
+            "VINCI",
+        ]:
             mne_short = f"{mne_short} (group)"
+
+        # Add "(company)" for certain MNEs with ambiguous names
+        if mne_name in ["AMAZON"]:
+            mne_short = f"{mne_short} (company)"
 
         wiki_search = wikipedia.search(f"{mne_short}")
         wiki_name = wiki_search[0]
@@ -55,16 +73,16 @@ class WikipediaFetcher:
             OtherSources: An object containing the Wikipedia source URL and metadata.
         """
 
-        try:
-            wiki_name = await self.get_wikipedia_name(mne["NAME"])
-            wiki_page = wikipedia.page(wiki_name, auto_suggest=False)
-            wiki_url = wiki_page.url
-        except wikipedia.exceptions.PageError:
-            wiki_url = f"https://en.wikipedia.org/wiki/{wiki_name.replace(' ', '_')}"
-        except wikipedia.exceptions.DisambiguationError:
-            wiki_url = f"https://en.wikipedia.org/wiki/{wiki_name}"
-        except wikipedia.exceptions.WikipediaException:
-            wiki_url = f"https://en.wikipedia.org/wiki/{mne['NAME']}"
+        # try:
+        wiki_name = await self.get_wikipedia_name(mne["NAME"])
+        wiki_page = wikipedia.page(wiki_name, auto_suggest=False)
+        wiki_url = wiki_page.url
+        # except wikipedia.exceptions.PageError:
+        #     wiki_url = f"https://en.wikipedia.org/wiki/{wiki_name.replace(' ', '_')}"
+        # except wikipedia.exceptions.DisambiguationError:
+        #     wiki_url = f"https://en.wikipedia.org/wiki/{wiki_name}"
+        # except wikipedia.exceptions.WikipediaException:
+        #     wiki_url = f"https://en.wikipedia.org/wiki/{mne['NAME']}"
 
         # We always specify the year as 2024 but will make it consistent with the year of the report retrieved
         return OtherSources(mne_id=mne["ID"], mne_name=mne["NAME"], source_name="Wikipedia", url=wiki_url, year=2024)
