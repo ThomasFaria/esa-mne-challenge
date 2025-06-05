@@ -71,7 +71,7 @@ class YahooExtractor:
                 ("COUNTRY", country, "profile", "N/A"),
                 ("EMPLOYEES", employees, "profile", "N/A"),
                 ("TURNOVER", turnover, "financials", currency),
-                ("ASSETS", assets, "financials", currency),
+                ("ASSETS", assets, "balance-sheet", currency),
                 ("WEBSITE", website, "profile", "N/A"),
                 ("ACTIVITY", activity, "profile", "N/A"),
             ]
