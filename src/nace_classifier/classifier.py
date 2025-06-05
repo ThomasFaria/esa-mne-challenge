@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from typing import List
 
 from langchain.schema import Document
@@ -21,6 +23,10 @@ class NACEClassifier:
         self.db = get_vector_db("challenge-mne")
         self.prompt_template = Langfuse().get_prompt("nace-classifier", label="production")
 
+        mapping_file = Path(__file__).parent / "mapping.json"
+        with mapping_file.open(encoding="utf-8") as f:
+            self.mapping = json.load(f)
+
     def _format_documents(self, docs: List[Document]) -> (str, str):
         proposed_codes = "\n\n".join(f"========\n{doc.page_content}" for doc in docs)
         list_codes = ", ".join(f"'{doc.metadata['CODE']}'" for doc in docs)
@@ -41,4 +47,7 @@ class NACEClassifier:
         response = self.client.beta.chat.completions.parse(
             name="activity_classifier", model=self.model, messages=messages, response_format=Activity, temperature=0.1
         )
-        return response.choices[0].message.parsed
+
+        parsed = response.choices[0].message.parsed
+        parsed.code = f"{self.mapping[parsed.code]}{parsed.code}"
+        return parsed
