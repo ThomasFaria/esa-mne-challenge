@@ -102,11 +102,11 @@ def format_nace_labels(nace_data: Dict[str, Dict[str, Dict[str, str]]]) -> pd.Da
 
         label = "\n".join(
             [
-                f"# Division - **{div_code}** - {div.get('preferred_label', '')}",
+                f"## Division - **{div_code}** - {div.get('preferred_label', '')}",
                 "",
                 division_notes,
                 "",
-                f"## Parent Section - **{div.get('broader', '')}** - {sec.get('preferred_label', '')}",
+                f"### Parent Section - **{div.get('broader', '')}** - {sec.get('preferred_label', '')}",
                 "",
                 section_notes,
             ]
