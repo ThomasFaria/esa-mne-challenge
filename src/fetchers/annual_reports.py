@@ -154,8 +154,6 @@ class AnnualReportFetcher:
         Returns:
             Optional[AnnualReport]: Parsed annual report object or None if parsing fails.
         """
-        logger.info(f"Querying LLM for {mne['NAME']}")
-
         # The prompt is stored in Langfuse so that it can be properly versionned
         messages = self.prompt.compile(mne_name=mne["NAME"], proposed_urls=list_urls)
 

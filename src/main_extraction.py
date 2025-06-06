@@ -47,62 +47,72 @@ classifier = NACEClassifier(
 )
 
 
-mne_name = "ETEX"
-mne = {"ID": 0000, "NAME": mne_name}
-mne = mnes[91]
-extractions_results = []
-discovery_results = []
+def format_site_filter(url: str) -> str:
+    if url:
+        domain = url.replace("https://", "").replace("http://", "").replace("www.", "")
+        return f"site:{domain}"
+    return ""
 
 
-for mne in tqdm(mnes, desc="Extracting MNEs"):
-    yahoo_info, yahoo_sources = yahoo_extractor.extract_for(mne)
-    wiki_info, wiki_sources = wiki_extractor.extract_for(mne)
-    info_merged = merge_extracted_infos(yahoo_info, wiki_info)
+async def main():
+    extractions_results = []
+    discovery_results = []
 
-    website_url = next((item.value for item in info_merged if item.variable == "WEBSITE"), None)
-    ### Search AR based on website
-    site_filter = (
-        f"site:{website_url.replace('https://', '').replace('http://', '').replace('www.', '')}" if website_url else ""
-    )
-    query = f"{mne['NAME']} annual report (2024 OR 2023) filetype:pdf {site_filter}"
-    annual_report = ar_fetcher.fetch_for(mne, web_query=query)
+    for mne in tqdm(mnes, desc="Extracting MNEs"):
+        try:
+            # Extract data from Yahoo and Wikipedia
+            logger.info(
+                f"Discovering Yahoo and Wikipedia pages for {mne['NAME']} and extracting available information..."
+            )
+            yahoo_info, yahoo_sources = await yahoo_extractor.async_extract_for(mne)
+            wiki_info, wiki_sources = await wiki_extractor.async_extract_for(mne)
 
-    country = next((item.value for item in info_merged if item.variable == "COUNTRY"), None)
-    activity_desc = next((item.value for item in info_merged if item.variable == "ACTIVITY"), None)
+            info_merged = merge_extracted_infos(yahoo_info, wiki_info)
 
-    if country == "FR":
-        country_spec = official_register.fetch_for(mne, country=country)
-        if country_spec.mne_activity is not None:
-            nace_code = country_spec.mne_activity
-            next(
-                item for item in info_merged if item.variable == "ACTIVITY"
-            ).value = f"{classifier.mapping[nace_code]}{nace_code}"
-        else:
-            activity = classifier.classify(activity_desc)
-            next(item for item in info_merged if item.variable == "ACTIVITY").value = activity.code
-    else:
-        activity = classifier.classify(activity_desc)
-        next(item for item in info_merged if item.variable == "ACTIVITY").value = activity.code
-        country_spec = None
+            # Prepare the query for the annual report search
+            website_url = next((item.value for item in info_merged if item.variable == "WEBSITE"), None)
+            site_filter = format_site_filter(website_url)
+            query = f"{mne['NAME']} annual report (2024 OR 2023) filetype:pdf {site_filter}"
 
-    if len(info_merged) != 6:
-        VAR_TO_EXTRACT = [
-            "COUNTRY",
-            "EMPLOYEES",
-            "TURNOVER",
-            "ASSETS",
-            "WEBSITE",
-            "ACTIVITY",
-        ]
-        var_missing = [var for var in VAR_TO_EXTRACT if var not in [item.variable for item in info_merged]]
-        logger.warning(f"Missing variables for {mne_name}: {var_missing}")
-        # Load PDF of annual report and extract missing variables using LLM
+            # Fetch annual report
+            logger.info(f"Fetching annual report for {mne['NAME']} with query: {query}")
+            annual_report = await ar_fetcher.async_fetch_for(mne, web_query=query)
 
-    discovery_results.append([annual_report, *yahoo_sources, wiki_sources, country_spec])
-    extractions_results.append(info_merged)
+            country = next((item.value for item in info_merged if item.variable == "COUNTRY"), None)
+            activity_desc = next((item.value for item in info_merged if item.variable == "ACTIVITY"), None)
 
-generate_discovery_submission(discovery_results)
-generate_extraction_submission(extractions_results)
+            # Fetch country-specific details if needed
+            logger.info(f"Discovering and extracting country-specific URLs for {mne['NAME']} coming from {country}...")
+            country_spec = await official_register.async_fetch_for(mne, country=country)
+            if country_spec and country_spec.mne_activity:
+                nace_code = country_spec.mne_activity
+            else:
+                logger.info(f"Classifying activity for {mne['NAME']} using NACE classifier...")
+                activity = classifier.classify(activity_desc)
+                nace_code = activity.code
 
-# faire streamlit qui cherche pour 1 entreprise à la fois
-# checker wikipedia pour corriger les infos utiliser les vrais infobox
+            # Update activity code
+            for item in info_merged:
+                if item.variable == "ACTIVITY":
+                    item.value = nace_code
+
+            # Handle missing variables
+            VAR_TO_EXTRACT = ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
+            var_missing = [var for var in VAR_TO_EXTRACT if var not in [item.variable for item in info_merged]]
+
+            if var_missing:
+                logger.info(f"Missing variables {var_missing}. Attempting to extract from annual report...")
+                # Additional logic to extract from annual_report if available
+
+            # Accumulate results
+            logger.info("Saving results for the discovery and the extraction challenge in the desired format...")
+            discovery_results.append([annual_report, *yahoo_sources, wiki_sources, country_spec])
+            extractions_results.append(info_merged)
+
+        except Exception as e:
+            logger.exception(f"Error processing {mne['NAME']}: {e}")
+
+    # Generate submissions once
+    generate_discovery_submission(discovery_results)
+    generate_extraction_submission(extractions_results)
+    return extractions_results, discovery_results
