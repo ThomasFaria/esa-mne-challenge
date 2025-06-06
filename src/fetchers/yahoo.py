@@ -3,7 +3,7 @@ import json
 import logging
 import os
 import random
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import requests
 import yfinance as yf
@@ -162,18 +162,17 @@ class YahooFetcher:
             )
             return None
 
-    async def fetch_yahoo_page(self, mne: dict) -> Optional[List[OtherSources]]:
+    async def fetch_yahoo_page(self, mne: dict, ticker: str) -> Optional[List[OtherSources]]:
         """
         Retrieve profile and financials pages for a company via Yahoo Finance.
 
         Args:
-            mne (dict): Dictionary with at least keys "ID" and "NAME".
+            mne (dict): MNE metadata containing ID and NAME.
+            ticker (str): Yahoo Finance ticker symbol of the MNE.
 
         Returns:
             Optional[List[OtherSources]]: List of two OtherSources (profile and financials), or None.
         """
-        # Get the Yahoo ticker symbol
-        ticker = await self.get_yahoo_ticker(mne["NAME"])
 
         if ticker:
             # Make sure the ticker is valid by making a request to Yahoo
@@ -199,12 +198,19 @@ class YahooFetcher:
                         url=f"https://finance.yahoo.com/quote/{ticker}/financials/",
                         year=year,
                     ),
+                    OtherSources(
+                        mne_id=mne["ID"],
+                        mne_name=mne["NAME"],
+                        source_name="Yahoo",
+                        url=f"https://finance.yahoo.com/quote/{ticker}/balance-sheet/",
+                        year=year,
+                    ),
                 ]
             else:
                 logger.error(f"Yahoo Finance page not found for ticker: {ticker}")
                 return None
 
-    async def async_fetch_for(self, mne: dict) -> Optional[OtherSources]:
+    async def async_fetch_for(self, mne: dict) -> Tuple[Optional[OtherSources], Optional[str]]:
         """
         Async wrapper to fetch Yahoo Finance pages for a given MNE.
 
@@ -213,8 +219,14 @@ class YahooFetcher:
 
         Returns:
             Optional[List[OtherSources]]: List of sources or None.
+            Optional[str]: Yahoo ticker symbol or None.
         """
-        return await self.fetch_yahoo_page(mne)
+
+        # Get the Yahoo ticker symbol from the MNE name
+        ticker = await self.get_yahoo_ticker(mne["NAME"])
+        # Retrieve the Yahoo Finance pages for the ticker
+        sources = await self.fetch_yahoo_page(mne, ticker)
+        return sources, ticker
 
     def fetch_for(self, mne: dict) -> Optional[OtherSources]:
         """
@@ -226,4 +238,4 @@ class YahooFetcher:
         Returns:
             Optional[List[OtherSources]]: List of sources or None.
         """
-        return asyncio.run(self.fetch_yahoo_page(mne))
+        return asyncio.run(self.async_fetch_for(mne))

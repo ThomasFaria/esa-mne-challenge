@@ -61,7 +61,7 @@ class AnnuaireEntrepriseFetcher:
                     url=url,
                     year="2024",
                     mne_national_id=siren,
-                    mne_activity=data["activite_principale"][:2],
+                    mne_activity=data["activite_principale"][:2] if data["activite_principale"][:2] != "70" else None,
                 )
         except (IndexError, KeyError):
             logger.error(f"Unexpected data format for {mne['NAME']}: {response.text}")

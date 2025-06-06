@@ -1,11 +1,12 @@
 import asyncio
 import logging
-from typing import Optional
+from typing import List, Optional, Tuple
 
 import pycountry
 import yfinance as yf
 
 from extraction.models import ExtractedInfo
+from fetchers.models import OtherSources
 from fetchers.yahoo import YahooFetcher
 
 logger = logging.getLogger(__name__)
@@ -22,21 +23,19 @@ class YahooExtractor:
         """
         self.fetcher = fetcher
 
-    async def extract_yahoo_infos(self, mne: dict) -> Optional[ExtractedInfo]:
+    async def extract_yahoo_infos(self, mne: dict, yahoo_symbol: str) -> Optional[ExtractedInfo]:
         """
         Extract financial information from Yahoo Finance for a given MNE.
 
         Args:
             mne (dict): MNE metadata.
+            yahoo_symbol (str): Yahoo Finance ticker symbol.
 
         Returns:
             Optional[ExtractedInfo]: Financial information or None.
         """
         mne_name = mne.get("NAME")
         mne_id = mne.get("ID")
-
-        # Get the Yahoo ticker symbol
-        yahoo_symbol = await self.fetcher.get_yahoo_ticker(mne_name)
 
         if not yahoo_symbol:
             return None
@@ -209,7 +208,7 @@ class YahooExtractor:
         except KeyError:
             return None
 
-    async def async_extract_for(self, mne: dict) -> Optional[ExtractedInfo]:
+    async def async_extract_for(self, mne: dict) -> Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]:
         """
         Async wrapper to extract financial informations from Yahoo Finance page for a given MNE.
 
@@ -217,10 +216,11 @@ class YahooExtractor:
             mne (dict): MNE metadata.
 
         Returns:
-            Optional[List[ExtractedInfo]]: List of extracted informations or None.
+            Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]: Tuple of extracted financial information and sources, or None.
         """
-
-        return await self.extract_yahoo_infos(mne)
+        sources, yahoo_symbol = await self.fetcher.async_fetch_for(mne)
+        infos = await self.extract_yahoo_infos(mne, yahoo_symbol)
+        return sources, infos
 
     def extract_for(self, mne: dict) -> Optional[ExtractedInfo]:
         """
@@ -232,4 +232,4 @@ class YahooExtractor:
         Returns:
             Optional[List[ExtractedInfo]]: List of extracted informations or None.
         """
-        return asyncio.run(self.extract_yahoo_infos(mne))
+        return asyncio.run(self.async_extract_for(mne))
