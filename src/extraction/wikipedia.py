@@ -6,8 +6,8 @@ import pycountry
 import requests
 import wikipedia
 
-from discovery.wikipedia import WikipediaFetcher
 from extraction.models import ExtractedInfo
+from fetchers.wikipedia import WikipediaFetcher
 
 logger = logging.getLogger(__name__)
 

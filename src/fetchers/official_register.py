@@ -2,8 +2,7 @@ import asyncio
 import logging
 from typing import Optional
 
-from discovery.models import OtherSources
-
+from .models import OtherSources
 from .official_registers.country_resolver import get_country_for_mne
 from .official_registers.factory import OfficialRegisterFetcherFactory
 

@@ -3,8 +3,8 @@ from typing import Optional
 
 import wikipedia
 
-from discovery.models import OtherSources
-from discovery.utils import clean_mne_name
+from .models import OtherSources
+from .utils import clean_mne_name
 
 
 class WikipediaFetcher:

@@ -5,7 +5,7 @@ from typing import Dict, List
 from duckduckgo_search import DDGS
 
 from common.websearch.base import WebSearch
-from discovery.models import SearchResult
+from fetchers.models import SearchResult
 
 USER_AGENTS = [
     "Mozilla/5.0",

@@ -5,8 +5,8 @@ from typing import Optional
 import pycountry
 import yfinance as yf
 
-from discovery.yahoo import YahooFetcher
 from extraction.models import ExtractedInfo
+from fetchers.yahoo import YahooFetcher
 
 logger = logging.getLogger(__name__)
 

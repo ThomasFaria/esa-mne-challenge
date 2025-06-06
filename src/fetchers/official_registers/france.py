@@ -4,7 +4,7 @@ from typing import Optional
 
 import requests
 
-from discovery.models import OtherSources
+from fetchers.models import OtherSources
 
 logger = logging.getLogger(__name__)
 

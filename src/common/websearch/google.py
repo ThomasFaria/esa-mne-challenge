@@ -5,7 +5,7 @@ from googlesearch import search as google_search
 from pydantic import ValidationError
 
 from common.websearch.base import WebSearch
-from discovery.models import SearchResult
+from fetchers.models import SearchResult
 
 logger = logging.getLogger(__name__)
 

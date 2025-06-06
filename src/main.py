@@ -13,11 +13,11 @@ import config
 from common.data import generate_discovery_submission, load_mnes
 from common.websearch.duckduckgo import DuckDuckGoSearch
 from common.websearch.google import GoogleSearch
-from discovery.fetcher import AnnualReportFetcher
-from discovery.official_register import OfficialRegisterFetcher
-from discovery.paths import DATA_DISCOVERY_PATH
-from discovery.wikipedia import WikipediaFetcher
-from discovery.yahoo import YahooFetcher
+from fetchers.annual_reports import AnnualReportFetcher
+from fetchers.official_register import OfficialRegisterFetcher
+from fetchers.paths import DATA_DISCOVERY_PATH
+from fetchers.wikipedia import WikipediaFetcher
+from fetchers.yahoo import YahooFetcher
 
 # Logging setup
 logging.basicConfig(

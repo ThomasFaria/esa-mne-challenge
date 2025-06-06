@@ -5,8 +5,8 @@ from typing import List, Union
 import pandas as pd
 import s3fs
 
-from discovery.models import AnnualReport, OtherSources
 from extraction.models import ExtractedInfo
+from fetchers.models import AnnualReport, OtherSources
 
 logger = logging.getLogger(__name__)
 
