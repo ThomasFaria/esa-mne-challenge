@@ -176,13 +176,14 @@ class AnnualReportFetcher:
         logger.info(f"LLM parsed result for '{mne['NAME']}': {parsed}")
         return parsed
 
-    async def async_fetch_for(self, mne: dict) -> Optional[AnnualReport]:
+    async def async_fetch_for(self, mne: dict, web_query: str) -> Optional[AnnualReport]:
         """
         Asynchronously fetch the annual report for a single MNE.
         Uses search + LLM + validation pipeline.
 
         Args:
             mne (dict): MNE metadata.
+            web_query (str): Search query string to find the annual report.
 
         Returns:
             Optional[AnnualReport]: Resulting annual report or None.
@@ -198,10 +199,8 @@ class AnnualReportFetcher:
                 year=self.reports_cache[mne["NAME"]][0],
             )
         try:
-            # Define the web query
-            query = f"{mne['NAME']} annual report (2024 OR 2023) filetype:pdf"
             # Make the websearch
-            results = await self._search(query)
+            results = await self._search(web_query)
             if not results:
                 return None
             # Format the urls obtained from the web search into a markdown prompt
@@ -219,27 +218,29 @@ class AnnualReportFetcher:
             logger.error(f"Url extracted does not reply 200 response : {e}")
             return None
 
-    def fetch_for(self, mne: dict) -> Optional[AnnualReport]:
+    def fetch_for(self, mne: dict, web_query: str) -> Optional[AnnualReport]:
         """
         Synchronous wrapper for `async_fetch_for`, for compatibility with sync code.
 
         Args:
             mne (dict): MNE metadata.
+            web_query (str): Search query string to find the annual report.
 
         Returns:
             Optional[AnnualReport]: Resulting annual report or None.
         """
-        return asyncio.run(self.async_fetch_for(mne))
+        return asyncio.run(self.async_fetch_for(mne, web_query))
 
-    async def fetch_batch(self, mnes: List[dict]) -> List[Optional[AnnualReport]]:
+    async def fetch_batch(self, mnes: List[dict], web_queries: List[str]) -> List[Optional[AnnualReport]]:
         """
         Asynchronously fetch annual reports for a list of MNEs.
 
         Args:
             mnes (List[dict]): List of MNEs.
+            web_queries (List[str]): List of search queries corresponding to each MNE.
 
         Returns:
             List[Optional[AnnualReport]]: List of annual report results, one per MNE.
         """
-        tasks = [self.async_fetch_for(mne) for mne in mnes]
+        tasks = [self.async_fetch_for(mne, query) for mne, query in zip(mnes, web_queries)]
         return await tqdm.gather(*tasks)
