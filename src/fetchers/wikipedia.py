@@ -109,4 +109,4 @@ class WikipediaFetcher:
         Returns:
             Optional[OtherSources]: Wikipedia URL or None.
         """
-        return asyncio.run(self.fetch_wikipedia_page(mne))
+        return asyncio.run(self.async_fetch_for(mne))

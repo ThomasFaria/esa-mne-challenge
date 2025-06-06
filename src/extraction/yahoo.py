@@ -220,9 +220,9 @@ class YahooExtractor:
         """
         sources, yahoo_symbol = await self.fetcher.async_fetch_for(mne)
         infos = await self.extract_yahoo_infos(mne, yahoo_symbol)
-        return sources, infos
+        return infos, sources
 
-    def extract_for(self, mne: dict) -> Optional[ExtractedInfo]:
+    def extract_for(self, mne: dict) -> Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]:
         """
         Sync wrapper around the async Yahoo Extractor.
 
@@ -230,6 +230,6 @@ class YahooExtractor:
             mne (dict): MNE metadata.
 
         Returns:
-            Optional[List[ExtractedInfo]]: List of extracted informations or None.
+            Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]: Tuple of extracted financial information and sources, or None.
         """
         return asyncio.run(self.async_extract_for(mne))

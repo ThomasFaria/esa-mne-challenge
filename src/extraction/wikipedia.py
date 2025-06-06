@@ -1,12 +1,13 @@
 import asyncio
 import logging
-from typing import Optional
+from typing import List, Optional, Tuple
 
 import pycountry
 import requests
 import wikipedia
 
 from extraction.models import ExtractedInfo
+from fetchers.models import OtherSources
 from fetchers.wikipedia import WikipediaFetcher
 
 logger = logging.getLogger(__name__)
@@ -202,7 +203,7 @@ class WikipediaExtractor:
     async def get_activity(self, wiki_page) -> str:
         return wiki_page.summary
 
-    async def async_extract_for(self, mne: dict) -> Optional[ExtractedInfo]:
+    async def async_extract_for(self, mne: dict) -> Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]:
         """
         Async wrapper to extract informations from Wikipedia page for a given MNE.
 
@@ -210,12 +211,13 @@ class WikipediaExtractor:
             mne (dict): MNE metadata.
 
         Returns:
-            Optional[List[ExtractedInfo]]: List of extracted informations or None.
+            Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]: Tuple of extracted wikipedia information and sources, or None.
         """
+        sources = await self.fetcher.async_fetch_for(mne)
+        infos = await self.extract_wikipedia_infos(mne)
+        return infos, sources
 
-        return await self.extract_wikipedia_infos(mne)
-
-    def extract_for(self, mne: dict) -> Optional[ExtractedInfo]:
+    def extract_for(self, mne: dict) -> Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]:
         """
         Sync wrapper around the async Wikipedia Extractor.
 
@@ -223,6 +225,6 @@ class WikipediaExtractor:
             mne (dict): MNE metadata.
 
         Returns:
-            Optional[List[ExtractedInfo]]: List of extracted informations or None.
+            Tuple[Optional[List[ExtractedInfo]], Optional[List[OtherSources]]]: Tuple of extracted wikipedia information and sources, or None.
         """
-        return asyncio.run(self.extract_wikipedia_infos(mne))
+        return asyncio.run(self.async_extract_for(mne))
