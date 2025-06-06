@@ -11,11 +11,11 @@ from tqdm import tqdm
 
 import config
 from common.data import generate_discovery_submission, load_mnes
+from common.paths import DATA_DISCOVERY_PATH
 from common.websearch.duckduckgo import DuckDuckGoSearch
 from common.websearch.google import GoogleSearch
 from fetchers.annual_reports import AnnualReportFetcher
 from fetchers.official_register import OfficialRegisterFetcher
-from fetchers.paths import DATA_DISCOVERY_PATH
 from fetchers.wikipedia import WikipediaFetcher
 from fetchers.yahoo import YahooFetcher
 
