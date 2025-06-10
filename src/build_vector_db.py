@@ -20,7 +20,7 @@ def build_vector_db():
 
     docs = DataFrameLoader(labels, page_content_column="LABEL").load()
 
-    emb_model = get_embedding_model("Alibaba-NLP/gte-Qwen2-7B-instruct")
+    emb_model = get_embedding_model("Qwen/Qwen3-Embedding-8B")
 
     _ = create_vector_db(docs, emb_model)
 

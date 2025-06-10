@@ -32,7 +32,7 @@ class NACEClassifier:
         list_codes = ", ".join(f"'{doc.metadata['CODE']}'" for doc in docs)
         return proposed_codes, list_codes
 
-    def classify(self, activity_description: str, top_k: int = 20) -> Activity:
+    def classify(self, activity_description: str, top_k: int = 8) -> Activity:
         """
         Classify a company's main activity into a NACE code.
         """

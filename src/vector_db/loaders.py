@@ -5,8 +5,6 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 
-EMBEDDING_MODEL = "Alibaba-NLP/gte-Qwen2-7B-instruct"
-
 logger = logging.getLogger(__name__)
 
 
@@ -16,7 +14,7 @@ def create_vector_db(docs, embedding_model) -> QdrantVectorStore:
         docs,
         embedding_model,
         collection_name="challenge-mne",
-        vector_name=EMBEDDING_MODEL,
+        vector_name=os.getenv("EMBEDDING_MODEL"),
         url=os.getenv("QDRANT_URL"),
         api_key=os.getenv("QDRANT_API_KEY"),
         port="443",
