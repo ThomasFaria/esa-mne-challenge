@@ -191,13 +191,13 @@ class WikipediaExtractor:
     async def get_website(self, claims: dict) -> str:
         return self._get_claim_value(claims, "P856", "string")
 
-    async def get_employees(self, claims: dict) -> tuple[int, int]:
+    async def get_employees(self, claims: dict) -> tuple[int, int, str]:
         return self._get_claim_value(claims, "P1128", "amount")
 
-    async def get_turnover(self, claims: dict) -> tuple[int, int]:
+    async def get_turnover(self, claims: dict) -> tuple[int, int, str]:
         return self._get_claim_value(claims, "P2139", "amount", currency=True)
 
-    async def get_assets(self, claims: dict) -> tuple[int, int]:
+    async def get_assets(self, claims: dict) -> tuple[int, int, str]:
         return self._get_claim_value(claims, "P2403", "amount", currency=True)
 
     async def get_activity(self, wiki_page) -> str:
