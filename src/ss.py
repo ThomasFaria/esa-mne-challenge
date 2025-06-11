@@ -53,18 +53,30 @@ def parse_infobox(wikitext):
                             nested_template = [
                                 t
                                 for t in nested_template
-                                if t.name.lower().strip() not in ["cite web", "increase", "gain", "decrease", "down"]
+                                if t.name.lower().strip()
+                                not in ["cite web", "increase", "gain", "decrease", "down", "unbulleted list"]
                             ]
                             if nested_template and k in ["revenue", "assets"]:
                                 if nested_template[0].name.lower().strip() == "nowrap":
-                                    value_str = f"{nested_template[1].name} {nested_template[1].params[0]} {template.get(key).value.strip_code().strip()}"
+                                    renested_template = mwparserfromhell.parse(
+                                        str(nested_template[0].params[0])
+                                    ).filter_templates()
+                                    renested_template = [
+                                        t
+                                        for t in renested_template
+                                        if t.name.lower().strip()
+                                        not in ["cite web", "increase", "gain", "decrease", "down", "unbulleted list"]
+                                    ]
+                                    value_str = f"{renested_template[0].name} {renested_template[0].params[0]} {nested_template[0].params[0].value.strip_code().strip()}"
+                                    # value_str = f"{nested_template[1].name} {nested_template[1].params[0]} {template.get(key).value.strip_code().strip()}"
+                                    # value_str = nested_template[0].params[0].value.strip_code()
                                 else:
                                     unit = None
                                     if len(nested_template[0].params) > 1:
                                         unit = nested_template[0].params[1].value.strip_code().strip()
                                         unit = unit.replace("t", "trillion")
                                     value_str = f"{nested_template[0].name} {nested_template[0].params[0]} {unit if unit else ''} {template.get(key).value.strip_code().strip()}"
-                            elif nested_template and k in ["website"]:
+                            elif nested_template and k in ["website", "location"]:
                                 value_str = nested_template[0].params[0]
                             elif nested_template and k in ["num_employees"]:
                                 value_str = (
@@ -97,7 +109,7 @@ def get_stripped_value(template, key):
 def harmonize_country(country_str):
     if not country_str:
         return None
-    return country_str.split(",")[-1].strip()
+    return country_str.split(",")[-1].strip().replace("U.S.", "US")
 
 
 def extract_year(text):
@@ -111,29 +123,28 @@ def parse_numeric_value(value_str):
     if not value_str:
         return None
 
-    if value_str.startswith("MSEK"):
-        pattern = r"MSEK\s+((?:\d[\d\s]*)+)\s*\((\d{4})\)"
-        match = re.search(pattern, value_str)
-        number = match.group(1).replace(" ", "")
-        value_str = f"SEK {'{:,}'.format(int(number))} million"
+    if value_str.startswith("MSEK") or value_str.startswith("SEKm"):
+        # Use a regular expression to match both formats
+        match = re.search(r"(?:MSEK|SEKm)\s+((?:\d[\d\s,]*\d|\d[\d\s]*)+)\s*(?:\((\d{4})\))?", value_str)
+        if match:
+            number = match.group(1).replace(" ", "").replace(",", "")
+            value_str = f"SEK {'{:,}'.format(int(number))} million"
 
     multipliers = {"trillion": 1_000_000_000_000, "billion": 1_000_000_000, "million": 1_000_000, "thousand": 1_000}
     match = re.search(
         r"(\d+\.?\d*)\s*(trillion|billion|million|thousand)?", value_str.lower().replace(",", "").replace("&nbsp;", "")
     )
-
     if match:
         number = float(match.group(1))
         multiplier = multipliers.get(match.group(2), 1)
         return int(number * multiplier)
-
     return None
 
 
 def extract_currency(text):
     if not text:
         return None
-    text = text.replace("JPYConvert", "JPY").replace("yen", "JPY").replace("MSEK", "SEK")
+    text = text.lower().replace("jpyconvert", "JPY").replace("yen", "JPY").replace("msek", "SEK").replace("sekm", "SEK")
     return iso4217parse.parse(text)[0].alpha3
 
 
