@@ -5,7 +5,7 @@ from typing import List, Optional, Tuple
 import pycountry
 import yfinance as yf
 
-from extraction.models import ExtractedInfo
+from extractors.models import ExtractedInfo
 from fetchers.models import OtherSources
 from fetchers.yahoo import YahooFetcher
 

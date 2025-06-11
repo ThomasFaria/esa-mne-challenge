@@ -1,4 +1,4 @@
-from extraction.models import ExtractedInfo
+from extractors.models import ExtractedInfo
 
 
 def merge_extracted_infos(*sources: list[ExtractedInfo]) -> list[ExtractedInfo]:

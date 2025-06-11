@@ -7,9 +7,9 @@ import config
 from common.data import generate_discovery_submission, generate_extraction_submission, load_mnes
 from common.paths import DATA_DISCOVERY_PATH
 from common.websearch.google import GoogleSearch
-from extraction.utils import merge_extracted_infos
-from extraction.wikipedia import WikipediaExtractor
-from extraction.yahoo import YahooExtractor
+from extractors.utils import format_site_filter, merge_extracted_infos
+from extractors.wikipedia import WikipediaExtractor
+from extractors.yahoo import YahooExtractor
 from fetchers.annual_reports import AnnualReportFetcher
 from fetchers.official_register import OfficialRegisterFetcher
 from fetchers.wikipedia import WikipediaFetcher
@@ -45,13 +45,6 @@ classifier = NACEClassifier(
     base_url="https://llm.lab.sspcloud.fr/api",
     api_key=os.environ["OPENAI_API_KEY"],
 )
-
-
-def format_site_filter(url: str) -> str:
-    if url:
-        domain = url.replace("https://", "").replace("http://", "").replace("www.", "")
-        return f"site:{domain}"
-    return ""
 
 
 async def main():

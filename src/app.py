@@ -5,9 +5,9 @@ import streamlit as st
 
 import config
 from common.websearch.google import GoogleSearch
-from extraction.utils import merge_extracted_infos
-from extraction.wikipedia import WikipediaExtractor
-from extraction.yahoo import YahooExtractor
+from extractors.utils import merge_extracted_infos
+from extractors.wikipedia import WikipediaExtractor
+from extractors.yahoo import YahooExtractor
 from fetchers.annual_reports import AnnualReportFetcher
 from fetchers.wikipedia import WikipediaFetcher
 from fetchers.yahoo import YahooFetcher
