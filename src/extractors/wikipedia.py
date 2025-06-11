@@ -7,6 +7,7 @@ import iso4217parse
 import mwparserfromhell
 import pycountry
 import requests
+import tldextract
 import wikipedia
 
 from extractors.models import ExtractedInfo
@@ -244,8 +245,15 @@ class WikiDataExtractor(BaseExtractor):
     async def get_website(self, title: str) -> Optional[str]:
         claims = await self._get_claims_if_valid(title)
         try:
-            return claims["P856"][0]["mainsnak"]["datavalue"]["value"]
-        except Exception:
+            url = claims["P856"][0]["mainsnak"]["datavalue"]["value"]
+            extracted = tldextract.extract(url)
+
+            if extracted.domain and extracted.suffix:
+                return f"{extracted.domain}.{extracted.suffix}"
+
+            # fallback in case extraction fails but url is present
+            return url
+        except (KeyError, IndexError, TypeError):
             return None
 
     async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
@@ -392,7 +400,16 @@ class WikipediaAPIExtractor(BaseExtractor):
     async def get_website(self, title: str) -> Optional[str]:
         wikitext = self._get_wikitext(title)
         fields = self._parse_infobox(wikitext)
-        return fields.get("website")
+        try:
+            url = fields.get("website")
+            extracted = tldextract.extract(url)
+            if extracted.domain and extracted.suffix:
+                return f"{extracted.domain}.{extracted.suffix}"
+
+            # fallback in case extraction fails but url is present
+            return url
+        except (KeyError, IndexError, TypeError):
+            return None
 
     async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
         wikitext = self._get_wikitext(title)

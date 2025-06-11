@@ -3,6 +3,7 @@ import logging
 from typing import List, Optional, Tuple
 
 import pycountry
+import tldextract
 import yfinance as yf
 
 from extractors.models import ExtractedInfo
@@ -130,7 +131,12 @@ class YahooExtractor:
             str: Official website URL or None if not found.
         """
         try:
-            return ticker.info.get("website")
+            url = ticker.info.get("website")
+            extracted = tldextract.extract(url)
+
+            if extracted.domain and extracted.suffix:
+                return f"{extracted.domain}.{extracted.suffix}"
+            return
         except KeyError:
             return None
 
