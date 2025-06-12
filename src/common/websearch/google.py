@@ -17,7 +17,7 @@ class GoogleSearch(WebSearch):
         self.sleep_interval = sleep_interval
 
     async def search(self, query: str) -> List[Dict]:
-        logger.info(f"Searching Google for '{query}'")
+        logger.debug(f"Searching Google for '{query}'")
         raw_results = list(
             google_search(
                 query,
@@ -35,6 +35,8 @@ class GoogleSearch(WebSearch):
 
         results = []
         for r in raw_results:
+            if not r.url:
+                continue
             try:
                 result = SearchResult(url=r.url, title=r.title, description=r.description)
                 results.append(result)
