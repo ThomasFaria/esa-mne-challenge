@@ -3,6 +3,7 @@ import logging
 import re
 from typing import Dict, List, Optional, Tuple
 
+import httpx
 import iso4217parse
 import mwparserfromhell
 import pycountry
@@ -14,12 +15,10 @@ from extractors.models import ExtractedInfo
 from fetchers.models import OtherSources
 from fetchers.wikipedia import WikipediaFetcher
 
-from .base import BaseExtractor
-
 logger = logging.getLogger(__name__)
 
 
-class WikipediaExtractor(BaseExtractor):
+class WikipediaExtractor:
     def __init__(self, fetcher: WikipediaFetcher):
         self.wikidata = WikiDataExtractor()
         self.api = WikipediaAPIExtractor()
@@ -141,7 +140,16 @@ class WikipediaExtractor(BaseExtractor):
         return await self._choose(title, "get_country")
 
     async def get_website(self, title: str) -> Optional[str]:
-        return await self._choose(title, "get_website")
+        raw_url = await self._choose(title, "get_website")
+        if raw_url is None:
+            return None
+        try:
+            async with httpx.AsyncClient(follow_redirects=True) as client:
+                response = await client.get(raw_url)
+                extracted = tldextract.extract(str(response.url))
+                return f"{extracted.domain}.{extracted.suffix}" if extracted.domain and extracted.suffix else raw_url
+        except Exception:
+            return raw_url
 
     async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
         return await self._choose(title, "get_employees")
@@ -172,7 +180,7 @@ class WikipediaExtractor(BaseExtractor):
         return asyncio.run(self.async_extract_for(mne))
 
 
-class WikiDataExtractor(BaseExtractor):
+class WikiDataExtractor:
     def __init__(self):
         self.api_base = "https://www.wikidata.org/wiki/Special:EntityData"
 
@@ -245,15 +253,8 @@ class WikiDataExtractor(BaseExtractor):
     async def get_website(self, title: str) -> Optional[str]:
         claims = await self._get_claims_if_valid(title)
         try:
-            url = claims["P856"][0]["mainsnak"]["datavalue"]["value"]
-            extracted = tldextract.extract(url)
-
-            if extracted.domain and extracted.suffix:
-                return f"{extracted.domain}.{extracted.suffix}"
-
-            # fallback in case extraction fails but url is present
-            return url
-        except (KeyError, IndexError, TypeError):
+            return claims["P856"][0]["mainsnak"]["datavalue"]["value"]
+        except Exception:
             return None
 
     async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
@@ -275,7 +276,7 @@ class WikiDataExtractor(BaseExtractor):
         return self._latest_value(claims, "P2403", currency=True)
 
 
-class WikipediaAPIExtractor(BaseExtractor):
+class WikipediaAPIExtractor:
     INFOBOX_KEYS = {
         "location": ["hq_location_country", "location_country", "location", "hq_city", "hq_location"],
         "num_employees": ["num_employees"],
@@ -400,16 +401,7 @@ class WikipediaAPIExtractor(BaseExtractor):
     async def get_website(self, title: str) -> Optional[str]:
         wikitext = self._get_wikitext(title)
         fields = self._parse_infobox(wikitext)
-        try:
-            url = fields.get("website")
-            extracted = tldextract.extract(url)
-            if extracted.domain and extracted.suffix:
-                return f"{extracted.domain}.{extracted.suffix}"
-
-            # fallback in case extraction fails but url is present
-            return url
-        except (KeyError, IndexError, TypeError):
-            return None
+        return fields.get("website")
 
     async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
         wikitext = self._get_wikitext(title)

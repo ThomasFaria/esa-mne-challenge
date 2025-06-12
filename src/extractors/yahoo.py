@@ -2,6 +2,7 @@ import asyncio
 import logging
 from typing import List, Optional, Tuple
 
+import httpx
 import pycountry
 import tldextract
 import yfinance as yf
@@ -131,14 +132,13 @@ class YahooExtractor:
             str: Official website URL or None if not found.
         """
         try:
-            url = ticker.info.get("website")
-            extracted = tldextract.extract(url)
-
-            if extracted.domain and extracted.suffix:
-                return f"{extracted.domain}.{extracted.suffix}"
-            return
-        except KeyError:
-            return None
+            raw_url = ticker.info.get("website")
+            async with httpx.AsyncClient(follow_redirects=True) as client:
+                response = await client.get(raw_url)
+                extracted = tldextract.extract(str(response.url))
+                return f"{extracted.domain}.{extracted.suffix}" if extracted.domain and extracted.suffix else raw_url
+        except Exception:
+            return raw_url
 
     async def get_employees(self, ticker: yf.Ticker) -> int:
         """
