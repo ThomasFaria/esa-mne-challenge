@@ -2,6 +2,7 @@ import asyncio
 import json
 import logging
 import os
+import re
 from typing import List, Optional, Union
 
 import aiohttp
@@ -198,7 +199,10 @@ class AnnualReportFetcher:
             )
         try:
             # Make the websearch
+            unrestricted_query = re.sub(r"\s*site:[^\s]+", "", web_query)
+            # TODO: make a task in order to have 2 simultaneous searches
             results = await self._search(web_query)
+            results += await self._search(unrestricted_query)
             if not results:
                 return None
             # Format the urls obtained from the web search into a markdown prompt
