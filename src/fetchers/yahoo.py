@@ -50,6 +50,7 @@ class YahooFetcher:
             "CPH",
             "HEL",
             "MCE",
+            "PNK",
         ]
         self.ticker_cache = self._load_cache(self.CACHE_PATH)
 
