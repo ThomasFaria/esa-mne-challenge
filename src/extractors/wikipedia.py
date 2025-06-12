@@ -161,59 +161,57 @@ class WikipediaExtractor:
 
 
 class WikiDataExtractor:
-    def __init__(self):
+    def __init__(self, client: httpx.AsyncClient):
+        self.client = client
         self.api_base = "https://www.wikidata.org/wiki/Special:EntityData"
 
     async def get_qid(self, title: str) -> Optional[str]:
         url = "https://en.wikipedia.org/w/api.php"
         params = {"action": "query", "titles": title, "prop": "pageprops", "format": "json"}
-        resp = requests.get(url, params=params).json()
-        pages = resp.get("query", {}).get("pages", {})
+        resp = await self.client.get(url, params=params)
+        pages = resp.json().get("query", {}).get("pages", {})
         return list(pages.values())[0].get("pageprops", {}).get("wikibase_item")
 
     async def get_claims(self, qid: str) -> dict:
         url = f"{self.api_base}/{qid}.json"
-        return requests.get(url).json()["entities"][qid].get("claims", {})
+        resp = await self.client.get(url)
+        return resp.json()["entities"][qid].get("claims", {})
 
     def _parse_time(self, claim: dict) -> Optional[int]:
         try:
-            # Extract the year from the time string
             return int(claim["qualifiers"]["P585"][0]["datavalue"]["value"]["time"][1:5])
         except Exception:
             return None
 
-    def _latest_value(
-        self, claims: dict, prop: str, currency: bool = False
-    ) -> Tuple[Optional[int], Optional[int], Optional[str]]:
+    async def _latest_value(self, title: str, prop: str, currency: bool = False) -> QuantifiedData:
+        claims = await self._get_claims_if_valid(title)
+        if not claims or prop not in claims:
+            return QuantifiedData(None, None, None)
         try:
-            dated = []
-            for c in claims[prop]:
-                year = self._parse_time(c)
-                if year:
-                    dated.append((year, c))
+            dated = [(self._parse_time(c), c) for c in claims[prop] if self._parse_time(c)]
             latest = max(dated, key=lambda x: x[0]) if dated else (None, claims[prop][0])
             amount = int(latest[1]["mainsnak"]["datavalue"]["value"]["amount"].replace("+", ""))
             currency_code = "N/A"
             if currency:
                 unit_id = latest[1]["mainsnak"]["datavalue"]["value"]["unit"].split("/")[-1]
-                currency_code = self._currency_label(unit_id)
-            return amount, latest[0], currency_code
+                currency_code = await self._currency_label(unit_id)
+            return QuantifiedData(amount, latest[0], currency_code)
         except Exception:
-            return None, None, None
+            return QuantifiedData(None, None, None)
 
-    def _currency_label(self, unit_id: str) -> str:
+    async def _currency_label(self, unit_id: str) -> str:
         try:
             url = f"{self.api_base}/{unit_id}.json"
-            data = requests.get(url).json()
-            return data["entities"][unit_id]["claims"]["P498"][0]["mainsnak"]["datavalue"]["value"]
+            resp = await self.client.get(url)
+            return resp.json()["entities"][unit_id]["claims"]["P498"][0]["mainsnak"]["datavalue"]["value"]
         except Exception:
             return "N/A"
 
-    def _country_label(self, unit_id: str) -> str:
+    async def _country_label(self, unit_id: str) -> Optional[str]:
         try:
             url = f"{self.api_base}/{unit_id}.json"
-            data = requests.get(url).json()
-            return data["entities"][unit_id]["labels"]["en"]["value"]
+            resp = await self.client.get(url)
+            return resp.json()["entities"][unit_id]["labels"]["en"]["value"]
         except Exception:
             return None
 
@@ -228,7 +226,7 @@ class WikiDataExtractor:
         if not claims or "P17" not in claims:
             return None
         country_id = claims["P17"][0]["mainsnak"]["datavalue"]["value"]["id"]
-        return pycountry.countries.search_fuzzy(self._country_label(country_id))[0].alpha_2
+        return pycountry.countries.search_fuzzy(await self._country_label(country_id))[0].alpha_2
 
     async def get_website(self, title: str) -> Optional[str]:
         claims = await self._get_claims_if_valid(title)
@@ -237,23 +235,14 @@ class WikiDataExtractor:
         except Exception:
             return None
 
-    async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
-        claims = await self._get_claims_if_valid(title)
-        if not claims or "P1128" not in claims:
-            return None, None, None
-        return self._latest_value(claims, "P1128")
+    async def get_employees(self, title: str) -> QuantifiedData:
+        return await self._latest_value(title, "P1128")
 
-    async def get_turnover(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
-        claims = await self._get_claims_if_valid(title)
-        if not claims or "P2139" not in claims:
-            return None, None, None
-        return self._latest_value(claims, "P2139", currency=True)
+    async def get_turnover(self, title: str) -> QuantifiedData:
+        return await self._latest_value(title, "P2139", currency=True)
 
-    async def get_assets(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
-        claims = await self._get_claims_if_valid(title)
-        if not claims or "P2403" not in claims:
-            return None, None, None
-        return self._latest_value(claims, "P2403", currency=True)
+    async def get_assets(self, title: str) -> QuantifiedData:
+        return await self._latest_value(title, "P2403", currency=True)
 
 
 class WikipediaAPIExtractor:
