@@ -8,7 +8,6 @@ import httpx
 import iso4217parse
 import mwparserfromhell
 import pycountry
-import requests
 import tldextract
 import wikipedia
 
@@ -254,66 +253,52 @@ class WikipediaAPIExtractor:
         "website": ["website", "homepage"],
     }
 
-    def __init__(self):
+    def __init__(self, client: httpx.AsyncClient):
+        self.client = client
         self.api_url = "https://en.wikipedia.org/w/api.php"
 
-    def _get_wikitext(self, title: str) -> str:
-        params = {
-            "action": "parse",
-            "page": title,
-            "prop": "wikitext",
-            "format": "json",
-        }
-        response = requests.get(self.api_url, params=params)
-        response.raise_for_status()
-        return response.json()["parse"]["wikitext"]["*"]
-
-    def _filter_templates(self, templates) -> list:
-        skip_names = {"cite web", "cite news", "increase", "decrease", "gain", "down", "unbulleted list"}
-        return [t for t in templates if t.name.lower().strip() not in skip_names]
+    async def _get_wikitext(self, title: str) -> str:
+        params = {"action": "parse", "page": title, "prop": "wikitext", "format": "json"}
+        resp = await self.client.get(self.api_url, params=params)
+        return resp.json()["parse"]["wikitext"]["*"]
 
     def _parse_infobox(self, wikitext: str) -> Dict[str, str]:
         wikicode = mwparserfromhell.parse(wikitext)
-        templates = wikicode.filter_templates()
+        templates = [t for t in wikicode.filter_templates() if t.name.lower().strip().startswith("infobox")]
         fields = {}
-
         for template in templates:
-            if not template.name.lower().strip().startswith("infobox"):
-                continue
-
             for field, keys in self.INFOBOX_KEYS.items():
                 for key in keys:
-                    if not template.has(key):
-                        continue
+                    if template.has(key):
+                        try:
+                            value = template.get(key).value
+                            nested = self._filter_templates(value.filter_templates())
+                            value_str = value.strip_code().strip()
 
-                    try:
-                        value = template.get(key).value
-                        nested = self._filter_templates(value.filter_templates())
-                        value_str = value.strip_code().strip()
-
-                        if field in {"revenue", "assets"} and nested:
-                            if nested[0].name.lower().strip() == "nowrap":
-                                renested = mwparserfromhell.parse(str(nested[0].params[0])).filter_templates()
-                                renested = self._filter_templates(renested)
-                                if renested:
-                                    fields[field] = (
-                                        f"{renested[0].name} {renested[0].params[0]} {nested[0].params[0].value.strip_code().strip()}"
+                            if field in {"revenue", "assets"} and nested:
+                                if nested[0].name.lower().strip() == "nowrap":
+                                    renested = mwparserfromhell.parse(str(nested[0].params[0])).filter_templates()
+                                    renested = self._filter_templates(renested)
+                                    if renested:
+                                        fields[field] = (
+                                            f"{renested[0].name} {renested[0].params[0]} {nested[0].params[0].value.strip_code().strip()}"
+                                        )
+                                elif nested[0].params:
+                                    unit = (
+                                        nested[0].params[1].value.strip_code().strip()
+                                        if len(nested[0].params) > 1
+                                        else ""
                                     )
-                            elif nested[0].params:
-                                unit = (
-                                    nested[0].params[1].value.strip_code().strip() if len(nested[0].params) > 1 else ""
-                                )
-                                fields[field] = f"{nested[0].name} {nested[0].params[0]} {unit} {value_str}"
-                        elif field in {"website", "location"} and nested:
-                            fields[field] = str(nested[0].params[0])
-                        elif field == "num_employees" and nested:
-                            fields[field] = f"{nested[0].params[0]} {value_str}"
-                        else:
-                            fields[field] = value_str
-
-                        break
-                    except Exception:
-                        continue
+                                    fields[field] = f"{nested[0].name} {nested[0].params[0]} {unit} {value_str}"
+                            elif field in {"website", "location"} and nested:
+                                fields[field] = str(nested[0].params[0])
+                            elif field == "num_employees" and nested:
+                                fields[field] = f"{nested[0].params[0]} {value_str}"
+                            else:
+                                fields[field] = value_str
+                            break
+                        except Exception:
+                            continue
         return fields
 
     def _extract_year(self, text: Optional[str]) -> Optional[int]:
@@ -362,30 +347,33 @@ class WikipediaAPIExtractor:
             return None
 
     async def get_country(self, title: str) -> Optional[str]:
-        wikitext = self._get_wikitext(title)
+        wikitext = await self._get_wikitext(title)
         fields = self._parse_infobox(wikitext)
         loc = fields.get("location")
         return loc.split(",")[-1].strip().replace("U.S.", "US") if loc else None
 
     async def get_website(self, title: str) -> Optional[str]:
-        wikitext = self._get_wikitext(title)
+        wikitext = await self._get_wikitext(title)
         fields = self._parse_infobox(wikitext)
         return fields.get("website")
 
-    async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
-        wikitext = self._get_wikitext(title)
-        fields = self._parse_infobox(wikitext)
-        raw = fields.get("num_employees")
-        return self._parse_numeric_value(raw), self._extract_year(raw), "N/A"
+    async def get_employees(self, title: str) -> QuantifiedData:
+        return await self._extract_numeric(title, "num_employees")
 
-    async def get_turnover(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
-        wikitext = self._get_wikitext(title)
-        fields = self._parse_infobox(wikitext)
-        raw = fields.get("revenue")
-        return self._parse_numeric_value(raw), self._extract_year(raw), self._extract_currency(raw)
+    async def get_turnover(self, title: str) -> QuantifiedData:
+        return await self._extract_numeric(title, "revenue", extract_currency=True)
 
-    async def get_assets(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
-        wikitext = self._get_wikitext(title)
-        fields = self._parse_infobox(wikitext)
-        raw = fields.get("assets")
-        return self._parse_numeric_value(raw), self._extract_year(raw), self._extract_currency(raw)
+    async def get_assets(self, title: str) -> QuantifiedData:
+        return await self._extract_numeric(title, "assets", extract_currency=True)
+
+    async def _extract_numeric(self, title: str, field: str, extract_currency: bool = False) -> QuantifiedData:
+        try:
+            wikitext = await self._get_wikitext(title)
+            fields = self._parse_infobox(wikitext)
+            raw = fields.get(field)
+            value = self._parse_numeric_value(raw)
+            year = self._extract_year(raw)
+            currency = self._extract_currency(raw) if extract_currency else "N/A"
+            return QuantifiedData(value, year, currency)
+        except Exception:
+            return QuantifiedData(None, None, None)
