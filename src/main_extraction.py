@@ -1,13 +1,15 @@
+import asyncio
 import logging
 import os
 
+import httpx
 from tqdm import tqdm
 
 import config
 from common.data import generate_discovery_submission, generate_extraction_submission, load_mnes
 from common.paths import DATA_DISCOVERY_PATH
 from common.websearch.google import GoogleSearch
-from extractors.utils import format_site_filter, merge_extracted_infos
+from extractors.utils import merge_extracted_infos
 from extractors.wikipedia import WikipediaExtractor
 from extractors.yahoo import YahooExtractor
 from fetchers.annual_reports import AnnualReportFetcher
@@ -30,7 +32,7 @@ yahoo = YahooFetcher()
 official_register = OfficialRegisterFetcher()
 ar_fetcher = AnnualReportFetcher(
     searcher=[
-        GoogleSearch(max_results=10),
+        GoogleSearch(max_results=6),
         # DuckDuckGoSearch(),
     ],
     model="gemma3:27b",
@@ -48,64 +50,80 @@ classifier = NACEClassifier(
 
 
 async def main():
-    extractions_results = []
-    discovery_results = []
+    wiki = WikipediaFetcher()
+    async with httpx.AsyncClient() as client:
+        wiki_extractor = WikipediaExtractor(fetcher=wiki, client=client)
 
-    for mne in tqdm(mnes, desc="Extracting MNEs"):
-        try:
-            # Extract data from Yahoo and Wikipedia
-            logger.info(
-                f"Discovering Yahoo and Wikipedia pages for {mne['NAME']} and extracting available information..."
-            )
-            yahoo_info, yahoo_sources = await yahoo_extractor.async_extract_for(mne)
-            wiki_info, wiki_sources = await wiki_extractor.async_extract_for(mne)
+        extractions_results = []
+        discovery_results = []
 
-            info_merged = merge_extracted_infos(yahoo_info, wiki_info)
+        for mne in tqdm(mnes, desc="Extracting MNEs"):
+            try:
+                # Extract data from Yahoo and Wikipedia
+                logger.info(
+                    f"Discovering Yahoo and Wikipedia pages for {mne['NAME']} and extracting available information..."
+                )
+                (yahoo_info, yahoo_sources), (wiki_info, wiki_source) = await asyncio.gather(
+                    yahoo_extractor.async_extract_for(mne), wiki_extractor.async_extract_for(mne)
+                )
+                # Merge extracted information
+                info_merged = merge_extracted_infos(yahoo_info, wiki_info)
 
-            # Prepare the query for the annual report search
-            website_url = next((item.value for item in info_merged if item.variable == "WEBSITE"), None)
-            site_filter = format_site_filter(website_url)
-            query = f"{mne['NAME']} annual report (2024 OR 2023) filetype:pdf {site_filter}"
+                # Prepare the query for the annual report search
+                website_url = next((item.value for item in info_merged if item.variable == "WEBSITE"), None)
+                query = f"{mne['NAME']} annual report (2024 OR 2023) filetype:pdf {f'site:{website_url}' if website_url else ''}"
 
-            # Fetch annual report
-            logger.info(f"Fetching annual report for {mne['NAME']} with query: {query}")
-            annual_report = await ar_fetcher.async_fetch_for(mne, web_query=query)
+                # Fetch annual report
+                logger.info(f"Fetching annual report for {mne['NAME']} with query: {query}")
+                annual_report = await ar_fetcher.async_fetch_for(mne, web_query=query)
 
-            country = next((item.value for item in info_merged if item.variable == "COUNTRY"), None)
-            activity_desc = next((item.value for item in info_merged if item.variable == "ACTIVITY"), None)
+                country = next((item.value for item in info_merged if item.variable == "COUNTRY"), None)
+                activity_desc = next((item.value for item in info_merged if item.variable == "ACTIVITY"), None)
 
-            # Fetch country-specific details if needed
-            logger.info(f"Discovering and extracting country-specific URLs for {mne['NAME']} coming from {country}...")
-            country_spec = await official_register.async_fetch_for(mne, country=country)
-            if country_spec and country_spec.mne_activity:
-                nace_code = country_spec.mne_activity
-            else:
-                logger.info(f"Classifying activity for {mne['NAME']} using NACE classifier...")
-                activity = classifier.classify(activity_desc)
-                nace_code = activity.code
+                # Fetch country-specific details if needed
+                logger.info(
+                    f"Discovering and extracting country-specific URLs for {mne['NAME']} coming from {country}..."
+                )
+                country_spec = await official_register.async_fetch_for(mne, country=country)
+                if country_spec and country_spec.mne_activity:
+                    nace_code = country_spec.mne_activity
+                else:
+                    logger.info(f"Classifying activity for {mne['NAME']} using NACE classifier...")
+                    activity = classifier.classify(activity_desc)
+                    nace_code = activity.code
 
-            # Update activity code
-            for item in info_merged:
-                if item.variable == "ACTIVITY":
-                    item.value = nace_code
+                # Update activity code
+                for item in info_merged:
+                    if item.variable == "ACTIVITY":
+                        item.value = nace_code
 
-            # Handle missing variables
-            VAR_TO_EXTRACT = ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
-            var_missing = [var for var in VAR_TO_EXTRACT if var not in [item.variable for item in info_merged]]
+                # Handle missing variables
+                VAR_TO_EXTRACT = ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
+                var_missing = [var for var in VAR_TO_EXTRACT if var not in [item.variable for item in info_merged]]
 
-            if var_missing:
-                logger.info(f"Missing variables {var_missing}. Attempting to extract from annual report...")
-                # Additional logic to extract from annual_report if available
+                if var_missing:
+                    logger.info(f"Missing variables {var_missing}. Attempting to extract from annual report...")
+                    # Additional logic to extract from annual_report if available
 
-            # Accumulate results
-            logger.info("Saving results for the discovery and the extraction challenge in the desired format...")
-            discovery_results.append([annual_report, *yahoo_sources, wiki_sources, country_spec])
-            extractions_results.append(info_merged)
+                # Accumulate results
+                sources = [
+                    item
+                    for item in ([annual_report] + (yahoo_sources or []) + [wiki_source] + [country_spec])
+                    if item is not None
+                ]
 
-        except Exception as e:
-            logger.exception(f"Error processing {mne['NAME']}: {e}")
+                discovery_results.append(sources)
+                extractions_results.append(info_merged)
 
-    # Generate submissions once
-    generate_discovery_submission(discovery_results)
-    generate_extraction_submission(extractions_results)
-    return extractions_results, discovery_results
+            except Exception as e:
+                logger.exception(f"Error processing {mne['NAME']}: {e}")
+
+        # Generate submissions once
+        logger.info("Saving results for the discovery and the extraction challenge in the desired format...")
+        generate_discovery_submission(discovery_results)
+        generate_extraction_submission(extractions_results)
+        return extractions_results, discovery_results
+
+
+# Run the async main loop
+e, d = asyncio.run(main())
