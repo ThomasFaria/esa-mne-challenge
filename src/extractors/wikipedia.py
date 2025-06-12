@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import re
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
 import httpx
@@ -18,11 +19,19 @@ from fetchers.wikipedia import WikipediaFetcher
 logger = logging.getLogger(__name__)
 
 
+@dataclass
+class QuantifiedData:
+    value: Optional[int]
+    year: Optional[int]
+    currency: Optional[str]
+
+
 class WikipediaExtractor:
-    def __init__(self, fetcher: WikipediaFetcher):
-        self.wikidata = WikiDataExtractor()
-        self.api = WikipediaAPIExtractor()
+    def __init__(self, fetcher: WikipediaFetcher, client: httpx.AsyncClient):
+        self.wikidata = WikiDataExtractor(client)
+        self.api = WikipediaAPIExtractor(client)
         self.fetcher = fetcher
+        self.client = client
         self.min_valid_year = 2024
 
     async def extract_wikipedia_infos(self, mne: dict) -> Optional[List[ExtractedInfo]]:
@@ -53,9 +62,9 @@ class WikipediaExtractor:
 
             country = get_result(0)
             website = get_result(1)
-            employees = get_result(2, (None, None, None))
-            turnover = get_result(3, (None, None, None))
-            assets = get_result(4, (None, None, None))
+            employees = get_result(2, QuantifiedData(None, None, None))
+            turnover = get_result(3, QuantifiedData(None, None, None))
+            assets = get_result(4, QuantifiedData(None, None, None))
             activity = get_result(5)
 
             try:
@@ -67,14 +76,14 @@ class WikipediaExtractor:
 
             variables = [
                 ("COUNTRY", country, 2024, "N/A"),
-                ("EMPLOYEES", employees[0], employees[1], employees[2]),
-                ("TURNOVER", turnover[0], turnover[1], turnover[2]),
-                ("ASSETS", assets[0], assets[1], assets[2]),
+                ("EMPLOYEES", employees.value, employees.year, employees.currency),
+                ("TURNOVER", turnover.value, turnover.year, turnover.currency),
+                ("ASSETS", assets.value, assets.year, assets.currency),
                 ("WEBSITE", website, 2024, "N/A"),
                 ("ACTIVITY", activity, 2024, "N/A"),
             ]
 
-            results = [
+            return [
                 ExtractedInfo(
                     mne_id=mne_id,
                     mne_name=mne_name,
@@ -86,54 +95,27 @@ class WikipediaExtractor:
                 )
                 for var, val, year, curr in variables
                 if val is not None and year is not None
-            ]
-
-            return results if results else None
+            ] or None
 
         except Exception as e:
             logger.exception(f"Failed to extract info for {mne_name}: {e}")
             return None
 
-    async def _choose(self, title: str, method: str) -> Tuple:
+    async def _choose(self, title: str, method: str):
         wd_method = getattr(self.wikidata, method)
         api_method = getattr(self.api, method)
 
-        # Step 1: Try Wikidata
-        try:
-            wd_value = await wd_method(title)
-        except Exception as e:
-            logger.warning(f"Wikidata call failed for {method} on {title}: {e}")
-            wd_value = None
+        wd_task = asyncio.create_task(wd_method(title))
+        api_task = asyncio.create_task(api_method(title))
+        wd_value, api_value = await asyncio.gather(wd_task, api_task, return_exceptions=True)
 
-        # Step 2: Try Wikipedia
-        try:
-            api_value = await api_method(title)
-        except Exception as e:
-            logger.warning(f"Wikipedia API call failed for {method} on {title}: {e}")
-            api_value = None
+        # For QuantifiedData (Assets, Employees, Turnover), we want to keep the most recent value
+        if isinstance(wd_value, QuantifiedData) and isinstance(api_value, QuantifiedData):
+            if wd_value.year and api_value.year:
+                return wd_value if wd_value.year >= api_value.year else api_value
+            return wd_value if wd_value.year else api_value
 
-        # Step 3: Decision logic
-        if isinstance(wd_value, tuple) and isinstance(api_value, tuple):
-            wd_val, wd_year, _ = wd_value
-            api_val, api_year, _ = api_value
-
-            if wd_year and api_year:
-                return wd_value if wd_year >= api_year else api_value
-            elif wd_year:
-                return wd_value
-            elif api_year:
-                return api_value
-            elif wd_val:  # both have no year, fallback on availability
-                return wd_value
-            else:
-                return api_value
-
-        elif isinstance(wd_value, str) and wd_value.strip():
-            return wd_value
-        elif isinstance(api_value, str):
-            return api_value.strip() or None
-
-        # Final fallback
+        # For other types, we prefer the Wikidata value if available
         return wd_value or api_value
 
     async def get_country(self, title: str) -> Optional[str]:
@@ -144,26 +126,24 @@ class WikipediaExtractor:
         if raw_url is None:
             return None
         try:
-            async with httpx.AsyncClient(follow_redirects=True) as client:
-                response = await client.get(raw_url)
-                extracted = tldextract.extract(str(response.url))
-                return f"{extracted.domain}.{extracted.suffix}" if extracted.domain and extracted.suffix else raw_url
+            response = await self.client.get(raw_url, follow_redirects=True)
+            extracted = tldextract.extract(str(response.url))
+            return f"{extracted.domain}.{extracted.suffix}" if extracted.domain and extracted.suffix else raw_url
         except Exception:
             return raw_url
 
-    async def get_employees(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
+    async def get_employees(self, title: str) -> QuantifiedData:
         return await self._choose(title, "get_employees")
 
-    async def get_turnover(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
+    async def get_turnover(self, title: str) -> QuantifiedData:
         return await self._choose(title, "get_turnover")
 
-    async def get_assets(self, title: str) -> Tuple[Optional[int], Optional[int], Optional[str]]:
+    async def get_assets(self, title: str) -> QuantifiedData:
         return await self._choose(title, "get_assets")
 
     async def get_activity(self, title: str) -> Optional[str]:
         try:
-            page = wikipedia.page(title, auto_suggest=False)
-            return page.summary
+            return wikipedia.page(title, auto_suggest=False).summary
         except Exception:
             return None
 
