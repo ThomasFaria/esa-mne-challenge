@@ -171,7 +171,7 @@ class AnnualReportFetcher:
         parsed.mne_name = mne["NAME"]
         parsed.mne_id = mne["ID"]
 
-        logger.info(f"LLM parsed result for '{mne['NAME']}': {parsed}")
+        logger.debug(f"LLM parsed result for '{mne['NAME']}': {parsed}")
         return parsed
 
     async def async_fetch_for(self, mne: dict, web_query: str) -> Optional[AnnualReport]:

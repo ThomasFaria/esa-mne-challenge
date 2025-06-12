@@ -14,7 +14,7 @@ class OfficialRegisterFetcher:
             fetcher = OfficialRegisterFetcherFactory.get_fetcher(country)
             return await fetcher.async_fetch_for(mne)
         except ValueError:
-            logger.error(f"No specific sources found for country: {country}")
+            logger.debug(f"No specific sources found for country: {country}")
             return None
 
     def fetch_for(self, mne: dict, country: str) -> Optional[OtherSources]:
