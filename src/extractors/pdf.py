@@ -9,7 +9,6 @@ import httpx
 import iso4217parse
 import pycountry
 from langfuse import Langfuse
-from langfuse.decorators import observe
 from langfuse.openai import AsyncOpenAI
 
 from extractors.models import ExtractedInfo, PDFExtractionResult
@@ -244,7 +243,6 @@ class PDFExtractor:
 
         return "\n\n".join(prompt_lines)
 
-    @observe()
     async def _call_llm(self, text: str) -> Optional[PDFExtractionResult]:
         # The prompt is stored in Langfuse so that it can be properly versionned
         messages = self.prompt.compile(text=text)

@@ -8,7 +8,6 @@ from typing import List, Optional, Union
 import aiohttp
 import requests
 from langfuse import Langfuse
-from langfuse.decorators import observe
 from langfuse.openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
 
@@ -142,7 +141,6 @@ class AnnualReportFetcher:
         block = "\n\n".join(items)
         return f"\n\n{block}"
 
-    @observe()
     async def _call_llm(self, mne: dict, list_urls: str) -> Optional[AnnualReport]:
         """
         Call the LLM with the MNE name and list of candidate URLs to extract the correct one.
