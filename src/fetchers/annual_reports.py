@@ -28,11 +28,10 @@ class AnnualReportFetcher:
     def __init__(
         self,
         searcher: Union[WebSearch, List[WebSearch]],
-        api_key: str = "EMPTY",
-        model: str = "mistralai/Mistral-Small-24B-Instruct-2501",
-        base_url: str = "https://vllm-generation.user.lab.sspcloud.fr/v1",
+        llm_client: AsyncOpenAI,
+        model: str = "gemma3:27b",
     ):
-        self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
+        self.client = llm_client
         self.model = model
         self.prompt = Langfuse().get_prompt("annual-report-extractor", label="production")
         self.CACHE_PATH = "cache/reports_cache.json"
