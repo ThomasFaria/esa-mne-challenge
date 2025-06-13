@@ -131,5 +131,7 @@ async def main():
         return extractions_results, discovery_results
 
 
-# Run the async main loop
-e, d = asyncio.run(main())
+if __name__ == "__main__":
+    # Configure logging
+    logger.info("Starting the MNE extraction pipeline...")
+    asyncio.run(main())
