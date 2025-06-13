@@ -3,12 +3,14 @@ import logging
 import os
 
 import httpx
+from langfuse.openai import AsyncOpenAI
 from tqdm import tqdm
 
 import config
 from common.data import generate_discovery_submission, generate_extraction_submission, load_mnes
 from common.paths import DATA_DISCOVERY_PATH
 from common.websearch.google import GoogleSearch
+from extractors.pdf import PDFExtractor
 from extractors.utils import merge_extracted_infos
 from extractors.wikipedia import WikipediaExtractor
 from extractors.yahoo import YahooExtractor
@@ -27,7 +29,11 @@ logger = logging.getLogger(__name__)
 # Load MNE data from the challenge starting kit
 mnes = load_mnes(DATA_DISCOVERY_PATH)
 
-wiki = WikipediaFetcher()
+llm_client = AsyncOpenAI(
+    base_url="https://llm.lab.sspcloud.fr/api",
+    api_key=os.environ["OPENAI_API_KEY"],
+)
+
 yahoo = YahooFetcher()
 official_register = OfficialRegisterFetcher()
 ar_fetcher = AnnualReportFetcher(
@@ -36,16 +42,14 @@ ar_fetcher = AnnualReportFetcher(
         # DuckDuckGoSearch(),
     ],
     model="gemma3:27b",
-    base_url="https://llm.lab.sspcloud.fr/api",
-    api_key=os.environ["OPENAI_API_KEY"],
+    llm_client=llm_client,
 )
 
-wiki_extractor = WikipediaExtractor(wiki)
 yahoo_extractor = YahooExtractor(yahoo)
 
 classifier = NACEClassifier(
-    base_url="https://llm.lab.sspcloud.fr/api",
-    api_key=os.environ["OPENAI_API_KEY"],
+    llm_client=llm_client,
+    model="gemma3:27b",
 )
 
 
@@ -53,6 +57,7 @@ async def main():
     wiki = WikipediaFetcher()
     async with httpx.AsyncClient() as client:
         wiki_extractor = WikipediaExtractor(fetcher=wiki, client=client)
+        pdf_extractor = PDFExtractor(client=client, llm_client=llm_client, model="gemma3:27b")
 
         extractions_results = []
         discovery_results = []
@@ -89,7 +94,7 @@ async def main():
                     nace_code = country_spec.mne_activity
                 else:
                     logger.info(f"Classifying activity for {mne['NAME']} using NACE classifier...")
-                    activity = classifier.classify(activity_desc)
+                    activity = await classifier.classify(activity_desc)
                     nace_code = activity.code
 
                 # Update activity code
@@ -103,8 +108,9 @@ async def main():
 
                 if var_missing:
                     logger.info(f"Missing variables {var_missing}. Attempting to extract from annual report...")
-                    # Additional logic to extract from annual_report if available
-
+                    # When some variables are missing, we try to extract from annual_report if available
+                    pdf_infos = await pdf_extractor.async_extract_for(annual_report.pdf_url, var_missing)
+                    info_merged.extend(pdf_extractor.extend_missing_vars(pdf_infos, mne, annual_report, var_missing))
                 # Accumulate results
                 sources = [
                     item
