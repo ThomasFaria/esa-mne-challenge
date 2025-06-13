@@ -23,8 +23,7 @@ class PDFExtractionResult(BaseModel):
 
     country: Optional[str] = Field(..., description="Country of the company (ISO2 code)")
     employees: Optional[int] = Field(None, description="Number of employees")
-    turnover: Optional[int] = Field(None, description="Annual turnover in local currency")
-    assets: Optional[int] = Field(None, description="Total assets in local currency")
+    turnover: Optional[int] = Field(None, description="Total net turnover/revenue/sales in local currency")
+    assets: Optional[int] = Field(None, description="Total net assets in local currency")
     website: Optional[str] = Field(None, description="Company website URL")
-    activity: Optional[str] = Field(None, description="Very short summary of company activity")
     currency: Optional[str] = Field(None, description="Currency of financial values, if applicable")
