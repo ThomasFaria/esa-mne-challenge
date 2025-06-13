@@ -12,7 +12,8 @@ from langfuse import Langfuse
 from langfuse.decorators import observe
 from langfuse.openai import AsyncOpenAI
 
-from extractors.models import PDFExtractionResult
+from extractors.models import ExtractedInfo, PDFExtractionResult
+from fetchers.models import AnnualReport
 
 logger = logging.getLogger(__name__)
 
@@ -190,6 +191,49 @@ class PDFExtractor:
         )
         parsed = response.choices[0].message.parsed
         return parsed
+
+    def extend_missing_vars(
+        pdf_infos: PDFExtractionResult, mne: dict, annual_report: AnnualReport, var_missing: list
+    ) -> list[ExtractedInfo]:
+        """
+        Create ExtractedInfo objects for missing variables based on PDF content.
+
+        Args:
+            pdf_infos (PDFExtractionResult): Extracted structured data from PDF.
+            mne (dict): MNE information containing ID and NAME.
+            annual_report (AnnualReport): Annual report metadata.
+            var_missing (list): List of variable names that are missing.
+
+        Returns:
+            List[ExtractedInfo]
+        """
+        # Map variable names to attributes in pdf_infos
+        attr_map = {
+            "EMPLOYEES": "employees",
+            "TURNOVER": "turnover",
+            "ASSETS": "assets",
+        }
+
+        extracted = []
+
+        for var in var_missing:
+            attr_name = attr_map.get(var)
+            value = getattr(pdf_infos, attr_name, None)
+
+            if value is not None:
+                extracted.append(
+                    ExtractedInfo(
+                        mne_id=mne["ID"],
+                        mne_name=mne["NAME"],
+                        variable=var,
+                        source_url=annual_report.pdf_url,
+                        value=value,
+                        currency=pdf_infos.currency,
+                        year=annual_report.year,
+                    )
+                )
+
+        return extracted
 
     async def async_extract_for(self, pdf_url: str) -> Optional[PDFExtractionResult]:
         """

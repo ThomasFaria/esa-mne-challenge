@@ -22,10 +22,3 @@ def merge_extracted_infos(*sources: list[ExtractedInfo]) -> list[ExtractedInfo]:
                     continue
 
     return list(merged.values())
-
-
-def format_site_filter(url: str) -> str:
-    if url:
-        domain = url.replace("https://", "").replace("http://", "").replace("www.", "")
-        return f"site:{domain}"
-    return ""
