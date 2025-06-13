@@ -193,7 +193,7 @@ class PDFExtractor:
         return parsed
 
     def extend_missing_vars(
-        pdf_infos: PDFExtractionResult, mne: dict, annual_report: AnnualReport, var_missing: list
+        self, pdf_infos: PDFExtractionResult, mne: dict, annual_report: AnnualReport, var_missing: list
     ) -> list[ExtractedInfo]:
         """
         Create ExtractedInfo objects for missing variables based on PDF content.
