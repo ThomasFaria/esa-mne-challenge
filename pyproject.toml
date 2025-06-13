@@ -21,6 +21,7 @@ dependencies = [
     "openai>=1.76.2",
     "pandas>=2.2.3",
     "pycountry>=24.6.1",
+    "pymupdf>=1.26.1",
     "python-dotenv>=1.1.0",
     "rdflib>=7.1.4",
     "s3fs>=2025.3.2",

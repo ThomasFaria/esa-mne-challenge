@@ -13,3 +13,18 @@ class ExtractedInfo(BaseModel):
     value: str | int = Field(..., description="Extracted value")
     currency: Optional[str] = Field("N/A", description="Currency of the value, if applicable")
     year: Optional[int] = Field(..., description="Fiscal year of the extracted information")
+
+
+class PDFExtractionResult(BaseModel):
+    """
+    Represents the result of extracting structured data from a PDF.
+    Contains a list of extracted information entries.
+    """
+
+    country: Optional[str] = Field(..., description="Country of the company (ISO2 code)")
+    employees: Optional[int] = Field(None, description="Number of employees")
+    turnover: Optional[int] = Field(None, description="Annual turnover in local currency")
+    assets: Optional[int] = Field(None, description="Total assets in local currency")
+    website: Optional[str] = Field(None, description="Company website URL")
+    activity: Optional[str] = Field(None, description="Very short summary of company activity")
+    currency: Optional[str] = Field(None, description="Currency of financial values, if applicable")
