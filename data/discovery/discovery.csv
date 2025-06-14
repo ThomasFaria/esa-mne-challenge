@@ -23,8 +23,8 @@ ID;NAME;TYPE;SRC;REFYEAR
 18511746;PUBLICIS GROUPE S A;OTHER;https://finance.yahoo.com/quote/PU4.F/balance-sheet/;2024
 18511746;PUBLICIS GROUPE S A;OTHER;https://en.wikipedia.org/wiki/Publicis;2024
 18511746;PUBLICIS GROUPE S A;OTHER;https://annuaire-entreprises.data.gouv.fr/entreprise/451846968;2024
-18512048;GEBR. KNAUF;FIN_REP;https://forbo.blob.core.windows.net/forbodocuments/41f1ccfc-cbb7-45d8-9ad2-e3786287272b/Forbo_Geschaeftsbericht_2024_en_Gesamtbericht.pdf;2024
-18512048;GEBR. KNAUF;OTHER;https://en.wikipedia.org/wiki/Knauf;2024
+18512048;GEBR. KNAUF;FIN_REP;https://s7g10.scene7.com/is/content/knauf/knauf_insulation_annual_review_2023pdf-1;2023
+18512048;GEBR. KNAUF;OTHER;https://en.wikipedia.org/wiki/Knauf;2023
 18512048;GEBR. KNAUF;OTHER;;
 18512048;GEBR. KNAUF;OTHER;;
 18512048;GEBR. KNAUF;OTHER;;
@@ -35,7 +35,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18519151;BRIDGESTONE CORPORATION;OTHER;https://finance.yahoo.com/quote/BGT.F/balance-sheet/;2024
 18519151;BRIDGESTONE CORPORATION;OTHER;https://en.wikipedia.org/wiki/Bridgestone;2024
 18519151;BRIDGESTONE CORPORATION;OTHER;;
-18520469;FERRERO;FIN_REP;https://www.ferrerosustainability.com/int/sites/ferrerosustainability_int/files/homepage-annual-report/2024-05/ferrero_csr_final_28524.pdf;2023
+18520469;FERRERO;FIN_REP;https://www.ferrero.com/int/sites/ferrero_int/files/2024-05/ferrero_csr_final_28524.pdf;2023
 18520469;FERRERO;OTHER;https://en.wikipedia.org/wiki/Ferrero_(company);2023
 18520469;FERRERO;OTHER;;
 18520469;FERRERO;OTHER;;
@@ -89,7 +89,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18573648;VOESTALPINE GROUP;OTHER;https://finance.yahoo.com/quote/VOE.VI/balance-sheet/;2025
 18573648;VOESTALPINE GROUP;OTHER;https://en.wikipedia.org/wiki/Voestalpine;2025
 18573648;VOESTALPINE GROUP;OTHER;;
-18573835;ORANGE;FIN_REP;https://www.orange-ir.pl/wp-content/uploads/2025/02/consolidated-financial-report-2024.pdf;2024
+18573835;ORANGE;FIN_REP;https://www.annualreports.com/HostedData/AnnualReports/PDF/NYSE_ORAN_2023.pdf;2024
 18573835;ORANGE;OTHER;https://finance.yahoo.com/quote/ORA.PA/profile/;2024
 18573835;ORANGE;OTHER;https://finance.yahoo.com/quote/ORA.PA/financials/;2024
 18573835;ORANGE;OTHER;https://finance.yahoo.com/quote/ORA.PA/balance-sheet/;2024
@@ -113,13 +113,13 @@ ID;NAME;TYPE;SRC;REFYEAR
 18591402;PROCTER & GAMBLE CO;OTHER;https://finance.yahoo.com/quote/PG/balance-sheet/;2024
 18591402;PROCTER & GAMBLE CO;OTHER;https://en.wikipedia.org/wiki/Procter_%26_Gamble;2024
 18591402;PROCTER & GAMBLE CO;OTHER;;
-18599238;FCC;FIN_REP;https://www.fcc.gov/sites/default/files/FCC-Agency-Financial-Report-FY-2024-508.pdf;2024
+18599238;FCC;FIN_REP;https://www.fcc.es/documents/13935105/57383152/annual_report_2024.pdf;2024
 18599238;FCC;OTHER;https://finance.yahoo.com/quote/FCIC/profile/;2024
 18599238;FCC;OTHER;https://finance.yahoo.com/quote/FCIC/financials/;2024
 18599238;FCC;OTHER;https://finance.yahoo.com/quote/FCIC/balance-sheet/;2024
 18599238;FCC;OTHER;https://en.wikipedia.org/wiki/FCC_Group;2024
 18599238;FCC;OTHER;;
-18606822;SOCIETE NATIONALE SNCF;FIN_REP;https://www.eurofima.org/sites/default/assets/File/investor-relations/financial-information/EUROFIMA-AR2024-Web.pdf;2024
+18606822;SOCIETE NATIONALE SNCF;FIN_REP;https://www.groupe-sncf.com/medias-publics/2025-05/2024-integrated-annual-report-accessible.pdf;2024
 18606822;SOCIETE NATIONALE SNCF;OTHER;https://en.wikipedia.org/wiki/SNCF;2024
 18606822;SOCIETE NATIONALE SNCF;OTHER;https://annuaire-entreprises.data.gouv.fr/entreprise/552049447;2024
 18606822;SOCIETE NATIONALE SNCF;OTHER;;
@@ -161,7 +161,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18632343;DEUTSCHE BAHN;OTHER;;
 18632343;DEUTSCHE BAHN;OTHER;;
 18632343;DEUTSCHE BAHN;OTHER;;
-18636888;CARGILL;FIN_REP;https://s204.q4cdn.com/581939372/files/doc_financials/2024/ar/2024-10-K-and-Shareholder-Letter.pdf;2024
+18636888;CARGILL;FIN_REP;https://www.cargill.com/doc/1432263180474/2024-annual-report.pdf;2024
 18636888;CARGILL;OTHER;https://en.wikipedia.org/wiki/Cargill;2024
 18636888;CARGILL;OTHER;;
 18636888;CARGILL;OTHER;;
@@ -191,13 +191,13 @@ ID;NAME;TYPE;SRC;REFYEAR
 18658675;BASF;OTHER;https://finance.yahoo.com/quote/BAS.DE/balance-sheet/;2024
 18658675;BASF;OTHER;https://en.wikipedia.org/wiki/BASF;2024
 18658675;BASF;OTHER;;
-18665236;APTIV PLC;FIN_REP;https://s204.q4cdn.com/218186261/files/doc_financials/2024/ar/2024-annual-report.pdf;2024
+18665236;APTIV PLC;FIN_REP;https://s22.q4cdn.com/336558720/files/doc_financials/2024/ar/2025_Aptiv_Web_AnnualReport.pdf;2024
 18665236;APTIV PLC;OTHER;https://finance.yahoo.com/quote/APTV/profile/;2024
 18665236;APTIV PLC;OTHER;https://finance.yahoo.com/quote/APTV/financials/;2024
 18665236;APTIV PLC;OTHER;https://finance.yahoo.com/quote/APTV/balance-sheet/;2024
 18665236;APTIV PLC;OTHER;https://en.wikipedia.org/wiki/Aptiv;2024
 18665236;APTIV PLC;OTHER;;
-18673760;WPP PLC;FIN_REP;https://www.wpp.com/wp-content/uploads/2024/03/WPP_Integrated_Report_2023_v2.pdf;2023
+18673760;WPP PLC;FIN_REP;https://www.wpp.com/wp-content/uploads/2024/03/WPP-Integrated-Annual-Report-2023.pdf;2023
 18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/profile/;2023
 18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/financials/;2023
 18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/balance-sheet/;2023
@@ -221,7 +221,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18691645;FLETCHER GROUP;OTHER;https://finance.yahoo.com/quote/FLQ.F/balance-sheet/;2024
 18691645;FLETCHER GROUP;OTHER;https://en.wikipedia.org/wiki/Fletcher_(singer);2024
 18691645;FLETCHER GROUP;OTHER;;
-18694033;SODEXO;FIN_REP;https://www.pluxeegroup.com/sites/g/files/jclxxe221/files/2024-10/Pluxee_Annual_Report_2024.pdf;2024
+18694033;SODEXO;FIN_REP;https://edge.sitecorecloud.io/sodexofrance1-sodexocorpsites-prod-e74c/media/Project/Sodexo-Corp/Global/Documents/investors/quarterly-financial-announcements/2024/Sodexo-Business-and-Sustainability-Report-Fiscal-2024.pdf;2024
 18694033;SODEXO;OTHER;https://finance.yahoo.com/quote/SJ7.F/profile/;2024
 18694033;SODEXO;OTHER;https://finance.yahoo.com/quote/SJ7.F/financials/;2024
 18694033;SODEXO;OTHER;https://finance.yahoo.com/quote/SJ7.F/balance-sheet/;2024
@@ -251,7 +251,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18712196;AMAZON;OTHER;https://finance.yahoo.com/quote/AMZ.F/balance-sheet/;2024
 18712196;AMAZON;OTHER;https://en.wikipedia.org/wiki/Amazon_(company);2024
 18712196;AMAZON;OTHER;;
-18715555;SONY GROUP CORPORATION;FIN_REP;https://moneyworld.jp/discl-pdf/tdnet/2025051354812001GENERAL.pdf;2024
+18715555;SONY GROUP CORPORATION;FIN_REP;https://www.sony.com/en/SonyInfo/IR/library/FY2023_20F_PDF.pdf;2024
 18715555;SONY GROUP CORPORATION;OTHER;https://finance.yahoo.com/quote/SONY/profile/;2024
 18715555;SONY GROUP CORPORATION;OTHER;https://finance.yahoo.com/quote/SONY/financials/;2024
 18715555;SONY GROUP CORPORATION;OTHER;https://finance.yahoo.com/quote/SONY/balance-sheet/;2024
@@ -263,7 +263,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18718848;SONOVA;OTHER;https://finance.yahoo.com/quote/PHBN.F/balance-sheet/;2024
 18718848;SONOVA;OTHER;https://en.wikipedia.org/wiki/Sonova;2024
 18718848;SONOVA;OTHER;;
-18731292;IKEA;FIN_REP;https://regnskaber.cvrapi.dk/xhtml/11947505/amNsb3VkczovLzAyLzRlL2E3LzQxL2EyLzM3NGMtNDA5Zi04YTE5LTg0NWQ5N2UwZjVhYg.pdf;2024
+18731292;IKEA;FIN_REP;https://www.inter.ikea.com/-/media/interikea/igi/financial-reports/fy24-financial-reports/inter-ikea-holding-bv-annual-report-fy24.pdf;2024
 18731292;IKEA;OTHER;https://en.wikipedia.org/wiki/IKEA;2024
 18731292;IKEA;OTHER;;
 18731292;IKEA;OTHER;;
@@ -281,7 +281,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18742207;AIRBUS SE;OTHER;https://finance.yahoo.com/quote/AIR.PA/balance-sheet/;2024
 18742207;AIRBUS SE;OTHER;https://en.wikipedia.org/wiki/Airbus;2024
 18742207;AIRBUS SE;OTHER;;
-18745703;ETEX;FIN_REP;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf?v=496e95;2024
+18745703;ETEX;FIN_REP;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;2024
 18745703;ETEX;OTHER;https://en.wikipedia.org/wiki/Antoine_%C3%89tex;2024
 18745703;ETEX;OTHER;;
 18745703;ETEX;OTHER;;
@@ -413,7 +413,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18818842;IWG PLC;OTHER;https://finance.yahoo.com/quote/IWG.F/balance-sheet/;2024
 18818842;IWG PLC;OTHER;https://en.wikipedia.org/wiki/IWG_plc;2024
 18818842;IWG PLC;OTHER;;
-18831586;SAP;FIN_REP;https://saputo.com/-/media/ecosystem/divisions/corporate-services/sites/saputo-com/saputo-com-documents/shareholder-reports/2024/annual-reports/01-24-sap_annualreport24-web_ang.pdf?revision=&rev=-1&hash=4B4CCDD534B90FCE1CD0012C82C8E203;2024
+18831586;SAP;FIN_REP;https://www.sap.com/docs/download/investors/2024/sap-2024-integrated-report.pdf;2024
 18831586;SAP;OTHER;https://finance.yahoo.com/quote/SAP/profile/;2024
 18831586;SAP;OTHER;https://finance.yahoo.com/quote/SAP/financials/;2024
 18831586;SAP;OTHER;https://finance.yahoo.com/quote/SAP/balance-sheet/;2024
@@ -479,7 +479,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18886469;VEOLIA ENVIRONNEMENT;OTHER;https://finance.yahoo.com/quote/VVD.DE/balance-sheet/;2024
 18886469;VEOLIA ENVIRONNEMENT;OTHER;https://en.wikipedia.org/wiki/Veolia;2024
 18886469;VEOLIA ENVIRONNEMENT;OTHER;https://annuaire-entreprises.data.gouv.fr/entreprise/403210032;2024
-18898974;TUI;FIN_REP;https://tuicu.ie/media/hopd53cb/tui-cu-agm-booklet-2024-web-v2.pdf;2024
+18898974;TUI;FIN_REP;https://cdn.sanity.io/files/b6xulh2p/production/5d9f57cdc308c1b9b1d0d701e6eb142652a8a50d.pdf;2024
 18898974;TUI;OTHER;https://finance.yahoo.com/quote/TUI1.DE/profile/;2024
 18898974;TUI;OTHER;https://finance.yahoo.com/quote/TUI1.DE/financials/;2024
 18898974;TUI;OTHER;https://finance.yahoo.com/quote/TUI1.DE/balance-sheet/;2024
@@ -527,7 +527,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18931004;DEUTSCHE LUFTHANSA;OTHER;https://finance.yahoo.com/quote/LHA.F/balance-sheet/;2024
 18931004;DEUTSCHE LUFTHANSA;OTHER;https://en.wikipedia.org/wiki/Lufthansa;2024
 18931004;DEUTSCHE LUFTHANSA;OTHER;;
-18935271;TELEFONAKTIEBOLAGET LM ERICSSON;FIN_REP;https://mb.cision.com/Main/15448/4111351/3285959.pdf;2024
+18935271;TELEFONAKTIEBOLAGET LM ERICSSON;FIN_REP;https://www.ericsson.com/49317f/assets/local/investors/documents/2024/annual-report-2024-en.pdf;2024
 18935271;TELEFONAKTIEBOLAGET LM ERICSSON;OTHER;https://finance.yahoo.com/quote/ERCA.F/profile/;2024
 18935271;TELEFONAKTIEBOLAGET LM ERICSSON;OTHER;https://finance.yahoo.com/quote/ERCA.F/financials/;2024
 18935271;TELEFONAKTIEBOLAGET LM ERICSSON;OTHER;https://finance.yahoo.com/quote/ERCA.F/balance-sheet/;2024
@@ -569,7 +569,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18957222;SYNLAB;OTHER;https://finance.yahoo.com/quote/SYAB.VI/balance-sheet/;2023
 18957222;SYNLAB;OTHER;https://en.wikipedia.org/wiki/Synlab_Group;2023
 18957222;SYNLAB;OTHER;;
-18959709;L AIR LIQUIDE;FIN_REP;https://www.airliquide.com/sites/airliquide.com/files/2025-03/rapport-annuel-integre-2024.pdf;2024
+18959709;L AIR LIQUIDE;FIN_REP;https://usa.airliquide.com/sites/al_us/files/2025-05/2024-integrated-annual-report.pdf;2024
 18959709;L AIR LIQUIDE;OTHER;https://finance.yahoo.com/quote/AI.PA/profile/;2024
 18959709;L AIR LIQUIDE;OTHER;https://finance.yahoo.com/quote/AI.PA/financials/;2024
 18959709;L AIR LIQUIDE;OTHER;https://finance.yahoo.com/quote/AI.PA/balance-sheet/;2024
@@ -599,7 +599,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18974095;UMICORE;OTHER;https://finance.yahoo.com/quote/NVJP.F/balance-sheet/;2024
 18974095;UMICORE;OTHER;https://en.wikipedia.org/wiki/Umicore;2024
 18974095;UMICORE;OTHER;;
-18976475;KONE;FIN_REP;https://ml-eu.globenewswire.com/Resource/Download/eac58640-6719-4338-a1e0-467fa0b46e80;2024
+18976475;KONE;FIN_REP;https://www.kone.com/en/Images/KONE_Annual%20Review_2024_tcm17-134328.pdf;2024
 18976475;KONE;OTHER;https://finance.yahoo.com/quote/KNEBV.HE/profile/;2024
 18976475;KONE;OTHER;https://finance.yahoo.com/quote/KNEBV.HE/financials/;2024
 18976475;KONE;OTHER;https://finance.yahoo.com/quote/KNEBV.HE/balance-sheet/;2024
@@ -623,7 +623,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18984365;NOKIA;OTHER;https://finance.yahoo.com/quote/NOK/balance-sheet/;2024
 18984365;NOKIA;OTHER;https://en.wikipedia.org/wiki/Nokia;2024
 18984365;NOKIA;OTHER;;
-18984744;MONDELEZ INTERNATIONAL INC.;FIN_REP;https://fortune.com/company-assets/1832/quartr/annual-report-10-k-5cd0a-2025-02-05-07-43-54.pdf;2024
+18984744;MONDELEZ INTERNATIONAL INC.;FIN_REP;https://www.mondelezinternational.com/assets/PDFs/MONDELEZ-INTERNATIONAL-INC_10K_2024.pdf;2024
 18984744;MONDELEZ INTERNATIONAL INC.;OTHER;https://finance.yahoo.com/quote/KTF.F/profile/;2024
 18984744;MONDELEZ INTERNATIONAL INC.;OTHER;https://finance.yahoo.com/quote/KTF.F/financials/;2024
 18984744;MONDELEZ INTERNATIONAL INC.;OTHER;https://finance.yahoo.com/quote/KTF.F/balance-sheet/;2024
@@ -707,7 +707,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 19032544;RETHMANN;OTHER;;
 19032544;RETHMANN;OTHER;;
 19032544;RETHMANN;OTHER;;
-19032847;MITSUI & CO LTD;FIN_REP;https://www.mes.co.jp/english/investor/integratedreport2024_en.pdf;2024
+19032847;MITSUI & CO LTD;FIN_REP;https://www.mitsui.com/jp/en/ir/library/online2024/pdf/en_ar2024_all_web.pdf;2024
 19032847;MITSUI & CO LTD;OTHER;https://finance.yahoo.com/quote/MTS1.F/profile/;2024
 19032847;MITSUI & CO LTD;OTHER;https://finance.yahoo.com/quote/MTS1.F/financials/;2024
 19032847;MITSUI & CO LTD;OTHER;https://finance.yahoo.com/quote/MTS1.F/balance-sheet/;2024
@@ -725,7 +725,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 19037648;H & M HENNES & MAURITZ;OTHER;https://finance.yahoo.com/quote/HMSB.F/balance-sheet/;2024
 19037648;H & M HENNES & MAURITZ;OTHER;https://en.wikipedia.org/wiki/H%26M;2024
 19037648;H & M HENNES & MAURITZ;OTHER;;
-19041196;MERCEDES-BENZ GROUP;FIN_REP;https://www.daimlertruck.com/fileadmin/user_upload/documents/investors/reports/annual-reports/2024/daimler-truck-ir-annual-report-2024-incl-combined-management-report-dth-ag.pdf;2024
+19041196;MERCEDES-BENZ GROUP;FIN_REP;https://group.mercedes-benz.com/documents/investors/reports/annual-report/mercedes-benz/mercedes-benz-annual-report-2024-incl-combined-management-report-mbg-ag.pdf;2024
 19041196;MERCEDES-BENZ GROUP;OTHER;https://finance.yahoo.com/quote/MBG.DE/profile/;2024
 19041196;MERCEDES-BENZ GROUP;OTHER;https://finance.yahoo.com/quote/MBG.DE/financials/;2024
 19041196;MERCEDES-BENZ GROUP;OTHER;https://finance.yahoo.com/quote/MBG.DE/balance-sheet/;2024
@@ -791,7 +791,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 19057037;THERMO FISHER SCIENTIFIC INC.;OTHER;https://finance.yahoo.com/quote/TMO/balance-sheet/;2024
 19057037;THERMO FISHER SCIENTIFIC INC.;OTHER;https://en.wikipedia.org/wiki/Thermo_Fisher_Scientific;2024
 19057037;THERMO FISHER SCIENTIFIC INC.;OTHER;;
-19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;FIN_REP;https://group.ntt/en/ir/library/yuho/2023/pdf/39yuho.pdf;2024
+19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;FIN_REP;https://group.ntt/en/ir/library/annual/pdf/integrated_report_24e.pdf;2024
 19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;OTHER;https://finance.yahoo.com/quote/NTT.F/profile/;2024
 19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;OTHER;https://finance.yahoo.com/quote/NTT.F/financials/;2024
 19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;OTHER;https://finance.yahoo.com/quote/NTT.F/balance-sheet/;2024
@@ -1025,7 +1025,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 19249932;NOVO NORDISK;OTHER;https://finance.yahoo.com/quote/NVO/balance-sheet/;2024
 19249932;NOVO NORDISK;OTHER;https://en.wikipedia.org/wiki/Novo_Nordisk;2024
 19249932;NOVO NORDISK;OTHER;;
-19253725;SOLVAY;FIN_REP;https://www.solvay.com/sites/g/files/srpend616/files/2025-04/20250403%20-%202024%20Annual%20Report%20PR_EN.pdf;2024
+19253725;SOLVAY;FIN_REP;https://www.solvay.com/sites/g/files/srpend616/files/2025-06/Solvay_AIR_2024_EN.pdf;2024
 19253725;SOLVAY;OTHER;https://finance.yahoo.com/quote/SOLBB.XC/profile/;2024
 19253725;SOLVAY;OTHER;https://finance.yahoo.com/quote/SOLBB.XC/financials/;2024
 19253725;SOLVAY;OTHER;https://finance.yahoo.com/quote/SOLBB.XC/balance-sheet/;2024
@@ -1037,13 +1037,13 @@ ID;NAME;TYPE;SRC;REFYEAR
 19258448;BERTELSMANN STIFTUNG;OTHER;;
 19258448;BERTELSMANN STIFTUNG;OTHER;;
 19258448;BERTELSMANN STIFTUNG;OTHER;;
-19261077;ASTRAZENECA PLC;FIN_REP;https://www.astrazeneca.com/content/dam/az/Sustainability/Annual_Report_and_Sustainability_Report_2023/AZ_Integrated_Annual_Report_2023.pdf;2023
+19261077;ASTRAZENECA PLC;FIN_REP;https://www.astrazeneca.com/content/dam/az/Our_Therapeutic_Areas/Annual_Report_and_Financial_Reports/2023/AZ_AR2023_FullReport.pdf;2023
 19261077;ASTRAZENECA PLC;OTHER;https://finance.yahoo.com/quote/ZEGA.F/profile/;2023
 19261077;ASTRAZENECA PLC;OTHER;https://finance.yahoo.com/quote/ZEGA.F/financials/;2023
 19261077;ASTRAZENECA PLC;OTHER;https://finance.yahoo.com/quote/ZEGA.F/balance-sheet/;2023
 19261077;ASTRAZENECA PLC;OTHER;https://en.wikipedia.org/wiki/AstraZeneca;2023
 19261077;ASTRAZENECA PLC;OTHER;;
-19264134;ISS A/S;FIN_REP;https://regnskaber.cvrapi.dk/xhtml/59380412/amNsb3VkczovLzAzL2I5LzI3LzVkL2M2L2RlNTgtNDNjNS1hMjY3LWZhZDIyMGY2YjlkYQ.pdf;2024
+19264134;ISS A/S;FIN_REP;https://brand.issworld.com/m/1bb99b2c33c4d7cf/original/ISS-Annual-Report-2024.pdf;2024
 19264134;ISS A/S;OTHER;https://finance.yahoo.com/quote/ISS.CO/profile/;2024
 19264134;ISS A/S;OTHER;https://finance.yahoo.com/quote/ISS.CO/financials/;2024
 19264134;ISS A/S;OTHER;https://finance.yahoo.com/quote/ISS.CO/balance-sheet/;2024
@@ -1134,7 +1134,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 19346455;STRABAG GROUP;OTHER;https://en.wikipedia.org/wiki/Strabag;2024
 19346455;STRABAG GROUP;OTHER;;
 19414796;ATLAS UK BIDCO LIMITED;FIN_REP;https://filecache.investorroom.com/mr5ircnw_seaspan/1339/download/ATCO%20%28Atlas%20Corp.%29%20%20%2820-F%29%202024-03-14.pdf_.pdf;2023
-19414796;ATLAS UK BIDCO LIMITED;OTHER;https://en.wikipedia.org/wiki/Boston_Scientific;2023
+19414796;ATLAS UK BIDCO LIMITED;OTHER;https://en.wikipedia.org/wiki/Norton_Motorcycle_Company;2023
 19414796;ATLAS UK BIDCO LIMITED;OTHER;;
 19414796;ATLAS UK BIDCO LIMITED;OTHER;;
 19414796;ATLAS UK BIDCO LIMITED;OTHER;;
