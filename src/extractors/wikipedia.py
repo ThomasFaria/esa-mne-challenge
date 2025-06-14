@@ -262,6 +262,10 @@ class WikipediaAPIExtractor:
         resp = await self.client.get(self.api_url, params=params)
         return resp.json()["parse"]["wikitext"]["*"]
 
+    def _filter_templates(self, templates) -> list:
+        skip_names = {"cite web", "cite news", "increase", "decrease", "gain", "down", "unbulleted list"}
+        return [t for t in templates if t.name.lower().strip() not in skip_names]
+
     def _parse_infobox(self, wikitext: str) -> Dict[str, str]:
         wikicode = mwparserfromhell.parse(wikitext)
         templates = [t for t in wikicode.filter_templates() if t.name.lower().strip().startswith("infobox")]
