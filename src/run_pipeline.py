@@ -11,7 +11,7 @@ from common.data import generate_discovery_submission, generate_extraction_submi
 from common.paths import DATA_DISCOVERY_PATH
 from common.websearch.google import GoogleSearch
 from extractors.pdf import PDFExtractor
-from extractors.utils import merge_extracted_infos
+from extractors.utils import deduplicate_by_latest_year, merge_extracted_infos
 from extractors.wikipedia import WikipediaExtractor
 from extractors.yahoo import YahooExtractor
 from fetchers.annual_reports import AnnualReportFetcher
@@ -102,15 +102,20 @@ async def main():
                     if item.variable == "ACTIVITY":
                         item.value = nace_code
 
-                # Handle missing variables
+                # Handle missing variables (missing from Yahoo or Wikipedia or date older than 2023)
                 VAR_TO_EXTRACT = ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
-                var_missing = [var for var in VAR_TO_EXTRACT if var not in [item.variable for item in info_merged]]
-
-                if var_missing:
+                var_missing = [
+                    var
+                    for var in VAR_TO_EXTRACT
+                    if not any(item.variable == var and item.year >= 2023 for item in info_merged)
+                ]
+                if var_missing and annual_report.year >= 2024:
                     logger.info(f"Missing variables {var_missing}. Attempting to extract from annual report...")
                     # When some variables are missing, we try to extract from annual_report if available
                     pdf_infos = await pdf_extractor.async_extract_for(annual_report.pdf_url, var_missing)
                     info_merged.extend(pdf_extractor.extend_missing_vars(pdf_infos, mne, annual_report, var_missing))
+                    info_merged = deduplicate_by_latest_year(info_merged)
+
                 # Accumulate results
                 sources = [
                     item

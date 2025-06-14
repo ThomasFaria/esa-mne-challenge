@@ -22,3 +22,12 @@ def merge_extracted_infos(*sources: list[ExtractedInfo]) -> list[ExtractedInfo]:
                     continue
 
     return list(merged.values())
+
+
+def deduplicate_by_latest_year(infos: list[ExtractedInfo]) -> list[ExtractedInfo]:
+    latest = {}
+    for item in infos:
+        var = item.variable
+        if var not in latest or item.year > latest[var].year:
+            latest[var] = item
+    return list(latest.values())
