@@ -91,7 +91,8 @@ async def main():
                 )
                 country_spec = await official_register.async_fetch_for(mne, country=country)
                 if country_spec and country_spec.mne_activity:
-                    nace_code = country_spec.mne_activity
+                    # Add section code before the division code
+                    nace_code = f"{classifier.mapping[country_spec.mne_activity]}{country_spec.mne_activity}"
                 else:
                     logger.info(f"Classifying activity for {mne['NAME']} using NACE classifier...")
                     activity = await classifier.classify(activity_desc)
