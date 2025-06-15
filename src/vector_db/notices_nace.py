@@ -90,7 +90,7 @@ def format_nace_labels(nace_data: Dict[str, Dict[str, Dict[str, str]]]) -> pd.Da
     """
 
     def format_notes(source: Dict[str, str]) -> str:
-        return "\n".join(note for key in ["core_note", "alt_note", "exclusion_note"] if (note := source.get(key)))
+        return "\n".join(note for key in ["core_note", "alt_note"] if (note := source.get(key)))
 
     labels: List[Dict[str, str]] = []
 
@@ -108,7 +108,7 @@ def format_nace_labels(nace_data: Dict[str, Dict[str, Dict[str, str]]]) -> pd.Da
                 "",
                 f"### Parent Section - **{div.get('broader', '')}** - {sec.get('preferred_label', '')}",
                 "",
-                section_notes,
+                section_notes[:773],  # Limit to 773 characters in order not to produce too large prompts
             ]
         ).strip()
 

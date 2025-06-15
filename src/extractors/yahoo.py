@@ -162,7 +162,7 @@ class YahooExtractor:
             int: Total revenue or None if not found.
         """
         try:
-            return ticker.financials.loc["Total Revenue"].iloc[0]
+            return int(ticker.financials.loc["Total Revenue"].iloc[0])
         except KeyError:
             return None
 
@@ -175,7 +175,7 @@ class YahooExtractor:
             int: Total revenue or None if not found.
         """
         try:
-            return ticker.balance_sheet.loc["Total Assets"].iloc[0]
+            return int(ticker.balance_sheet.loc["Total Assets"].iloc[0])
         except KeyError:
             return None
 
