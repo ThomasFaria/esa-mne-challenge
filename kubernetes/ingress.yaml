@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mne-ui-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "360"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "360"
+spec:
+  tls:
+    - hosts:
+        - mne-ui.lab.sspcloud.fr
+  rules:
+    - host: mne-ui.lab.sspcloud.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mne-ui-service
+                port:
+                  number: 8501

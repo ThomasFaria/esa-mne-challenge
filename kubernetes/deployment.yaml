@@ -1,0 +1,64 @@
+# Creating MLflow deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mne-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mne-ui
+  template:
+    metadata:
+      labels:
+        app: mne-ui
+    spec:
+      containers:
+        - name: mne-ui
+          image: thomasfaria/esa-mne-challenge:v0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8501
+          envFrom:
+            # from configmap
+            - configMapRef:
+                name: configmap-mne-ui
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: my-s3-creds
+                  key: accessKey
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: my-s3-creds
+                  key: secretKey
+            - name: LANGFUSE_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: langfuse-id
+                  key: publicKey
+            - name: LANGFUSE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: langfuse-id
+                  key: secretKey
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openai
+                  key: secretKey
+            - name: QDRANT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: qdrant
+                  key: secretKey
+
+          resources:
+            limits:
+              cpu: 30000m
+              memory: 50Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi

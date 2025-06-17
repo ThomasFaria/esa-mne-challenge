@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-mne-ui
+  namespace: tfaria
+data:
+  S3_ENDPOINT: https://minio.lab.sspcloud.fr
+  AWS_S3_ENDPOINT: minio.lab.sspcloud.fr
+  AWS_DEFAULT_REGION: us-east-1
+  LANGFUSE_HOST: https://langfuse.lab.sspcloud.fr
+  OPENAI_API_BASE_URL: https://llm.lab.sspcloud.fr/api
+  URL_EMBEDDING_API: https://vllm-embed2.user.lab.sspcloud.fr/v1
+  QDRANT_URL: https://user-tfaria-qdrant.user.lab.sspcloud.fr/
+  EMBEDDING_MODEL: Qwen/Qwen3-Embedding-8B
