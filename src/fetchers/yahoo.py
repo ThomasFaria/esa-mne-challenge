@@ -33,7 +33,7 @@ class YahooFetcher:
         and a list of supported exchanges for filtering ticker results.
         """
         self.URL_BASE = "https://query2.finance.yahoo.com/v1/finance/search"
-        self.CACHE_PATH = "cache/tickers_cache.json"
+        self.CACHE_PATH = "/tmp/cache/tickers_cache.json"
         self.EXCHANGE_LIST = [
             "CXE",
             "NYQ",
@@ -64,8 +64,10 @@ class YahooFetcher:
         Returns:
             dict: Dictionary mapping MNE names to Yahoo tickers.
         """
-        if not os.path.exists("cache"):
-            os.makedirs("cache")
+        cache_dir = os.path.dirname(cache_path)
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir, exist_ok=True)
+
         if os.path.exists(cache_path):
             try:
                 with open(cache_path, "r", encoding="utf-8") as f:

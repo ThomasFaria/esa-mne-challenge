@@ -33,7 +33,7 @@ class AnnualReportFetcher:
         self.client = llm_client
         self.model = model
         self.prompt = Langfuse().get_prompt("annual-report-extractor", label="production")
-        self.CACHE_PATH = "cache/reports_cache.json"
+        self.CACHE_PATH = "/tmp/cache/reports_cache.json"
         self.reports_cache = self._load_cache(self.CACHE_PATH)
 
         if isinstance(searcher, list):
@@ -51,8 +51,10 @@ class AnnualReportFetcher:
         Returns:
             dict: A dictionary mapping MNE names to [year, pdf_url].
         """
-        if not os.path.exists("cache"):
-            os.makedirs("cache")
+        cache_dir = os.path.dirname(cache_path)
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir, exist_ok=True)
+
         if os.path.exists(cache_path):
             try:
                 with open(cache_path, "r", encoding="utf-8") as f:
