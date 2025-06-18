@@ -4,6 +4,7 @@ import os
 import httpx
 import nest_asyncio
 import streamlit as st
+from langfuse.openai import AsyncOpenAI
 
 import config
 from common.websearch.google import GoogleSearch
@@ -11,6 +12,7 @@ from extractors.utils import merge_extracted_infos
 from extractors.wikipedia import WikipediaExtractor
 from extractors.yahoo import YahooExtractor
 from fetchers.annual_reports import AnnualReportFetcher
+from fetchers.official_register import OfficialRegisterFetcher
 from fetchers.wikipedia import WikipediaFetcher
 from fetchers.yahoo import YahooFetcher
 from nace_classifier.classifier import NACEClassifier
@@ -22,24 +24,33 @@ config.setup()
 @st.cache_resource
 def init_services():
     client = httpx.AsyncClient()
+    llm_client = AsyncOpenAI(
+        base_url="https://llm.lab.sspcloud.fr/api",
+        api_key=os.environ["OPENAI_API_KEY"],
+    )
+    # Fetchers
     wiki = WikipediaFetcher()
     yahoo = YahooFetcher()
+    official_register = OfficialRegisterFetcher()
+    ar_fetcher = AnnualReportFetcher(
+        searcher=[
+            GoogleSearch(max_results=6),
+        ],
+        model="gemma3:27b",
+        llm_client=llm_client,
+    )
+    # Extractors
     wiki_extractor = WikipediaExtractor(fetcher=wiki, client=client)
     yahoo_extractor = YahooExtractor(yahoo)
-    ar_fetcher = AnnualReportFetcher(
-        searcher=[GoogleSearch(max_results=6)],
-        model="gemma3:27b",
-        base_url="https://llm.lab.sspcloud.fr/api",
-        api_key=os.environ["OPENAI_API_KEY"],
-    )
+
     classifier = NACEClassifier(
-        base_url="https://llm.lab.sspcloud.fr/api",
-        api_key=os.environ["OPENAI_API_KEY"],
+        llm_client=llm_client,
+        model="gemma3:27b",
     )
-    return client, wiki_extractor, yahoo_extractor, ar_fetcher, classifier
+    return client, wiki_extractor, yahoo_extractor, ar_fetcher, classifier, official_register
 
 
-client, wiki_extractor, yahoo_extractor, ar_fetcher, classifier = init_services()
+client, wiki_extractor, yahoo_extractor, ar_fetcher, classifier, official_register = init_services()
 
 
 async def extract_initial_info(mne):
@@ -50,11 +61,17 @@ async def extract_initial_info(mne):
     return merge_extracted_infos(yahoo_result[0], wiki_result[0])
 
 
-async def classify_activity(activity_desc, mne_name):
+async def classify_activity(activity_desc, country, mne):
+    mne_name = mne["NAME"]
     st.session_state[f"{mne_name}_activity_status"] = "Classifying..."
+
+    country_spec = await official_register.async_fetch_for(mne, country=country)
+    if country_spec and country_spec.mne_activity:
+        nace_code = f"{classifier.mapping[country_spec.mne_activity]}{country_spec.mne_activity}"
+    else:
+        nace_code = await classifier.classify(activity_desc).code
     try:
-        result = classifier.classify(activity_desc)
-        st.session_state[f"{mne_name}_classified_activity"] = result.code
+        st.session_state[f"{mne_name}_classified_activity"] = nace_code
         st.session_state[f"{mne_name}_activity_status"] = "Done"
     except Exception as e:
         st.session_state[f"{mne_name}_activity_status"] = f"Error: {e}"
@@ -84,14 +101,14 @@ def display_basic_info(info_merged, exclude_vars=None):
 async def orchestrate_workflow(mne_name):
     mne = {"NAME": mne_name, "ID": 0}
     info_merged = await extract_initial_info(mne)
-    info_dict = display_basic_info(info_merged, exclude_vars=["ACTIVITY"])
+    display_basic_info(info_merged, exclude_vars=["ACTIVITY"])
 
     activity_desc = next((item.value for item in info_merged if item.variable == "ACTIVITY"), None)
-    website_url = info_dict.get("WEBSITE", (None,))[0]
-
+    website_url = next((item.value for item in info_merged if item.variable == "WEBSITE"), None)
+    country = next((item.value for item in info_merged if item.variable == "COUNTRY"), None)
     tasks = []
     if activity_desc:
-        tasks.append(classify_activity(activity_desc, mne_name))
+        tasks.append(classify_activity(activity_desc, country, mne))
     if website_url:
         tasks.append(fetch_annual_report(mne, website_url))
 
