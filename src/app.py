@@ -70,57 +70,82 @@ official_register = services["official_register"]
 
 
 async def extract_initial_info(mne):
-    st.info("Extracting initial information from Yahoo and Wikipedia...")
-    yahoo_res, wiki_res = await asyncio.gather(
-        yahoo_extractor.async_extract_for(mne),
-        wiki_extractor.async_extract_for(mne),
-    )
+    with st.spinner("Extracting initial information from Yahoo and Wikipedia..."):
+        yahoo_res, wiki_res = await asyncio.gather(
+            yahoo_extractor.async_extract_for(mne),
+            wiki_extractor.async_extract_for(mne),
+        )
     return merge_extracted_infos(yahoo_res[0], wiki_res[0])
 
 
 async def classify_activity(activity_desc, country, mne_name, mne):
     st.session_state[f"{mne_name}_activity_status"] = "Classifying..."
-    st.info("Classifying the activity using official registers or LLM classifier...")
-    country_spec = await official_register.async_fetch_for(mne, country=country)
-    if country_spec and country_spec.mne_activity:
-        code = f"{classifier.mapping[country_spec.mne_activity]}{country_spec.mne_activity}"
-    else:
-        code = (await classifier.classify(activity_desc)).code
-    st.session_state[f"{mne_name}_classified_activity"] = code
-    st.session_state[f"{mne_name}_activity_status"] = "Done"
+    with st.spinner("Classifying the activity using official registers or LLM classifier..."):
+        country_spec = await official_register.async_fetch_for(mne, country=country)
+        if country_spec and country_spec.mne_activity:
+            code = f"{classifier.mapping[country_spec.mne_activity]}{country_spec.mne_activity}"
+        else:
+            code = (await classifier.classify(activity_desc)).code
+        st.session_state[f"{mne_name}_classified_activity"] = code
+        st.session_state[f"{mne_name}_activity_status"] = "Done"
 
 
 async def fetch_annual_report(mne, mne_name, website_url):
     st.session_state[f"{mne_name}_pdf_status"] = "Searching report..."
-    st.info("Fetching annual report from the web...")
-    query = f"{mne_name} annual report (2024 OR 2023) filetype:pdf {f'site:{website_url}' if website_url else ''}"
-    report = await ar_fetcher.async_fetch_for(mne, web_query=query)
-    if report and report.pdf_url:
-        st.session_state[f"{mne_name}_annual_pdf"] = report
-        st.session_state[f"{mne_name}_pdf_status"] = "Found"
-    else:
-        st.session_state[f"{mne_name}_annual_pdf"] = None
-        st.session_state[f"{mne_name}_pdf_status"] = "Not found"
+    with st.spinner("Fetching annual report from the web..."):
+        query = f"{mne_name} annual report (2024 OR 2023) filetype:pdf {f'site:{website_url}' if website_url else ''}"
+        report = await ar_fetcher.async_fetch_for(mne, web_query=query)
+        if report and report.pdf_url:
+            st.session_state[f"{mne_name}_annual_pdf"] = report
+            st.session_state[f"{mne_name}_pdf_status"] = "Found"
+        else:
+            st.session_state[f"{mne_name}_annual_pdf"] = None
+            st.session_state[f"{mne_name}_pdf_status"] = "Not found"
 
 
 def display_basic_info(info_merged, exclude_vars=None):
     info_dict = {item.variable: (item.value, item.year) for item in info_merged}
-    for var in ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE"]:
-        if exclude_vars and var in exclude_vars:
-            continue
-        val, year = info_dict.get(var, ("Not available", None))
-        status = f"(Year: {year})" if year else ""
-        st.write(f"**{var.capitalize()}:** {val} {status}")
+    with st.container():
+        st.markdown(
+            """
+            <style>
+            .info-card {
+                background-color: #343a40;
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                font-size: 16px;
+                height: 100%;
+            }
+            </style>
+        """,
+            unsafe_allow_html=True,
+        )
+
+        cols = st.columns(3)
+        idx = 0
+        for var in ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE"]:
+            if exclude_vars and var in exclude_vars:
+                continue
+            val, year = info_dict.get(var, ("Not available", None))
+            html = f"""
+            <div class='info-card'>
+                <div><strong>{var}</strong></div>
+                <div style='font-size: 22px; margin-top: 8px'>{val}</div>
+                <div style='font-size: 12px; color: #ccc'>Year: {year if year else "N/A"}</div>
+            </div>
+            """
+            cols[idx % 3].markdown(html, unsafe_allow_html=True)
+            idx += 1
     return info_dict
 
 
 async def orchestrate_workflow(mne_name):
     mne = {"NAME": mne_name, "ID": 0}
-    # 1) extract initial info
     info_merged = await extract_initial_info(mne)
     display_basic_info(info_merged, exclude_vars=["ACTIVITY"])
 
-    # 2) schedule classification and report fetch
     activity_desc = next((i.value for i in info_merged if i.variable == "ACTIVITY"), None)
     website_url = next((i.value for i in info_merged if i.variable == "WEBSITE"), None)
     country = next((i.value for i in info_merged if i.variable == "COUNTRY"), None)
@@ -130,34 +155,28 @@ async def orchestrate_workflow(mne_name):
     if website_url:
         tasks.append(fetch_annual_report(mne, mne_name, website_url))
     if tasks:
-        st.info("Running classification and fetching the annual report...")
-        await asyncio.gather(*tasks)
+        with st.spinner("Running classification and fetching the annual report..."):
+            await asyncio.gather(*tasks)
 
-    # 3) handle missing or outdated vars via PDF
-    # Determine vars missing or older than 2023
     missing = [
         v
         for v in ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
         if not any(i.variable == v and (i.year or 0) >= 2023 for i in info_merged)
     ]
-    # if missing and we have a newer report
     report = st.session_state.get(f"{mne_name}_annual_pdf")
     if missing and report and report.year >= 2024:
-        st.info(f"Extracting {missing} from PDF... this may take a moment.")
-        pdf_infos = await pdf_extractor.async_extract_for(report.pdf_url, missing)
-        info_merged.extend(pdf_extractor.extend_missing_vars(pdf_infos, mne, report, missing))
-        info_merged = deduplicate_by_latest_year(info_merged)
-        st.success("PDF extraction complete.")
+        with st.spinner(f"Extracting {missing} from PDF... this may take a moment."):
+            pdf_infos = await pdf_extractor.async_extract_for(report.pdf_url, missing)
+            info_merged.extend(pdf_extractor.extend_missing_vars(pdf_infos, mne, report, missing))
+            info_merged = deduplicate_by_latest_year(info_merged)
+            st.success("PDF extraction complete.")
     elif missing:
         st.warning("Some variables are missing or outdated, but no recent report available.")
 
-    # 4) final display including activity
     display_basic_info(info_merged)
-    # show classified activity code if present
     code = st.session_state.get(f"{mne_name}_classified_activity")
     if code:
         st.success(f"**Activity Code:** {code}")
-    # show report viewer
     report = st.session_state.get(f"{mne_name}_annual_pdf")
     if report and report.pdf_url:
         st.header("Annual Report Preview")
@@ -166,7 +185,6 @@ async def orchestrate_workflow(mne_name):
         st.info(st.session_state.get(f"{mne_name}_pdf_status"))
 
 
-# --- Streamlit UI ---
 st.title("MNE Info Explorer")
 mne_input = st.text_input("MNE Name:")
 if st.button("Run Extraction") and mne_input:
