@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: configmap-mne-ui
-  namespace: tfaria
+  namespace: user-tfaria
 data:
   S3_ENDPOINT: https://minio.lab.sspcloud.fr
   AWS_S3_ENDPOINT: minio.lab.sspcloud.fr
