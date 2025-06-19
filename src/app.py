@@ -3,6 +3,7 @@ import os
 
 import httpx
 import nest_asyncio
+import pycountry
 import streamlit as st
 from langfuse.openai import AsyncOpenAI
 
@@ -69,6 +70,74 @@ classifier = services["classifier"]
 official_register = services["official_register"]
 
 
+def format_number(value):
+    try:
+        n = float(value)
+        if n >= 1e9:
+            return f"{n / 1e9:.0f} Billion"
+        elif n >= 1e6:
+            return f"{n / 1e6:.0f} Million"
+        return f"{int(n):,}"
+    except Exception:
+        return value
+
+
+def get_country_display(code):
+    try:
+        country = pycountry.countries.get(alpha_2=code)
+        flag = country.flag
+        return f"{flag} {country.name}"
+    except Exception:
+        return code
+
+
+def display_info_cards(info_merged):
+    info_dict = {(i.variable, i.source_url): (i.value, i.year) for i in info_merged}
+    ordered_vars = ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
+    with st.container():
+        st.markdown(
+            """
+        <style>
+        .info-card {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            height: 100%;
+        }
+        </style>
+        """,
+            unsafe_allow_html=True,
+        )
+
+        cols = st.columns(3)
+        idx = 0
+        for var in ordered_vars:
+            for (k, src), (val, year) in info_dict.items():
+                if k != var:
+                    continue
+                if var == "COUNTRY":
+                    val = get_country_display(val)
+                elif var == "EMPLOYEES":
+                    val = format_number(val)
+                elif var in ["TURNOVER", "ASSETS"]:
+                    val = format_number(val)
+                elif var == "WEBSITE":
+                    val = f"<a href='https://{val}' target='_blank'>{val}</a>"
+                html = f"""
+                <div class='info-card'>
+                    <div><strong>{var}</strong></div>
+                    <div style='font-size: 22px; margin-top: 8px'>{val}</div>
+                    <div style='font-size: 12px; color: #ccc'>Year: {year if year else "N/A"}{f' | <a href="{src}" target="_blank" style="color:#aaa">Source</a>' if src else ""}</div>
+                </div>
+                """
+                cols[idx % 3].markdown(html, unsafe_allow_html=True)
+                idx += 1
+                break
+
+
 async def extract_initial_info(mne):
     with st.spinner("Extracting initial information from Yahoo and Wikipedia..."):
         yahoo_res, wiki_res = await asyncio.gather(
@@ -103,48 +172,9 @@ async def fetch_annual_report(mne, mne_name, website_url):
             st.session_state[f"{mne_name}_pdf_status"] = "Not found"
 
 
-def display_basic_info(info_merged, exclude_vars=None):
-    info_dict = {item.variable: (item.value, item.year) for item in info_merged}
-    with st.container():
-        st.markdown(
-            """
-            <style>
-            .info-card {
-                background-color: #343a40;
-                color: white;
-                padding: 20px;
-                border-radius: 10px;
-                text-align: center;
-                font-size: 16px;
-                height: 100%;
-            }
-            </style>
-        """,
-            unsafe_allow_html=True,
-        )
-
-        cols = st.columns(3)
-        idx = 0
-        for var in ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE"]:
-            if exclude_vars and var in exclude_vars:
-                continue
-            val, year = info_dict.get(var, ("Not available", None))
-            html = f"""
-            <div class='info-card'>
-                <div><strong>{var}</strong></div>
-                <div style='font-size: 22px; margin-top: 8px'>{val}</div>
-                <div style='font-size: 12px; color: #ccc'>Year: {year if year else "N/A"}</div>
-            </div>
-            """
-            cols[idx % 3].markdown(html, unsafe_allow_html=True)
-            idx += 1
-    return info_dict
-
-
 async def orchestrate_workflow(mne_name):
     mne = {"NAME": mne_name, "ID": 0}
     info_merged = await extract_initial_info(mne)
-    display_basic_info(info_merged, exclude_vars=["ACTIVITY"])
 
     activity_desc = next((i.value for i in info_merged if i.variable == "ACTIVITY"), None)
     website_url = next((i.value for i in info_merged if i.variable == "WEBSITE"), None)
@@ -173,10 +203,11 @@ async def orchestrate_workflow(mne_name):
     elif missing:
         st.warning("Some variables are missing or outdated, but no recent report available.")
 
-    display_basic_info(info_merged)
-    code = st.session_state.get(f"{mne_name}_classified_activity")
-    if code:
-        st.success(f"**Activity Code:** {code}")
+    for item in info_merged:
+        if item.variable == "ACTIVITY":
+            item.value = st.session_state.get(f"{mne_name}_classified_activity")
+
+    display_info_cards(info_merged)
     report = st.session_state.get(f"{mne_name}_annual_pdf")
     if report and report.pdf_url:
         st.header("Annual Report Preview")
