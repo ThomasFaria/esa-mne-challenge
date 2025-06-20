@@ -5,7 +5,12 @@ import httpx
 import nest_asyncio
 import pycountry
 import streamlit as st
+import streamlit.components.v1 as components
+from currency_symbols import CurrencySymbols
 from langfuse.openai import AsyncOpenAI
+from millify import millify, prettify
+from rdflib import Literal
+from rdflib.namespace import SKOS
 
 import config
 from common.websearch.google import GoogleSearch
@@ -18,6 +23,7 @@ from fetchers.official_register import OfficialRegisterFetcher
 from fetchers.wikipedia import WikipediaFetcher
 from fetchers.yahoo import YahooFetcher
 from nace_classifier.classifier import NACEClassifier
+from vector_db.notices_nace import BASE_URL, extract_notes, get_rdf_graph
 
 nest_asyncio.apply()
 config.setup()
@@ -70,18 +76,6 @@ classifier = services["classifier"]
 official_register = services["official_register"]
 
 
-def format_number(value):
-    try:
-        n = float(value)
-        if n >= 1e9:
-            return f"{n / 1e9:.0f} Billion"
-        elif n >= 1e6:
-            return f"{n / 1e6:.0f} Million"
-        return f"{int(n):,}"
-    except Exception:
-        return value
-
-
 def get_country_display(code):
     try:
         country = pycountry.countries.get(alpha_2=code)
@@ -91,48 +85,96 @@ def get_country_display(code):
         return code
 
 
-def display_info_cards(info_merged):
-    info_dict = {(i.variable, i.source_url): (i.value, i.year) for i in info_merged}
-    ordered_vars = ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
-    with st.container():
-        st.markdown(
-            """
-        <style>
-        .info-card {
-            background-color: #343a40;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 16px;
-            height: 100%;
-        }
-        </style>
-        """,
-            unsafe_allow_html=True,
-        )
+def render_card(title, value, year, source):
+    return f"""
+    <div class='info-card'>
+        <div><strong>{title}</strong></div>
+        <div style='font-size: 22px; margin-top: 8px; margin-bottom: 8px'>{value}</div>
+        <div style='font-size: 12px; color: #ccc'>Year: {year if year else "N/A"}{f' | <a href="{source}" target="_blank" style="color:#aaa">Source</a>' if source else ""}</div>
+    </div>
+    """
 
-        cols = st.columns(3)
-        idx = 0
-        for var in ordered_vars:
-            for (k, src), (val, year) in info_dict.items():
-                if k != var:
-                    continue
-                if var == "COUNTRY":
-                    val = get_country_display(val)
-                elif var == "EMPLOYEES":
-                    val = format_number(val)
-                elif var in ["TURNOVER", "ASSETS"]:
-                    val = format_number(val)
-                elif var == "WEBSITE":
-                    val = f"<a href='https://{val}' target='_blank'>{val}</a>"
-                html = f"""
-                <div class='info-card'>
-                    <div><strong>{var}</strong></div>
-                    <div style='font-size: 22px; margin-top: 8px'>{val}</div>
-                    <div style='font-size: 12px; color: #ccc'>Year: {year if year else "N/A"}{f' | <a href="{src}" target="_blank" style="color:#aaa">Source</a>' if src else ""}</div>
-                </div>
-                """
+
+def display_country(item):
+    return render_card("COUNTRY", get_country_display(item.value), item.year, item.source_url)
+
+
+def display_employee(item):
+    return render_card("EMPLOYEES", prettify(item.value), item.year, item.source_url)
+
+
+def display_turnover(item):
+    formatted = (
+        f"{millify(item.value, precision=3)} {CurrencySymbols.get_symbol(item.currency)}"
+        if hasattr(item, "currency")
+        else millify(item.value, precision=3)
+    )
+    return render_card("TURNOVER", formatted, item.year, item.source_url)
+
+
+def display_assets(item):
+    formatted = (
+        f"{millify(item.value, precision=3)} {CurrencySymbols.get_symbol(item.currency)}"
+        if hasattr(item, "currency")
+        else millify(item.value, precision=3)
+    )
+    return render_card("ASSETS", formatted, item.year, item.source_url)
+
+
+def display_website(item):
+    return render_card(
+        "WEBSITE", f"<a href='https://{item.value}' target='_blank'>{item.value}</a>", item.year, item.source_url
+    )
+
+
+def display_activity(item):
+    title = "ACTIVITY"
+    value = item.value
+    graph = get_rdf_graph(f"{BASE_URL}/{value[1:]}")
+    subj = next(graph.subjects(SKOS.notation, Literal(value[1:])))
+    description = extract_notes(graph, subj)["preferred_label"]
+    html = f"""
+    <div class='info-card'>
+        <div><strong>{title}</strong></div>
+        <div style='font-size: 22px; margin-top: 8px; margin-bottom: 8px'>{value}</div>
+        <div style='font-size: 12px; color: #ccc'>{description}</div>
+    </div>
+    """
+    return html
+
+
+def display_info_cards(info_merged):
+    var_to_fn = {
+        "COUNTRY": display_country,
+        "EMPLOYEES": display_employee,
+        "TURNOVER": display_turnover,
+        "ASSETS": display_assets,
+        "WEBSITE": display_website,
+        "ACTIVITY": display_activity,
+    }
+    st.markdown(
+        """
+    <style>
+    .info-card {
+        background-color: #343a40;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 16px;
+        height: 100%;
+    }
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    cols = st.columns(3)
+    idx = 0
+    for var in var_to_fn:
+        for item in info_merged:
+            if item.variable == var:
+                html = var_to_fn[var](item)
                 cols[idx % 3].markdown(html, unsafe_allow_html=True)
                 idx += 1
                 break
@@ -212,6 +254,7 @@ async def orchestrate_workflow(mne_name):
     if report and report.pdf_url:
         st.header("Annual Report Preview")
         st.markdown(f"[Download Report]({report.pdf_url})")
+        components.iframe(report.pdf_url, height=600)
     else:
         st.info(st.session_state.get(f"{mne_name}_pdf_status"))
 

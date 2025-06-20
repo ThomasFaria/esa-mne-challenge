@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "asyncio>=3.4.3",
+    "currency-symbols>=2.0.4",
     "duckduckgo-search>=8.0.1",
     "googlesearch-python>=1.3.0",
     "hf-xet>=1.1.3",
@@ -16,6 +17,7 @@ dependencies = [
     "langfuse>=2.60.3",
     "litellm>=1.67.5",
     "logfire>=3.16.0",
+    "millify>=0.1.1",
     "mwparserfromhell>=0.6.6",
     "nest-asyncio>=1.6.0",
     "openai>=1.76.2",
