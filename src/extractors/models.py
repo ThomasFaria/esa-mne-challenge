@@ -12,7 +12,12 @@ class ExtractedInfo(BaseModel):
     source_url: HttpUrl = Field(..., description="Source URL")
     value: str | int = Field(..., description="Extracted value")
     currency: Optional[str] = Field("N/A", description="Currency of the value, if applicable")
-    year: Optional[int] = Field(..., description="Fiscal year of the extracted information")
+    year: Optional[int] = Field(
+        ...,
+        description="Fiscal year of the extracted information",
+        ge=2018,  # Must be >= 2018
+        le=2025,  # Must be <= 2025
+    )
 
 
 class PDFExtractionResult(BaseModel):
