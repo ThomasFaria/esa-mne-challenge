@@ -79,8 +79,7 @@ official_register = services["official_register"]
 def get_country_display(code):
     try:
         country = pycountry.countries.get(alpha_2=code)
-        flag = country.flag
-        return f"{flag} {country.name}"
+        return f"{country.flag} {country.name}"
     except Exception:
         return code
 
@@ -128,16 +127,15 @@ def display_website(item):
 
 
 def display_activity(item):
-    title = "ACTIVITY"
-    value = item.value
-    graph = get_rdf_graph(f"{BASE_URL}/{value[1:]}")
-    subj = next(graph.subjects(SKOS.notation, Literal(value[1:])))
-    description = extract_notes(graph, subj)["preferred_label"]
+    code = item.value
+    graph = get_rdf_graph(f"{BASE_URL}/{code[1:]}")
+    subj = next(graph.subjects(SKOS.notation, Literal(code[1:])), None)
+    desc = extract_notes(graph, subj)["preferred_label"] if subj else ""
     html = f"""
     <div class='info-card'>
-        <div><strong>{title}</strong></div>
-        <div style='font-size: 22px; margin-top: 8px; margin-bottom: 8px'>{value}</div>
-        <div style='font-size: 12px; color: #ccc'>{description}</div>
+        <div><strong>{"ACTIVITY"}</strong></div>
+        <div style='font-size: 22px; margin-top: 8px; margin-bottom: 8px'>{code}</div>
+        <div style='font-size: 12px; color: #ccc'>{desc}</div>
     </div>
     """
     return html
@@ -215,7 +213,7 @@ async def fetch_annual_report(mne, mne_name, website_url):
 
 
 async def orchestrate_workflow(mne_name):
-    mne = {"NAME": mne_name, "ID": 0}
+    mne = {"NAME": mne_name.upper(), "ID": 0}
     info_merged = await extract_initial_info(mne)
 
     activity_desc = next((i.value for i in info_merged if i.variable == "ACTIVITY"), None)
@@ -227,8 +225,7 @@ async def orchestrate_workflow(mne_name):
     if website_url:
         tasks.append(fetch_annual_report(mne, mne_name, website_url))
     if tasks:
-        with st.spinner("Running classification and fetching the annual report..."):
-            await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks)
 
     missing = [
         v
