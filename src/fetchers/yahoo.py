@@ -138,15 +138,20 @@ class YahooFetcher:
         ):
             mne_name_cleaned = f"{mne_name_cleaned} POLAND"
 
-        # Randomly select a user agent for the request
-        headers = {"User-Agent": random.choice(USER_AGENTS)}
-        params = {
-            "q": mne_name_cleaned,
-            "quotes_count": 10,
-        }
-        response = requests.get(self.URL_BASE, headers=headers, params=params)
-        # Check if the request was successful
-        if response.status_code != 200:
+        for attempt in range(5):
+            # Randomly select a user agent for the request
+            headers = {"User-Agent": random.choice(USER_AGENTS)}
+            params = {
+                "q": mne_name_cleaned,
+                "quotes_count": 10,
+            }
+            response = requests.get(self.URL_BASE, headers=headers, params=params)
+            if response.status_code == 200:
+                break  # Successful request, exit the loop
+            else:
+                logger.warning(f"Attempt {attempt + 1}: Failed with status code {response.status_code}")
+
+        else:
             logger.error(f"Failed to fetch Yahoo ticker for {mne_name}: {response.status_code}")
             return None
 

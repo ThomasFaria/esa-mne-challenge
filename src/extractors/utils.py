@@ -14,12 +14,22 @@ def merge_extracted_infos(*sources: list[ExtractedInfo]) -> list[ExtractedInfo]:
             if key not in merged:
                 merged[key] = item
             else:
-                # Compare years
-                if item.year and (merged[key].year is None or item.year > merged[key].year):
+                current = merged[key]
+
+                # Special rule for EMPLOYEES from WIKIPEDIA. (For employees, wikipedia is often a more reliable ad up to date source)
+                if key == "EMPLOYEES":
+                    if "wikipedia" in item.source_url and item.year and item.year >= 2024:
+                        merged[key] = item
+                        continue
+                    elif "wikipedia" in current.source_url and current.year and current.year >= 2024:
+                        # Keep existing if it already satisfies the rule
+                        continue
+
+                # Default merging logic by year
+                if item.year and (current.year is None or item.year > current.year):
                     merged[key] = item
-                elif item.year == merged[key].year:
-                    # Keep the first occurrence (keep existing)
-                    continue
+                elif item.year == current.year:
+                    continue  # Keep the existing item
 
     return list(merged.values())
 
