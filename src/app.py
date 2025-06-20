@@ -85,11 +85,12 @@ def get_country_display(code):
 
 
 def render_card(title, value, year, source):
+    meta_block = f'<div class="info-meta">Year: {year if year else "N/A"}{f' | <a href="{source}" target="_blank" style="color:#aaa">Source</a>' if source else ""}</div>'
     return f"""
     <div class='info-card'>
         <div><strong>{title}</strong></div>
-        <div style='font-size: 22px; margin-top: 8px; margin-bottom: 8px'>{value}</div>
-        <div style='font-size: 12px; color: #ccc'>Year: {year if year else "N/A"}{f' | <a href="{source}" target="_blank" style="color:#aaa">Source</a>' if source else ""}</div>
+        <div class='info-value'>{value}</div>
+        {meta_block}
     </div>
     """
 
@@ -131,14 +132,14 @@ def display_activity(item):
     graph = get_rdf_graph(f"{BASE_URL}/{code[1:]}")
     subj = next(graph.subjects(SKOS.notation, Literal(code[1:])), None)
     desc = extract_notes(graph, subj)["preferred_label"] if subj else ""
-    html = f"""
+    desc_block = f'<div class="info-desc">{desc}</div>'
+    return f"""
     <div class='info-card'>
-        <div><strong>{"ACTIVITY"}</strong></div>
-        <div style='font-size: 22px; margin-top: 8px; margin-bottom: 8px'>{code}</div>
-        <div style='font-size: 12px; color: #ccc'>{desc}</div>
+        <div><strong>ACTIVITY</strong></div>
+        <div class='info-value'>{code}</div>
+        {desc_block}
     </div>
     """
-    return html
 
 
 def display_info_cards(info_merged):
@@ -160,22 +161,51 @@ def display_info_cards(info_merged):
         border-radius: 10px;
         text-align: center;
         font-size: 16px;
-        height: 100%;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+    .info-value {
+        font-size: 22px;
+        margin: 8px 0;
+    }
+    .info-meta {
+        font-size: 12px;
+        color: #ccc;
+    }
+    .info-desc {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 4px;
+        white-space: normal;
     }
     </style>
     """,
         unsafe_allow_html=True,
     )
 
-    cols = st.columns(3)
-    idx = 0
+    # Collect all items that exist
+    available_items = []
     for var in var_to_fn:
         for item in info_merged:
             if item.variable == var:
-                html = var_to_fn[var](item)
-                cols[idx % 3].markdown(html, unsafe_allow_html=True)
-                idx += 1
+                available_items.append((var, item))
                 break
+
+    # Display items in rows of 3
+    for i in range(0, len(available_items), 3):
+        cols = st.columns(3)
+        row_items = available_items[i : i + 3]
+
+        for j, (var, item) in enumerate(row_items):
+            html = var_to_fn[var](item)
+            cols[j].markdown(html, unsafe_allow_html=True)
+
+        # Add empty columns if the row is not complete
+        for j in range(len(row_items), 3):
+            cols[j].empty()
 
 
 async def extract_initial_info(mne):
