@@ -18,10 +18,10 @@ def merge_extracted_infos(*sources: list[ExtractedInfo]) -> list[ExtractedInfo]:
 
                 # Special rule for EMPLOYEES from WIKIPEDIA. (For employees, wikipedia is often a more reliable ad up to date source)
                 if key == "EMPLOYEES":
-                    if "wikipedia" in item.source_url and item.year and item.year >= 2024:
+                    if "wikipedia" in str(item.source_url) and item.year and item.year >= 2024:
                         merged[key] = item
                         continue
-                    elif "wikipedia" in current.source_url and current.year and current.year >= 2024:
+                    elif "wikipedia" in str(current.source_url) and current.year and current.year >= 2024:
                         # Keep existing if it already satisfies the rule
                         continue
 

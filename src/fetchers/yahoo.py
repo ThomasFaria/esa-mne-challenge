@@ -14,7 +14,7 @@ from .utils import clean_mne_name
 logger = logging.getLogger(__name__)
 
 USER_AGENTS = [
-    "Mozilla/5.0",
+    "AppleWebKit/537.36 (KHTML, like Gecko)",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
     "Mozilla/5.0 (X11; Linux x86_64)",
@@ -140,7 +140,10 @@ class YahooFetcher:
 
         for attempt in range(5):
             # Randomly select a user agent for the request
-            headers = {"User-Agent": random.choice(USER_AGENTS)}
+            headers = {
+                "User-Agent": random.choice(USER_AGENTS),
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+            }
             params = {
                 "q": mne_name_cleaned,
                 "quotes_count": 10,
@@ -184,8 +187,12 @@ class YahooFetcher:
 
         if ticker:
             # Make sure the ticker is valid by making a request to Yahoo
-            status = requests.head(
-                f"https://finance.yahoo.com/quote/{ticker}/profile/", headers={"User-Agent": "Mozilla/5.0"}
+            status = requests.get(
+                f"https://finance.yahoo.com/quote/{ticker}/profile/",
+                headers={
+                    "User-Agent": random.choice(USER_AGENTS),
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                },
             ).status_code
             # Get the most recent year of the financials
             year = yf.Ticker(ticker).financials.columns[0].year
@@ -215,7 +222,7 @@ class YahooFetcher:
                     ),
                 ]
             else:
-                logger.error(f"Yahoo Finance page not found for ticker: {ticker}")
+                logger.error(f"Yahoo Finance page not found for ticker: {ticker} error :{status}")
                 return None
 
     async def async_fetch_for(self, mne: dict) -> Tuple[Optional[OtherSources], Optional[str]]:
