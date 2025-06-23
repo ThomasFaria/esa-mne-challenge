@@ -43,17 +43,17 @@ def init_services():
     official_register = OfficialRegisterFetcher()
     ar_fetcher = AnnualReportFetcher(
         searcher=[GoogleSearch(max_results=6)],
-        model="gemma3:27b",
+        model=os.getenv("GENERATION_MODEL"),
         llm_client=llm_client,
     )
     # Extractors
     wiki_extractor = WikipediaExtractor(fetcher=wiki, client=client)
     yahoo_extractor = YahooExtractor(yahoo)
-    pdf_extractor = PDFExtractor(client=client, llm_client=llm_client, model="gemma3:27b")
+    pdf_extractor = PDFExtractor(client=client, llm_client=llm_client, model=os.getenv("GENERATION_MODEL"))
 
     classifier = NACEClassifier(
         llm_client=llm_client,
-        model="gemma3:27b",
+        model=os.getenv("GENERATION_MODEL"),
     )
     return {
         "client": client,
@@ -157,13 +157,16 @@ def render_header():
 def render_footer():
     """Render footer with additional information"""
     st.markdown(
-        """
+        f"""
     <div class="footer">
         <div class="footer-section">
             Developed by Team Toad for Eurostat MNE Discovery & Extraction Challenges
         </div>
         <div class="footer-section">
             Please use responsibly and verify all extracted information
+        </div>
+        <div class="footer-section">
+            The LLM currently used for classification and web search is {os.getenv("GENERATION_MODEL")}
         </div>
     </div>
     """,
