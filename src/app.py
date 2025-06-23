@@ -11,6 +11,7 @@ from langfuse.openai import AsyncOpenAI
 from millify import millify, prettify
 from rdflib import Literal
 from rdflib.namespace import SKOS
+from streamlit_javascript import st_javascript
 
 import config
 from common.websearch.google import GoogleSearch
@@ -65,6 +66,8 @@ def init_services():
     }
 
 
+user_agent = st_javascript("navigator.userAgent")
+
 # initialize services
 services = init_services()
 client = services["client"]
@@ -74,6 +77,98 @@ pdf_extractor = services["pdf_extractor"]
 ar_fetcher = services["ar_fetcher"]
 classifier = services["classifier"]
 official_register = services["official_register"]
+
+
+def define_styles():
+    st.markdown(
+        """
+    <style>
+    .info-card {
+        background-color: #343a40;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 16px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+    .info-value {
+        font-size: 22px;
+        margin: 8px 0;
+    }
+    .info-meta {
+        font-size: 12px;
+        color: #ccc;
+    }
+    .info-desc {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 4px;
+        white-space: normal;
+    }
+    .disclaimer-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 5px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-size: 14px;
+        color: #856404;
+    }
+    .disclaimer-box strong {
+        color: #b8860b;
+    }
+    .footer {
+        margin-top: 3rem;
+        padding: 2rem 0 1rem 0;
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+        color: #666;
+        font-size: 12px;
+    }
+    .footer-section {
+        margin-bottom: 1rem;
+    }
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_header():
+    """Render header with logo and app information"""
+
+    header_html = """
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Multinational Enterprise Explorer</h1>
+        <a href="https://statistics-awards.eu/web-intelligence/" target="_blank">
+            <img src="https://statistics-awards.eu/static/img/version_3_logo_main.svg" alt="ESA Logo" style="height:150px;">
+        </a>
+    </div>
+    """
+
+    st.markdown(header_html, unsafe_allow_html=True)
+
+
+def render_footer():
+    """Render footer with additional information"""
+    st.markdown(
+        """
+    <div class="footer">
+        <div class="footer-section">
+            Developed by Team Toad for Eurostat MNE Discovery & Extraction Challenges
+        </div>
+        <div class="footer-section">
+            Please use responsibly and verify all extracted information
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def get_country_display(code):
@@ -151,40 +246,6 @@ def display_info_cards(info_merged):
         "WEBSITE": display_website,
         "ACTIVITY": display_activity,
     }
-    st.markdown(
-        """
-    <style>
-    .info-card {
-        background-color: #343a40;
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 16px;
-        height: 150px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-    }
-    .info-value {
-        font-size: 22px;
-        margin: 8px 0;
-    }
-    .info-meta {
-        font-size: 12px;
-        color: #ccc;
-    }
-    .info-desc {
-        font-size: 12px;
-        color: #aaa;
-        margin-top: 4px;
-        white-space: normal;
-    }
-    </style>
-    """,
-        unsafe_allow_html=True,
-    )
 
     # Collect all items that exist
     available_items = []
@@ -277,16 +338,39 @@ async def orchestrate_workflow(mne_name):
             item.value = st.session_state.get(f"{mne_name}_classified_activity")
 
     display_info_cards(info_merged)
+    st.markdown(
+        """
+    <div class="disclaimer-box">
+        <strong>⚠️ Data Accuracy:</strong> Results provided by this application are automatically extracted and may contain errors. Please verify all information independently before making any business decisions or reusing the data.
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
     report = st.session_state.get(f"{mne_name}_annual_pdf")
     if report and report.pdf_url:
         st.header("Annual Report Preview")
         st.markdown(f"[Download Report]({report.pdf_url})")
+        if user_agent and "Edg" in user_agent:
+            st.markdown(
+                """
+            <div class="disclaimer-box">
+                <strong>⚠️ Browser Compatibility:</strong> PDF preview functionality may not work properly in Microsoft Edge. For optimal experience, please use Mozilla Firefox or Google Chrome.
+            </div>
+            """,
+                unsafe_allow_html=True,
+            )
         components.iframe(report.pdf_url, height=600)
     else:
         st.info(st.session_state.get(f"{mne_name}_pdf_status"))
 
 
-st.title("MNE Info Explorer")
+define_styles()
+
+render_header()
+
 mne_input = st.text_input("MNE Name:")
 if st.button("Run Extraction") and mne_input:
     asyncio.run(orchestrate_workflow(mne_input))
+
+render_footer()
