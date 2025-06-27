@@ -1,6 +1,6 @@
 import logging
 import random
-from typing import Dict, List
+from typing import List
 
 from duckduckgo_search import DDGS
 
@@ -19,11 +19,23 @@ logger = logging.getLogger(__name__)
 
 
 class DuckDuckGoSearch(WebSearch):
+    """
+    Uses `duckduckgo_search` module to query DuckDuckGo for a given string and return SearchResult objects.
+    """
+
     def __init__(self, max_results: int = 5):
         self.max_results = max_results
 
-    async def search(self, query: str) -> List[Dict]:
-        logger.info(f"Searching DuckDuckGo for '{query}'")
+    async def search(self, query: str) -> List[SearchResult]:
+        """
+        Perform an asynchronous DuckDuckGo search.
+
+        Args:
+            query (str): The search string.
+        Returns:
+            List[SearchResult]: List of valid search results.
+        """
+        logger.debug(f"Searching DuckDuckGo for '{query}'")
 
         # Randomly select a user agent for the request
         ua1 = random.choice(USER_AGENTS)

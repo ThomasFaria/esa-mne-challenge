@@ -1,3 +1,8 @@
+"""
+Abstract base class for implementing custom search engines that return
+search results in a standardized list-of-dicts format.
+"""
+
 from abc import ABC, abstractmethod
 from typing import Dict, List
 

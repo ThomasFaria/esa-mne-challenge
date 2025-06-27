@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List
+from typing import List
 
 from googlesearch import search as google_search
 from pydantic import ValidationError
@@ -11,12 +11,24 @@ logger = logging.getLogger(__name__)
 
 
 class GoogleSearch(WebSearch):
+    """
+    Uses `googlesearch` module to query Google for a given string and return SearchResult objects.
+    """
+
     def __init__(self, max_results: int = 5, region: str = None, sleep_interval: int = 0):
         self.max_results = max_results
         self.region = region
         self.sleep_interval = sleep_interval
 
-    async def search(self, query: str) -> List[Dict]:
+    async def search(self, query: str) -> List[SearchResult]:
+        """
+        Perform an asynchronous Google search.
+
+        Args:
+            query (str): The search string.
+        Returns:
+            List[SearchResult]: List of valid search results.
+        """
         logger.debug(f"Searching Google for '{query}'")
         raw_results = list(
             google_search(

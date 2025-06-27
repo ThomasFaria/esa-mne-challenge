@@ -16,7 +16,15 @@ logger = logging.getLogger(__name__)
 
 class YahooExtractor:
     """
-    A class to extract financial informations from Yahoo Finance page for MNEs.
+    Extractor for retrieving structured company information from Yahoo Finance using yfinance.
+
+    It attempts to collect:
+    - Country (ISO2)
+    - Website
+    - Number of employees
+    - Turnover
+    - Total assets
+    - Activity description (sector + industry + summary)
     """
 
     def __init__(self, fetcher: Optional[YahooFetcher] = None):

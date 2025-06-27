@@ -26,6 +26,20 @@ class QuantifiedData:
 
 
 class WikipediaExtractor:
+    """
+    Extracts structured company information from Wikipedia using both the Wikipedia API and Wikidata.
+
+    It attempts to collect:
+    - Country (ISO2)
+    - Website
+    - Number of employees
+    - Turnover
+    - Total assets
+    - Summary of the activity
+
+    Sources are resolved in parallel, prioritized by freshness or data quality.
+    """
+
     def __init__(self, fetcher: WikipediaFetcher, client: httpx.AsyncClient):
         self.wikidata = WikiDataExtractor(client)
         self.api = WikipediaAPIExtractor(client)
@@ -34,6 +48,15 @@ class WikipediaExtractor:
         self.min_valid_year = 2024
 
     async def extract_wikipedia_infos(self, mne: dict) -> Optional[List[ExtractedInfo]]:
+        """
+        Given an MNE, resolves the associated Wikipedia page and extracts variables of interest.
+
+        Args:
+            mne (dict): A dictionary representing a multinational enterprise.
+
+        Returns:
+            Optional[List[ExtractedInfo]]: List of extracted variables (country, assets, etc.) with metadata.
+        """
         mne_name = mne.get("NAME")
         mne_id = mne.get("ID")
 
@@ -160,6 +183,10 @@ class WikipediaExtractor:
 
 
 class WikiDataExtractor:
+    """
+    Extracts structured company information from Wikidata.
+    """
+
     def __init__(self, client: httpx.AsyncClient):
         self.client = client
         self.api_base = "https://www.wikidata.org/wiki/Special:EntityData"
@@ -245,6 +272,10 @@ class WikiDataExtractor:
 
 
 class WikipediaAPIExtractor:
+    """
+    Extracts structured company information from Wikidata.
+    """
+
     INFOBOX_KEYS = {
         "location": ["hq_location_country", "location_country", "location", "hq_city", "hq_location"],
         "num_employees": ["num_employees"],
