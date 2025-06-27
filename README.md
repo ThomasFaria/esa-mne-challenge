@@ -1,6 +1,6 @@
 # ESA-MNE Challenge: Multinational Enterprise Profiling Pipeline
 
-This repository implements a complete, modular, and intelligent pipeline to **profile multinational enterprises (MNEs)** using a combination of **public web data**, **PDF extraction**, and **LLM-assisted classification**. It is designed to produce high-quality structured data for both the **discovery** and **extraction** challenges of the ESA-MNE competition.
+This repository implements a complete, modular, and intelligent pipeline to **profile multinational enterprises (MNEs)** using a combination of **public web data**, **PDF extraction**, and **LLM-assisted classification**. It is designed to produce structured data for both the **discovery** and **extraction** challenges of the ESA-MNE competition.
 
 ---
 
@@ -24,38 +24,7 @@ The final output includes:
 
 ## 🧽 Pipeline Architecture
 
-```text
-[ MNE List (CSV) ]
-        │
-        ▼
-┌────────────────────────────┐
-│      run_pipeline.py       │
-└────────────────────────────┘
-        │
-        ▼
-┌──────────────┬───────────────┬───────────────┐
-│  Wikipedia   │     Yahoo     │ Official Reg. │
-│  Extractor   │  Extractor    │   Fetcher     │
-└──────────────┴───────────────┴───────────────┘
-        │              │
-        └────┬─────────┘
-             ▼
-       Merge & Deduplicate
-             ▼
-       [ Web Search: Annual Report ]
-             ▼
-     ┌────────────────────────────┐
-     │ PDF Extraction (LLM + PDF) │
-     └────────────────────────────┘
-             ▼
-     ┌────────────────────────────┐
-     │   NACE Classification      │
-     │ (VectorDB + LLM + Mapping) │
-     └────────────────────────────┘
-             ▼
-     Write Final Submissions
-
----
+![Pipeline Architecture](public/diag-challenge-mne-extraction.png)
 
 ## 📁 Repository Structure
 
@@ -98,12 +67,7 @@ The final output includes:
 ### 1. Environment
 
 ```bash
-# Python version (e.g. from .python-version)
-pyenv install 3.10.9
-pyenv local 3.10.9
-
-# Install dependencies (Poetry or pip+pyproject)
-pip install -r requirements.txt
+uv sync
 ```
 
 ### 2. Environment Variables
@@ -118,11 +82,12 @@ OPENAI_API_KEY=your-api-key
 
 ## ▶️ Running the Pipeline
 
-Go to the app.
+To try the pipeline, the easiest is that you test it via the [App](https://mne-ui.lab.sspcloud.fr/)
+
+If you wish to run the pipeline locally to generate submission files for the challenge, you’ll need to configure Langfuse for LLM trace logging, set up an OpenAI client, and connect to the Qdrant vector database. The simplest way to get started is by using the [**SSPCloud** platform](https://datalab.sspcloud.fr/), and I’d be happy to assist with setup if needed.
 
 
-to produce submission file for the challenge need to run. Need to configure Langfuse to track LLM traces, OpenAI client, Qdrant Vector database => so the easiest is to deploy this on Onyxia.
-
+To run the pipeline, execute the following command:
 
 ```bash
 uv python src/run_pipeline.py
@@ -174,17 +139,6 @@ Results will be saved as:
 
 ---
 
-## 📦 Deployment
-
-```bash
-# Build Docker image (via GitHub Actions or locally)
-docker build -t esa-mne-pipeline .
-```
-
-Optional Kubernetes manifests are provided under `/kubernetes`.
-
----
-
 ## 📄 License
 
 MIT License
@@ -196,9 +150,3 @@ MIT License
 * Thomas Faria
 
 ---
-
-
-
-
-kubectl cp cache/reports_cache.json user-tfaria/mne-ui-5566545478-nl8lb:/tmp/cache/reports_cache.json
-kubectl cp cache/tickers_cache.json user-tfaria/mne-ui-5566545478-nl8lb:/tmp/cache/tickers_cache.json
