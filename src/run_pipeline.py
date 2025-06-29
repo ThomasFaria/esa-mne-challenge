@@ -122,7 +122,13 @@ async def main():
                         item.value = nace_code
 
                 # STEP 6: Fill missing values via annual report if available
-                VAR_TO_EXTRACT = ["COUNTRY", "EMPLOYEES", "TURNOVER", "ASSETS", "WEBSITE", "ACTIVITY"]
+                VAR_TO_EXTRACT = [
+                    "COUNTRY",
+                    "EMPLOYEES",
+                    "TURNOVER",
+                    "ASSETS",
+                    "WEBSITE",
+                ]
                 var_missing = [
                     var
                     for var in VAR_TO_EXTRACT

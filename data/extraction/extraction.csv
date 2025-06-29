@@ -18,7 +18,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18503440;MAGNA INTERNATIONAL INC;WEBSITE;https://finance.yahoo.com/quote/MGA/profile/;magna.com;N/A;2024
 18503440;MAGNA INTERNATIONAL INC;ACTIVITY;https://finance.yahoo.com/quote/MGA/profile/;C29;N/A;2024
 18511746;PUBLICIS GROUPE S A;COUNTRY;https://finance.yahoo.com/quote/PU4.F/profile/;FR;N/A;2024
-18511746;PUBLICIS GROUPE S A;EMPLOYEES;https://finance.yahoo.com/quote/PU4.F/profile/;107273;N/A;2024
+18511746;PUBLICIS GROUPE S A;EMPLOYEES;https://en.wikipedia.org/wiki/Publicis;103000;N/A;2024
 18511746;PUBLICIS GROUPE S A;TURNOVER;https://finance.yahoo.com/quote/PU4.F/financials/;16030000000;EUR;2024
 18511746;PUBLICIS GROUPE S A;ASSETS;https://finance.yahoo.com/quote/PU4.F/balance-sheet/;39854000000;EUR;2024
 18511746;PUBLICIS GROUPE S A;WEBSITE;https://finance.yahoo.com/quote/PU4.F/profile/;publicisgroupe.com;N/A;2024
@@ -41,12 +41,12 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18520469;FERRERO;ASSETS;;;;
 18520469;FERRERO;WEBSITE;https://en.wikipedia.org/wiki/Ferrero_(company);ferrero.com;N/A;2024
 18520469;FERRERO;ACTIVITY;https://en.wikipedia.org/wiki/Ferrero_(company);C10;N/A;2024
-18521399;SUMITOMO CORPORATION;COUNTRY;https://finance.yahoo.com/quote/SUMB.F/profile/;JP;N/A;2024
-18521399;SUMITOMO CORPORATION;EMPLOYEES;https://en.wikipedia.org/wiki/Sumitomo_Corporation;72642;N/A;2020
-18521399;SUMITOMO CORPORATION;TURNOVER;https://finance.yahoo.com/quote/SUMB.F/financials/;6910302000000;JPY;2024
-18521399;SUMITOMO CORPORATION;ASSETS;https://finance.yahoo.com/quote/SUMB.F/balance-sheet/;11032583000000;JPY;2024
-18521399;SUMITOMO CORPORATION;WEBSITE;https://finance.yahoo.com/quote/SUMB.F/profile/;sumitomocorp.com;N/A;2024
-18521399;SUMITOMO CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/SUMB.F/profile/;G46;N/A;2024
+18521399;SUMITOMO CORPORATION;COUNTRY;https://finance.yahoo.com/quote/SUMB.F/profile/;JP;N/A;2025
+18521399;SUMITOMO CORPORATION;EMPLOYEES;https://www.sumitomocorp.com/-/media/Files/hq/ir/report/investors-guide/2024/ar2024en_all.pdf;79692;N/A;2024
+18521399;SUMITOMO CORPORATION;TURNOVER;https://finance.yahoo.com/quote/SUMB.F/financials/;7292084000000;JPY;2025
+18521399;SUMITOMO CORPORATION;ASSETS;https://finance.yahoo.com/quote/SUMB.F/balance-sheet/;11631161000000;JPY;2025
+18521399;SUMITOMO CORPORATION;WEBSITE;https://finance.yahoo.com/quote/SUMB.F/profile/;sumitomocorp.com;N/A;2025
+18521399;SUMITOMO CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/SUMB.F/profile/;G46;N/A;2025
 18527213;COMPAGNIE DE SAINT GOBAIN;COUNTRY;https://finance.yahoo.com/quote/SGO.PA/profile/;FR;N/A;2024
 18527213;COMPAGNIE DE SAINT GOBAIN;EMPLOYEES;https://finance.yahoo.com/quote/SGO.PA/profile/;161482;N/A;2024
 18527213;COMPAGNIE DE SAINT GOBAIN;TURNOVER;https://finance.yahoo.com/quote/SGO.PA/financials/;46571000000;EUR;2024
@@ -54,13 +54,13 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18527213;COMPAGNIE DE SAINT GOBAIN;WEBSITE;https://finance.yahoo.com/quote/SGO.PA/profile/;saint-gobain.com;N/A;2024
 18527213;COMPAGNIE DE SAINT GOBAIN;ACTIVITY;https://finance.yahoo.com/quote/SGO.PA/profile/;C23;N/A;2024
 18535882;ABBOTT LABORATORIES;COUNTRY;https://finance.yahoo.com/quote/ABT/profile/;US;N/A;2024
-18535882;ABBOTT LABORATORIES;EMPLOYEES;https://finance.yahoo.com/quote/ABT/profile/;114000;N/A;2024
+18535882;ABBOTT LABORATORIES;EMPLOYEES;https://en.wikipedia.org/wiki/Abbott_Laboratories;114000;N/A;2024
 18535882;ABBOTT LABORATORIES;TURNOVER;https://finance.yahoo.com/quote/ABT/financials/;41950000000;USD;2024
 18535882;ABBOTT LABORATORIES;ASSETS;https://finance.yahoo.com/quote/ABT/balance-sheet/;81414000000;USD;2024
 18535882;ABBOTT LABORATORIES;WEBSITE;https://finance.yahoo.com/quote/ABT/profile/;abbott.com;N/A;2024
 18535882;ABBOTT LABORATORIES;ACTIVITY;https://finance.yahoo.com/quote/ABT/profile/;C21;N/A;2024
 18539093;BP P.L.C.;COUNTRY;https://finance.yahoo.com/quote/BP/profile/;GB;N/A;2024
-18539093;BP P.L.C.;EMPLOYEES;https://finance.yahoo.com/quote/BP/profile/;100500;N/A;2024
+18539093;BP P.L.C.;EMPLOYEES;https://en.wikipedia.org/wiki/BP;100500;N/A;2024
 18539093;BP P.L.C.;TURNOVER;https://finance.yahoo.com/quote/BP/financials/;189185000000;USD;2024
 18539093;BP P.L.C.;ASSETS;https://finance.yahoo.com/quote/BP/balance-sheet/;282228000000;USD;2024
 18539093;BP P.L.C.;WEBSITE;https://finance.yahoo.com/quote/BP/profile/;bp.com;N/A;2024
@@ -95,12 +95,12 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18573835;ORANGE;ASSETS;https://finance.yahoo.com/quote/ORA.PA/balance-sheet/;103874000000;EUR;2024
 18573835;ORANGE;WEBSITE;https://finance.yahoo.com/quote/ORA.PA/profile/;orange.com;N/A;2024
 18573835;ORANGE;ACTIVITY;https://finance.yahoo.com/quote/ORA.PA/profile/;J61;N/A;2024
-18581640;ORACLE CORP;COUNTRY;https://finance.yahoo.com/quote/ORCL/profile/;US;N/A;2024
-18581640;ORACLE CORP;EMPLOYEES;https://en.wikipedia.org/wiki/Oracle_Corporation;159000;N/A;2024
-18581640;ORACLE CORP;TURNOVER;https://finance.yahoo.com/quote/ORCL/financials/;52961000000;USD;2024
-18581640;ORACLE CORP;ASSETS;https://finance.yahoo.com/quote/ORCL/balance-sheet/;140976000000;USD;2024
-18581640;ORACLE CORP;WEBSITE;https://finance.yahoo.com/quote/ORCL/profile/;oracle.com;N/A;2024
-18581640;ORACLE CORP;ACTIVITY;https://finance.yahoo.com/quote/ORCL/profile/;J62;N/A;2024
+18581640;ORACLE CORP;COUNTRY;https://finance.yahoo.com/quote/ORCL/profile/;US;N/A;2025
+18581640;ORACLE CORP;EMPLOYEES;https://en.wikipedia.org/wiki/Oracle_Corporation;162000;N/A;2025
+18581640;ORACLE CORP;TURNOVER;https://finance.yahoo.com/quote/ORCL/financials/;57399000000;USD;2025
+18581640;ORACLE CORP;ASSETS;https://finance.yahoo.com/quote/ORCL/balance-sheet/;168361000000;USD;2025
+18581640;ORACLE CORP;WEBSITE;https://finance.yahoo.com/quote/ORCL/profile/;oracle.com;N/A;2025
+18581640;ORACLE CORP;ACTIVITY;https://finance.yahoo.com/quote/ORCL/profile/;J62;N/A;2025
 18587386;ACCOR;COUNTRY;https://finance.yahoo.com/quote/AC.PA/profile/;FR;N/A;2024
 18587386;ACCOR;EMPLOYEES;https://finance.yahoo.com/quote/AC.PA/profile/;19423;N/A;2024
 18587386;ACCOR;TURNOVER;https://finance.yahoo.com/quote/AC.PA/financials/;5606000000;EUR;2024
@@ -122,11 +122,11 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18606822;SOCIETE NATIONALE SNCF;COUNTRY;https://en.wikipedia.org/wiki/SNCF;FR;N/A;2024
 18606822;SOCIETE NATIONALE SNCF;EMPLOYEES;https://www.groupe-sncf.com/medias-publics/2025-05/2024-integrated-annual-report-accessible.pdf;290000;N/A;2024
 18606822;SOCIETE NATIONALE SNCF;TURNOVER;https://www.groupe-sncf.com/medias-publics/2025-05/2024-integrated-annual-report-accessible.pdf;43400000000;EUR;2024
-18606822;SOCIETE NATIONALE SNCF;ASSETS;;;;
+18606822;SOCIETE NATIONALE SNCF;ASSETS;https://www.groupe-sncf.com/medias-publics/2025-05/2024-integrated-annual-report-accessible.pdf;1527000000;EUR;2024
 18606822;SOCIETE NATIONALE SNCF;WEBSITE;https://en.wikipedia.org/wiki/SNCF;groupe-sncf.com;N/A;2024
 18606822;SOCIETE NATIONALE SNCF;ACTIVITY;https://en.wikipedia.org/wiki/SNCF;H49;N/A;2024
 18611599;ATLAS COPCO AKTIEBOLAG;COUNTRY;https://finance.yahoo.com/quote/ACO4.F/profile/;SE;N/A;2024
-18611599;ATLAS COPCO AKTIEBOLAG;EMPLOYEES;https://finance.yahoo.com/quote/ACO4.F/profile/;55248;N/A;2024
+18611599;ATLAS COPCO AKTIEBOLAG;EMPLOYEES;https://en.wikipedia.org/wiki/Atlas_Copco;55146;N/A;2024
 18611599;ATLAS COPCO AKTIEBOLAG;TURNOVER;https://finance.yahoo.com/quote/ACO4.F/financials/;176771000000;SEK;2024
 18611599;ATLAS COPCO AKTIEBOLAG;ASSETS;https://finance.yahoo.com/quote/ACO4.F/balance-sheet/;208538000000;SEK;2024
 18611599;ATLAS COPCO AKTIEBOLAG;WEBSITE;https://finance.yahoo.com/quote/ACO4.F/profile/;atlascopcogroup.com;N/A;2024
@@ -143,12 +143,12 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18622186;JOHN WOOD GROUP PLC;ASSETS;https://finance.yahoo.com/quote/WGL.XC/balance-sheet/;7660600000;USD;2023
 18622186;JOHN WOOD GROUP PLC;WEBSITE;https://en.wikipedia.org/wiki/John_Wood_Group;woodplc.com;N/A;2024
 18622186;JOHN WOOD GROUP PLC;ACTIVITY;https://en.wikipedia.org/wiki/John_Wood_Group;M71;N/A;2024
-18627417;FUJITSU LIMITED;COUNTRY;https://finance.yahoo.com/quote/FUJA.F/profile/;JP;N/A;2024
+18627417;FUJITSU LIMITED;COUNTRY;https://finance.yahoo.com/quote/FUJA.F/profile/;JP;N/A;2025
 18627417;FUJITSU LIMITED;EMPLOYEES;https://en.wikipedia.org/wiki/Fujitsu;124000;N/A;2024
-18627417;FUJITSU LIMITED;TURNOVER;https://finance.yahoo.com/quote/FUJA.F/financials/;3756059000000;JPY;2024
-18627417;FUJITSU LIMITED;ASSETS;https://finance.yahoo.com/quote/FUJA.F/balance-sheet/;3514818000000;JPY;2024
-18627417;FUJITSU LIMITED;WEBSITE;https://finance.yahoo.com/quote/FUJA.F/profile/;global.fujitsu;N/A;2024
-18627417;FUJITSU LIMITED;ACTIVITY;https://finance.yahoo.com/quote/FUJA.F/profile/;J62;N/A;2024
+18627417;FUJITSU LIMITED;TURNOVER;https://finance.yahoo.com/quote/FUJA.F/financials/;3550116000000;JPY;2025
+18627417;FUJITSU LIMITED;ASSETS;https://finance.yahoo.com/quote/FUJA.F/balance-sheet/;3497808000000;JPY;2025
+18627417;FUJITSU LIMITED;WEBSITE;https://finance.yahoo.com/quote/FUJA.F/profile/;global.fujitsu;N/A;2025
+18627417;FUJITSU LIMITED;ACTIVITY;https://finance.yahoo.com/quote/FUJA.F/profile/;J62;N/A;2025
 18629376;CRH PLC;COUNTRY;https://finance.yahoo.com/quote/CRH/profile/;IE;N/A;2024
 18629376;CRH PLC;EMPLOYEES;https://finance.yahoo.com/quote/CRH/profile/;79800;N/A;2024
 18629376;CRH PLC;TURNOVER;https://finance.yahoo.com/quote/CRH/financials/;35572000000;USD;2024
@@ -156,9 +156,9 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18629376;CRH PLC;WEBSITE;https://finance.yahoo.com/quote/CRH/profile/;crh.com;N/A;2024
 18629376;CRH PLC;ACTIVITY;https://finance.yahoo.com/quote/CRH/profile/;C23;N/A;2024
 18632343;DEUTSCHE BAHN;COUNTRY;https://en.wikipedia.org/wiki/Deutsche_Bahn;DE;N/A;2024
-18632343;DEUTSCHE BAHN;EMPLOYEES;https://en.wikipedia.org/wiki/Deutsche_Bahn;336990;N/A;2021
-18632343;DEUTSCHE BAHN;TURNOVER;https://en.wikipedia.org/wiki/Deutsche_Bahn;47075000000;EUR;2021
-18632343;DEUTSCHE BAHN;ASSETS;;;;
+18632343;DEUTSCHE BAHN;EMPLOYEES;https://www1.deutschebahn.com/resource/blob/13375722/26c85f5dda595e5a06ec2f4af65fc61c/IB2024en-data.pdf;225560;N/A;2024
+18632343;DEUTSCHE BAHN;TURNOVER;https://www1.deutschebahn.com/resource/blob/13375722/26c85f5dda595e5a06ec2f4af65fc61c/IB2024en-data.pdf;26203000000;EUR;2024
+18632343;DEUTSCHE BAHN;ASSETS;https://www1.deutschebahn.com/resource/blob/13375722/26c85f5dda595e5a06ec2f4af65fc61c/IB2024en-data.pdf;83898000000;EUR;2024
 18632343;DEUTSCHE BAHN;WEBSITE;https://en.wikipedia.org/wiki/Deutsche_Bahn;deutschebahn.com;N/A;2024
 18632343;DEUTSCHE BAHN;ACTIVITY;https://en.wikipedia.org/wiki/Deutsche_Bahn;H49;N/A;2024
 18636888;CARGILL;COUNTRY;https://en.wikipedia.org/wiki/Cargill;US;N/A;2024
@@ -192,13 +192,13 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18658675;BASF;WEBSITE;https://finance.yahoo.com/quote/BAS.DE/profile/;basf.com;N/A;2024
 18658675;BASF;ACTIVITY;https://finance.yahoo.com/quote/BAS.DE/profile/;C20;N/A;2024
 18665236;APTIV PLC;COUNTRY;https://finance.yahoo.com/quote/APTV/profile/;CH;N/A;2024
-18665236;APTIV PLC;EMPLOYEES;https://finance.yahoo.com/quote/APTV/profile/;141000;N/A;2024
+18665236;APTIV PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Aptiv;141000;N/A;2024
 18665236;APTIV PLC;TURNOVER;https://finance.yahoo.com/quote/APTV/financials/;19713000000;USD;2024
 18665236;APTIV PLC;ASSETS;https://finance.yahoo.com/quote/APTV/balance-sheet/;23458000000;USD;2024
 18665236;APTIV PLC;WEBSITE;https://finance.yahoo.com/quote/APTV/profile/;aptiv.com;N/A;2024
 18665236;APTIV PLC;ACTIVITY;https://finance.yahoo.com/quote/APTV/profile/;C29;N/A;2024
 18673760;WPP PLC;COUNTRY;https://finance.yahoo.com/quote/WPP/profile/;GB;N/A;2024
-18673760;WPP PLC;EMPLOYEES;https://finance.yahoo.com/quote/WPP/profile/;108044;N/A;2024
+18673760;WPP PLC;EMPLOYEES;https://en.wikipedia.org/wiki/WPP_plc;100000;N/A;2025
 18673760;WPP PLC;TURNOVER;https://finance.yahoo.com/quote/WPP/financials/;14741000000;GBP;2024
 18673760;WPP PLC;ASSETS;https://finance.yahoo.com/quote/WPP/balance-sheet/;25509000000;GBP;2024
 18673760;WPP PLC;WEBSITE;https://finance.yahoo.com/quote/WPP/profile/;wpp.com;N/A;2024
@@ -210,7 +210,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18685228;GI GROUP;WEBSITE;https://en.wikipedia.org/wiki/Gi_Group_Spa;gigroup.com;N/A;2024
 18685228;GI GROUP;ACTIVITY;https://en.wikipedia.org/wiki/Gi_Group_Spa;N78;N/A;2024
 18686668;ACCIONA;COUNTRY;https://finance.yahoo.com/quote/5BP.F/profile/;ES;N/A;2024
-18686668;ACCIONA;EMPLOYEES;https://finance.yahoo.com/quote/5BP.F/profile/;3224;N/A;2024
+18686668;ACCIONA;EMPLOYEES;https://en.wikipedia.org/wiki/Acciona;57843;N/A;2024
 18686668;ACCIONA;TURNOVER;https://finance.yahoo.com/quote/5BP.F/financials/;3048000000;EUR;2024
 18686668;ACCIONA;ASSETS;https://finance.yahoo.com/quote/5BP.F/balance-sheet/;16244000000;EUR;2024
 18686668;ACCIONA;WEBSITE;https://finance.yahoo.com/quote/5BP.F/profile/;https://www.acciona-energia.com;N/A;2024
@@ -251,50 +251,50 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18712196;AMAZON;ASSETS;https://finance.yahoo.com/quote/AMZ.F/balance-sheet/;624894000000;USD;2024
 18712196;AMAZON;WEBSITE;https://finance.yahoo.com/quote/AMZ.F/profile/;aboutamazon.com;N/A;2024
 18712196;AMAZON;ACTIVITY;https://finance.yahoo.com/quote/AMZ.F/profile/;G47;N/A;2024
-18715555;SONY GROUP CORPORATION;COUNTRY;https://finance.yahoo.com/quote/SONY/profile/;JP;N/A;2024
+18715555;SONY GROUP CORPORATION;COUNTRY;https://finance.yahoo.com/quote/SONY/profile/;JP;N/A;2025
 18715555;SONY GROUP CORPORATION;EMPLOYEES;https://en.wikipedia.org/wiki/Sony;113000;N/A;2024
-18715555;SONY GROUP CORPORATION;TURNOVER;https://finance.yahoo.com/quote/SONY/financials/;13020768000000;JPY;2024
-18715555;SONY GROUP CORPORATION;ASSETS;https://finance.yahoo.com/quote/SONY/balance-sheet/;34107490000000;JPY;2024
-18715555;SONY GROUP CORPORATION;WEBSITE;https://finance.yahoo.com/quote/SONY/profile/;sony.com;N/A;2024
-18715555;SONY GROUP CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/SONY/profile/;J59;N/A;2024
+18715555;SONY GROUP CORPORATION;TURNOVER;https://finance.yahoo.com/quote/SONY/financials/;12957064000000;JPY;2025
+18715555;SONY GROUP CORPORATION;ASSETS;https://finance.yahoo.com/quote/SONY/balance-sheet/;35293173000000;JPY;2025
+18715555;SONY GROUP CORPORATION;WEBSITE;https://finance.yahoo.com/quote/SONY/profile/;sony.com;N/A;2025
+18715555;SONY GROUP CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/SONY/profile/;J59;N/A;2025
 18718848;SONOVA;COUNTRY;https://finance.yahoo.com/quote/PHBN.F/profile/;CH;N/A;2025
-18718848;SONOVA;EMPLOYEES;https://finance.yahoo.com/quote/PHBN.F/profile/;18335;N/A;2025
+18718848;SONOVA;EMPLOYEES;https://en.wikipedia.org/wiki/Sonova;18151;N/A;2024
 18718848;SONOVA;TURNOVER;https://finance.yahoo.com/quote/PHBN.F/financials/;3865400000;CHF;2025
 18718848;SONOVA;ASSETS;https://finance.yahoo.com/quote/PHBN.F/balance-sheet/;5924200000;CHF;2025
 18718848;SONOVA;WEBSITE;https://finance.yahoo.com/quote/PHBN.F/profile/;sonova.com;N/A;2025
 18718848;SONOVA;ACTIVITY;https://finance.yahoo.com/quote/PHBN.F/profile/;C28;N/A;2025
-18731292;IKEA;COUNTRY;;;;
+18731292;IKEA;COUNTRY;https://www.inter.ikea.com/-/media/interikea/igi/financial-reports/fy24-financial-reports/inter-ikea-holding-bv-annual-report-fy24.pdf;NL;N/A;2024
 18731292;IKEA;EMPLOYEES;https://www.inter.ikea.com/-/media/interikea/igi/financial-reports/fy24-financial-reports/inter-ikea-holding-bv-annual-report-fy24.pdf;1450;N/A;2024
 18731292;IKEA;TURNOVER;https://www.inter.ikea.com/-/media/interikea/igi/financial-reports/fy24-financial-reports/inter-ikea-holding-bv-annual-report-fy24.pdf;314000000;EUR;2024
 18731292;IKEA;ASSETS;https://www.inter.ikea.com/-/media/interikea/igi/financial-reports/fy24-financial-reports/inter-ikea-holding-bv-annual-report-fy24.pdf;205000000;EUR;2024
 18731292;IKEA;WEBSITE;https://en.wikipedia.org/wiki/IKEA;ikea.com;N/A;2024
 18731292;IKEA;ACTIVITY;https://en.wikipedia.org/wiki/IKEA;G47;N/A;2024
 18736044;SECURITAS AB;COUNTRY;https://finance.yahoo.com/quote/S7MB.F/profile/;SE;N/A;2024
-18736044;SECURITAS AB;EMPLOYEES;https://finance.yahoo.com/quote/S7MB.F/profile/;336000;N/A;2024
+18736044;SECURITAS AB;EMPLOYEES;https://en.wikipedia.org/wiki/Securitas_AB;336000;N/A;2024
 18736044;SECURITAS AB;TURNOVER;https://finance.yahoo.com/quote/S7MB.F/financials/;161921000000;SEK;2024
 18736044;SECURITAS AB;ASSETS;https://finance.yahoo.com/quote/S7MB.F/balance-sheet/;123588000000;SEK;2024
 18736044;SECURITAS AB;WEBSITE;https://finance.yahoo.com/quote/S7MB.F/profile/;securitas.com;N/A;2024
 18736044;SECURITAS AB;ACTIVITY;https://finance.yahoo.com/quote/S7MB.F/profile/;N80;N/A;2024
 18742207;AIRBUS SE;COUNTRY;https://finance.yahoo.com/quote/AIR.PA/profile/;NL;N/A;2024
-18742207;AIRBUS SE;EMPLOYEES;https://finance.yahoo.com/quote/AIR.PA/profile/;157894;N/A;2024
+18742207;AIRBUS SE;EMPLOYEES;https://en.wikipedia.org/wiki/Airbus;156921;N/A;2024
 18742207;AIRBUS SE;TURNOVER;https://finance.yahoo.com/quote/AIR.PA/financials/;69230000000;EUR;2024
 18742207;AIRBUS SE;ASSETS;https://finance.yahoo.com/quote/AIR.PA/balance-sheet/;129213000000;EUR;2024
 18742207;AIRBUS SE;WEBSITE;https://finance.yahoo.com/quote/AIR.PA/profile/;airbus.com;N/A;2024
 18742207;AIRBUS SE;ACTIVITY;https://finance.yahoo.com/quote/AIR.PA/profile/;C30;N/A;2024
-18745703;ETEX;COUNTRY;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;BE;N/A;2024
-18745703;ETEX;EMPLOYEES;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;73044;N/A;2024
-18745703;ETEX;TURNOVER;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;65743;EUR;2024
-18745703;ETEX;ASSETS;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;81889;EUR;2024
-18745703;ETEX;WEBSITE;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;https://www.etexgroup.com/;N/A;2024
-18745703;ETEX;ACTIVITY;https://en.wikipedia.org/wiki/Antoine_%C3%89tex;R90;N/A;2024
+18745703;ETEX;COUNTRY;https://en.wikipedia.org/wiki/AGA_Rangemaster_Group;GB;N/A;2024
+18745703;ETEX;EMPLOYEES;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;13432;N/A;2024
+18745703;ETEX;TURNOVER;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;3777041000;EUR;2024
+18745703;ETEX;ASSETS;https://www.etexgroup.com/siteassets/etex-group-website-2024/investors/annual-report-2024/etex-2024-annual-report.pdf;5021597000;EUR;2024
+18745703;ETEX;WEBSITE;https://en.wikipedia.org/wiki/AGA_Rangemaster_Group;agarangemaster.com;N/A;2024
+18745703;ETEX;ACTIVITY;https://en.wikipedia.org/wiki/AGA_Rangemaster_Group;C28;N/A;2024
 18748693;SIEMENS;COUNTRY;https://finance.yahoo.com/quote/SIE.DE/profile/;DE;N/A;2024
-18748693;SIEMENS;EMPLOYEES;https://finance.yahoo.com/quote/SIE.DE/profile/;327000;N/A;2024
+18748693;SIEMENS;EMPLOYEES;https://en.wikipedia.org/wiki/Siemens;327000;N/A;2024
 18748693;SIEMENS;TURNOVER;https://finance.yahoo.com/quote/SIE.DE/financials/;75930000000;EUR;2024
 18748693;SIEMENS;ASSETS;https://finance.yahoo.com/quote/SIE.DE/balance-sheet/;147812000000;EUR;2024
 18748693;SIEMENS;WEBSITE;https://finance.yahoo.com/quote/SIE.DE/profile/;siemens.com;N/A;2024
 18748693;SIEMENS;ACTIVITY;https://finance.yahoo.com/quote/SIE.DE/profile/;C28;N/A;2024
 18754669;VODAFONE GROUP PLC;COUNTRY;https://finance.yahoo.com/quote/VODI.DE/profile/;GB;N/A;2025
-18754669;VODAFONE GROUP PLC;EMPLOYEES;https://finance.yahoo.com/quote/VODI.DE/profile/;88780;N/A;2025
+18754669;VODAFONE GROUP PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Vodafone;93000;N/A;2025
 18754669;VODAFONE GROUP PLC;TURNOVER;https://finance.yahoo.com/quote/VODI.DE/financials/;37448000000;EUR;2025
 18754669;VODAFONE GROUP PLC;ASSETS;https://finance.yahoo.com/quote/VODI.DE/balance-sheet/;128521000000;EUR;2025
 18754669;VODAFONE GROUP PLC;WEBSITE;https://finance.yahoo.com/quote/VODI.DE/profile/;vodafone.com;N/A;2025
@@ -347,12 +347,12 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18774867;SANOFI;ASSETS;https://finance.yahoo.com/quote/SAN.PA/balance-sheet/;132798000000;EUR;2024
 18774867;SANOFI;WEBSITE;https://finance.yahoo.com/quote/SAN.PA/profile/;sanofi.com;N/A;2024
 18774867;SANOFI;ACTIVITY;https://finance.yahoo.com/quote/SAN.PA/profile/;C21;N/A;2024
-18778752;WURTH;COUNTRY;https://en.wikipedia.org/wiki/W%C3%BCrth;DE;N/A;2024
-18778752;WURTH;EMPLOYEES;https://en.wikipedia.org/wiki/W%C3%BCrth;87047;N/A;2023
-18778752;WURTH;TURNOVER;https://en.wikipedia.org/wiki/W%C3%BCrth;20396000000;EUR;2023
-18778752;WURTH;ASSETS;;;;
+18778752;WURTH;COUNTRY;https://www.wuerth.com/downloads/pdf/Gesch%C3%A4ftsbericht/2024/W%C3%BCrth-Group-Annual-Report-2024.pdf;DE;N/A;2024
+18778752;WURTH;EMPLOYEES;https://www.wuerth.com/downloads/pdf/Gesch%C3%A4ftsbericht/2024/W%C3%BCrth-Group-Annual-Report-2024.pdf;88393;N/A;2024
+18778752;WURTH;TURNOVER;https://www.wuerth.com/downloads/pdf/Gesch%C3%A4ftsbericht/2024/W%C3%BCrth-Group-Annual-Report-2024.pdf;20214000000;EUR;2024
+18778752;WURTH;ASSETS;https://www.wuerth.com/downloads/pdf/Gesch%C3%A4ftsbericht/2024/W%C3%BCrth-Group-Annual-Report-2024.pdf;19273000000;EUR;2024
 18778752;WURTH;WEBSITE;https://en.wikipedia.org/wiki/W%C3%BCrth;wuerth.de;N/A;2024
-18778752;WURTH;ACTIVITY;https://en.wikipedia.org/wiki/W%C3%BCrth;G46;N/A;2024
+18778752;WURTH;ACTIVITY;https://en.wikipedia.org/wiki/Wurth;G46;N/A;2024
 18784770;AKTIEBOLAGET VOLVO;COUNTRY;https://finance.yahoo.com/quote/VOL3.F/profile/;SE;N/A;2024
 18784770;AKTIEBOLAGET VOLVO;EMPLOYEES;https://finance.yahoo.com/quote/VOL3.F/profile/;91154;N/A;2024
 18784770;AKTIEBOLAGET VOLVO;TURNOVER;https://finance.yahoo.com/quote/VOL3.F/financials/;526816000000;SEK;2024
@@ -366,17 +366,17 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18796310;TOTALENERGIES SE;WEBSITE;https://finance.yahoo.com/quote/TTE/profile/;totalenergies.com;N/A;2024
 18796310;TOTALENERGIES SE;ACTIVITY;https://finance.yahoo.com/quote/TTE/profile/;B06;N/A;2024
 18802249;BRITISH AMERICAN TOBACCO PLC;COUNTRY;https://finance.yahoo.com/quote/BTI/profile/;GB;N/A;2024
-18802249;BRITISH AMERICAN TOBACCO PLC;EMPLOYEES;https://finance.yahoo.com/quote/BTI/profile/;48989;N/A;2024
+18802249;BRITISH AMERICAN TOBACCO PLC;EMPLOYEES;https://en.wikipedia.org/wiki/British_American_Tobacco;46000;N/A;2025
 18802249;BRITISH AMERICAN TOBACCO PLC;TURNOVER;https://finance.yahoo.com/quote/BTI/financials/;25867000000;GBP;2024
 18802249;BRITISH AMERICAN TOBACCO PLC;ASSETS;https://finance.yahoo.com/quote/BTI/balance-sheet/;118899000000;GBP;2024
 18802249;BRITISH AMERICAN TOBACCO PLC;WEBSITE;https://finance.yahoo.com/quote/BTI/profile/;bat.com;N/A;2024
 18802249;BRITISH AMERICAN TOBACCO PLC;ACTIVITY;https://finance.yahoo.com/quote/BTI/profile/;C12;N/A;2024
-18803013;NIPPON STEEL CORPORATION;COUNTRY;https://finance.yahoo.com/quote/NPS.F/profile/;JP;N/A;2024
-18803013;NIPPON STEEL CORPORATION;EMPLOYEES;https://en.wikipedia.org/wiki/Nippon_Steel;106528;N/A;2022
-18803013;NIPPON STEEL CORPORATION;TURNOVER;https://finance.yahoo.com/quote/NPS.F/financials/;8868097000000;JPY;2024
-18803013;NIPPON STEEL CORPORATION;ASSETS;https://finance.yahoo.com/quote/NPS.F/balance-sheet/;10714627000000;JPY;2024
-18803013;NIPPON STEEL CORPORATION;WEBSITE;https://finance.yahoo.com/quote/NPS.F/profile/;nipponsteel.com;N/A;2024
-18803013;NIPPON STEEL CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/NPS.F/profile/;C24;N/A;2024
+18803013;NIPPON STEEL CORPORATION;COUNTRY;https://finance.yahoo.com/quote/NPS.F/profile/;JP;N/A;2025
+18803013;NIPPON STEEL CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/NPS.F/profile/;113845;N/A;2025
+18803013;NIPPON STEEL CORPORATION;TURNOVER;https://finance.yahoo.com/quote/NPS.F/financials/;8695526000000;JPY;2025
+18803013;NIPPON STEEL CORPORATION;ASSETS;https://finance.yahoo.com/quote/NPS.F/balance-sheet/;10942458000000;JPY;2025
+18803013;NIPPON STEEL CORPORATION;WEBSITE;https://finance.yahoo.com/quote/NPS.F/profile/;nipponsteel.com;N/A;2025
+18803013;NIPPON STEEL CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/NPS.F/profile/;C24;N/A;2025
 18805524;KONINKLIJKE AHOLD DELHAIZE NV;COUNTRY;https://finance.yahoo.com/quote/AHODF/profile/;NL;N/A;2024
 18805524;KONINKLIJKE AHOLD DELHAIZE NV;EMPLOYEES;https://finance.yahoo.com/quote/AHODF/profile/;390000;N/A;2024
 18805524;KONINKLIJKE AHOLD DELHAIZE NV;TURNOVER;https://finance.yahoo.com/quote/AHODF/financials/;89357000000;EUR;2024
@@ -390,13 +390,13 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18808977;PFIZER INC;WEBSITE;https://finance.yahoo.com/quote/PFE/profile/;pfizer.com;N/A;2024
 18808977;PFIZER INC;ACTIVITY;https://finance.yahoo.com/quote/PFE/profile/;C21;N/A;2024
 18812865;COCA-COLA COMPANY (THE);COUNTRY;https://finance.yahoo.com/quote/KO/profile/;US;N/A;2024
-18812865;COCA-COLA COMPANY (THE);EMPLOYEES;https://finance.yahoo.com/quote/KO/profile/;69700;N/A;2024
+18812865;COCA-COLA COMPANY (THE);EMPLOYEES;https://en.wikipedia.org/wiki/The_Coca-Cola_Company;69700;N/A;2024
 18812865;COCA-COLA COMPANY (THE);TURNOVER;https://finance.yahoo.com/quote/KO/financials/;47061000000;USD;2024
 18812865;COCA-COLA COMPANY (THE);ASSETS;https://en.wikipedia.org/wiki/The_Coca-Cola_Company;101716000000;USD;2025
 18812865;COCA-COLA COMPANY (THE);WEBSITE;https://finance.yahoo.com/quote/KO/profile/;coca-colacompany.com;N/A;2024
 18812865;COCA-COLA COMPANY (THE);ACTIVITY;https://finance.yahoo.com/quote/KO/profile/;C11;N/A;2024
 18813820;CATERPILLAR INC;COUNTRY;https://finance.yahoo.com/quote/CAT/profile/;US;N/A;2024
-18813820;CATERPILLAR INC;EMPLOYEES;https://finance.yahoo.com/quote/CAT/profile/;112900;N/A;2024
+18813820;CATERPILLAR INC;EMPLOYEES;https://en.wikipedia.org/wiki/Caterpillar_Inc.;112900;N/A;2024
 18813820;CATERPILLAR INC;TURNOVER;https://finance.yahoo.com/quote/CAT/financials/;64809000000;USD;2024
 18813820;CATERPILLAR INC;ASSETS;https://finance.yahoo.com/quote/CAT/balance-sheet/;87764000000;USD;2024
 18813820;CATERPILLAR INC;WEBSITE;https://finance.yahoo.com/quote/CAT/profile/;https://www.caterpillar.com;N/A;2024
@@ -414,27 +414,27 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18818842;IWG PLC;WEBSITE;https://finance.yahoo.com/quote/IWG.F/profile/;iwgplc.com;N/A;2024
 18818842;IWG PLC;ACTIVITY;https://finance.yahoo.com/quote/IWG.F/profile/;L68;N/A;2024
 18831586;SAP;COUNTRY;https://finance.yahoo.com/quote/SAP/profile/;DE;N/A;2024
-18831586;SAP;EMPLOYEES;https://finance.yahoo.com/quote/SAP/profile/;108187;N/A;2024
+18831586;SAP;EMPLOYEES;https://en.wikipedia.org/wiki/SAP;109973;N/A;2024
 18831586;SAP;TURNOVER;https://finance.yahoo.com/quote/SAP/financials/;34176000000;EUR;2024
 18831586;SAP;ASSETS;https://finance.yahoo.com/quote/SAP/balance-sheet/;74122000000;EUR;2024
 18831586;SAP;WEBSITE;https://finance.yahoo.com/quote/SAP/profile/;sap.com;N/A;2024
 18831586;SAP;ACTIVITY;https://finance.yahoo.com/quote/SAP/profile/;J62;N/A;2024
 18839233;ORKLA ASA;COUNTRY;https://finance.yahoo.com/quote/OKL.F/profile/;NO;N/A;2024
-18839233;ORKLA ASA;EMPLOYEES;https://finance.yahoo.com/quote/OKL.F/profile/;19080;N/A;2024
+18839233;ORKLA ASA;EMPLOYEES;https://en.wikipedia.org/wiki/Orkla_ASA;19500;N/A;2024
 18839233;ORKLA ASA;TURNOVER;https://finance.yahoo.com/quote/OKL.F/financials/;70656000000;NOK;2024
 18839233;ORKLA ASA;ASSETS;https://finance.yahoo.com/quote/OKL.F/balance-sheet/;89966000000;NOK;2024
 18839233;ORKLA ASA;WEBSITE;https://finance.yahoo.com/quote/OKL.F/profile/;orkla.com;N/A;2024
 18839233;ORKLA ASA;ACTIVITY;https://finance.yahoo.com/quote/OKL.F/profile/;C10;N/A;2024
 18850720;ENEL SPA;COUNTRY;https://finance.yahoo.com/quote/ENL.F/profile/;IT;N/A;2024
-18850720;ENEL SPA;EMPLOYEES;https://finance.yahoo.com/quote/ENL.F/profile/;60584;N/A;2024
+18850720;ENEL SPA;EMPLOYEES;https://en.wikipedia.org/wiki/Enel;60359;N/A;2024
 18850720;ENEL SPA;TURNOVER;https://finance.yahoo.com/quote/ENL.F/financials/;70649000000;EUR;2024
 18850720;ENEL SPA;ASSETS;https://finance.yahoo.com/quote/ENL.F/balance-sheet/;187139000000;EUR;2024
 18850720;ENEL SPA;WEBSITE;https://finance.yahoo.com/quote/ENL.F/profile/;enel.com;N/A;2024
 18850720;ENEL SPA;ACTIVITY;https://finance.yahoo.com/quote/ENL.F/profile/;D35;N/A;2024
 18853782;SHV HOLDINGS NV;COUNTRY;https://en.wikipedia.org/wiki/SHV_Holdings;NL;N/A;2024
-18853782;SHV HOLDINGS NV;EMPLOYEES;https://en.wikipedia.org/wiki/SHV_Holdings;50000;N/A;2024
-18853782;SHV HOLDINGS NV;TURNOVER;https://en.wikipedia.org/wiki/SHV_Holdings;16700000000;EUR;2020
-18853782;SHV HOLDINGS NV;ASSETS;https://annualreport.shv.nl/2024/xmlpages/resources/TXP/SHV/jv_2023/pdf/SHV_Annual_Report_2024.pdf;10;EUR;2024
+18853782;SHV HOLDINGS NV;EMPLOYEES;https://annualreport.shv.nl/2024/xmlpages/resources/TXP/SHV/jv_2023/pdf/SHV_Annual_Report_2024.pdf;64860;N/A;2024
+18853782;SHV HOLDINGS NV;TURNOVER;https://annualreport.shv.nl/2024/xmlpages/resources/TXP/SHV/jv_2023/pdf/SHV_Annual_Report_2024.pdf;23000000000;EUR;2024
+18853782;SHV HOLDINGS NV;ASSETS;https://annualreport.shv.nl/2024/xmlpages/resources/TXP/SHV/jv_2023/pdf/SHV_Annual_Report_2024.pdf;19000000000;EUR;2024
 18853782;SHV HOLDINGS NV;WEBSITE;https://en.wikipedia.org/wiki/SHV_Holdings;shv.nl;N/A;2024
 18853782;SHV HOLDINGS NV;ACTIVITY;https://en.wikipedia.org/wiki/SHV_Holdings;G46;N/A;2024
 18854880;BMW;COUNTRY;https://finance.yahoo.com/quote/BMW.DE/profile/;DE;N/A;2024
@@ -448,7 +448,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18858533;THALES;TURNOVER;https://finance.yahoo.com/quote/HO.PA/financials/;20576600000;EUR;2024
 18858533;THALES;ASSETS;https://finance.yahoo.com/quote/HO.PA/balance-sheet/;39989800000;EUR;2024
 18858533;THALES;WEBSITE;https://finance.yahoo.com/quote/HO.PA/profile/;thalesgroup.com;N/A;2024
-18858533;THALES;ACTIVITY;https://finance.yahoo.com/quote/HO.PA/profile/;C33;N/A;2024
+18858533;THALES;ACTIVITY;https://finance.yahoo.com/quote/HO.PA/profile/;M71;N/A;2024
 18860034;SIGNIFY NV;COUNTRY;https://finance.yahoo.com/quote/LGHT.VI/profile/;NL;N/A;2024
 18860034;SIGNIFY NV;EMPLOYEES;https://finance.yahoo.com/quote/LGHT.VI/profile/;29697;N/A;2024
 18860034;SIGNIFY NV;TURNOVER;https://finance.yahoo.com/quote/LGHT.VI/financials/;6143000000;EUR;2024
@@ -456,13 +456,13 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18860034;SIGNIFY NV;WEBSITE;https://finance.yahoo.com/quote/LGHT.VI/profile/;signify.com;N/A;2024
 18860034;SIGNIFY NV;ACTIVITY;https://finance.yahoo.com/quote/LGHT.VI/profile/;C27;N/A;2024
 18864084;3I GROUP PLC;COUNTRY;https://finance.yahoo.com/quote/IGQ5.F/profile/;GB;N/A;2025
-18864084;3I GROUP PLC;EMPLOYEES;https://finance.yahoo.com/quote/IGQ5.F/profile/;223;N/A;2025
+18864084;3I GROUP PLC;EMPLOYEES;https://en.wikipedia.org/wiki/3i;250;N/A;2024
 18864084;3I GROUP PLC;TURNOVER;https://finance.yahoo.com/quote/IGQ5.F/financials/;5189000000;GBP;2025
 18864084;3I GROUP PLC;ASSETS;https://finance.yahoo.com/quote/IGQ5.F/balance-sheet/;26056000000;GBP;2025
 18864084;3I GROUP PLC;WEBSITE;https://finance.yahoo.com/quote/IGQ5.F/profile/;3i.com;N/A;2025
 18864084;3I GROUP PLC;ACTIVITY;https://finance.yahoo.com/quote/IGQ5.F/profile/;K64;N/A;2025
 18876900;BAYER;COUNTRY;https://finance.yahoo.com/quote/BAYN.DE/profile/;DE;N/A;2024
-18876900;BAYER;EMPLOYEES;https://finance.yahoo.com/quote/BAYN.DE/profile/;90885;N/A;2024
+18876900;BAYER;EMPLOYEES;https://en.wikipedia.org/wiki/Bayer;92815;N/A;2024
 18876900;BAYER;TURNOVER;https://finance.yahoo.com/quote/BAYN.DE/financials/;46606000000;EUR;2024
 18876900;BAYER;ASSETS;https://finance.yahoo.com/quote/BAYN.DE/balance-sheet/;110850000000;EUR;2024
 18876900;BAYER;WEBSITE;https://finance.yahoo.com/quote/BAYN.DE/profile/;bayer.com;N/A;2024
@@ -480,7 +480,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18886469;VEOLIA ENVIRONNEMENT;WEBSITE;https://finance.yahoo.com/quote/VVD.DE/profile/;veolia.com;N/A;2024
 18886469;VEOLIA ENVIRONNEMENT;ACTIVITY;https://finance.yahoo.com/quote/VVD.DE/profile/;E36;N/A;2024
 18898974;TUI;COUNTRY;https://finance.yahoo.com/quote/TUI1.DE/profile/;DE;N/A;2024
-18898974;TUI;EMPLOYEES;https://finance.yahoo.com/quote/TUI1.DE/profile/;57781;N/A;2024
+18898974;TUI;EMPLOYEES;https://en.wikipedia.org/wiki/TUI_Group;66845;N/A;2024
 18898974;TUI;TURNOVER;https://finance.yahoo.com/quote/TUI1.DE/financials/;23167300000;EUR;2024
 18898974;TUI;ASSETS;https://finance.yahoo.com/quote/TUI1.DE/balance-sheet/;17416700000;EUR;2024
 18898974;TUI;WEBSITE;https://finance.yahoo.com/quote/TUI1.DE/profile/;tuigroup.com;N/A;2024
@@ -510,19 +510,19 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18919705;MANPOWERGROUP INC.;WEBSITE;https://finance.yahoo.com/quote/MAN/profile/;manpowergroup.com;N/A;2024
 18919705;MANPOWERGROUP INC.;ACTIVITY;https://finance.yahoo.com/quote/MAN/profile/;N78;N/A;2024
 18928008;PARAMOUNT GLOBAL;COUNTRY;https://finance.yahoo.com/quote/0VVB.F/profile/;US;N/A;2024
-18928008;PARAMOUNT GLOBAL;EMPLOYEES;https://finance.yahoo.com/quote/0VVB.F/profile/;18600;N/A;2024
+18928008;PARAMOUNT GLOBAL;EMPLOYEES;https://en.wikipedia.org/wiki/Paramount_Global;18600;N/A;2024
 18928008;PARAMOUNT GLOBAL;TURNOVER;https://finance.yahoo.com/quote/0VVB.F/financials/;29213000000;USD;2024
 18928008;PARAMOUNT GLOBAL;ASSETS;https://finance.yahoo.com/quote/0VVB.F/balance-sheet/;46172000000;USD;2024
 18928008;PARAMOUNT GLOBAL;WEBSITE;https://finance.yahoo.com/quote/0VVB.F/profile/;paramount.com;N/A;2024
 18928008;PARAMOUNT GLOBAL;ACTIVITY;https://finance.yahoo.com/quote/0VVB.F/profile/;J60;N/A;2024
 18930611;GLENCORE PLC;COUNTRY;https://finance.yahoo.com/quote/8GCA.F/profile/;CH;N/A;2024
-18930611;GLENCORE PLC;EMPLOYEES;https://finance.yahoo.com/quote/8GCA.F/profile/;84146;N/A;2024
+18930611;GLENCORE PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Glencore;150000;N/A;2024
 18930611;GLENCORE PLC;TURNOVER;https://finance.yahoo.com/quote/8GCA.F/financials/;230944000000;USD;2024
 18930611;GLENCORE PLC;ASSETS;https://finance.yahoo.com/quote/8GCA.F/balance-sheet/;130460000000;USD;2024
 18930611;GLENCORE PLC;WEBSITE;https://finance.yahoo.com/quote/8GCA.F/profile/;glencore.com;N/A;2024
 18930611;GLENCORE PLC;ACTIVITY;https://finance.yahoo.com/quote/8GCA.F/profile/;B07;N/A;2024
 18931004;DEUTSCHE LUFTHANSA;COUNTRY;https://finance.yahoo.com/quote/LHA.F/profile/;DE;N/A;2024
-18931004;DEUTSCHE LUFTHANSA;EMPLOYEES;https://finance.yahoo.com/quote/LHA.F/profile/;102574;N/A;2024
+18931004;DEUTSCHE LUFTHANSA;EMPLOYEES;https://en.wikipedia.org/wiki/Lufthansa;100290;N/A;2024
 18931004;DEUTSCHE LUFTHANSA;TURNOVER;https://finance.yahoo.com/quote/LHA.F/financials/;37581000000;EUR;2024
 18931004;DEUTSCHE LUFTHANSA;ASSETS;https://finance.yahoo.com/quote/LHA.F/balance-sheet/;47052000000;EUR;2024
 18931004;DEUTSCHE LUFTHANSA;WEBSITE;https://finance.yahoo.com/quote/LHA.F/profile/;lufthansagroup.com;N/A;2024
@@ -534,25 +534,25 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18935271;TELEFONAKTIEBOLAGET LM ERICSSON;WEBSITE;https://finance.yahoo.com/quote/ERCA.F/profile/;ericsson.com;N/A;2024
 18935271;TELEFONAKTIEBOLAGET LM ERICSSON;ACTIVITY;https://finance.yahoo.com/quote/ERCA.F/profile/;J61;N/A;2024
 18940840;ABB LTD;COUNTRY;https://finance.yahoo.com/quote/ABJ.DE/profile/;CH;N/A;2024
-18940840;ABB LTD;EMPLOYEES;https://finance.yahoo.com/quote/ABJ.DE/profile/;110970;N/A;2024
+18940840;ABB LTD;EMPLOYEES;https://en.wikipedia.org/wiki/ABB;110000;N/A;2024
 18940840;ABB LTD;TURNOVER;https://finance.yahoo.com/quote/ABJ.DE/financials/;32850000000;USD;2024
 18940840;ABB LTD;ASSETS;https://finance.yahoo.com/quote/ABJ.DE/balance-sheet/;40357000000;USD;2024
 18940840;ABB LTD;WEBSITE;https://finance.yahoo.com/quote/ABJ.DE/profile/;global.abb;N/A;2024
 18940840;ABB LTD;ACTIVITY;https://finance.yahoo.com/quote/ABJ.DE/profile/;C27;N/A;2024
 18942704;HP INC.;COUNTRY;https://finance.yahoo.com/quote/HPQ/profile/;US;N/A;2024
-18942704;HP INC.;EMPLOYEES;https://finance.yahoo.com/quote/HPQ/profile/;58000;N/A;2024
+18942704;HP INC.;EMPLOYEES;https://en.wikipedia.org/wiki/HP_Inc.;58000;N/A;2024
 18942704;HP INC.;TURNOVER;https://finance.yahoo.com/quote/HPQ/financials/;53559000000;USD;2024
 18942704;HP INC.;ASSETS;https://finance.yahoo.com/quote/HPQ/balance-sheet/;39909000000;USD;2024
 18942704;HP INC.;WEBSITE;https://finance.yahoo.com/quote/HPQ/profile/;hp.com;N/A;2024
 18942704;HP INC.;ACTIVITY;https://finance.yahoo.com/quote/HPQ/profile/;C26;N/A;2024
 18947387;CAPGEMINI;COUNTRY;https://finance.yahoo.com/quote/CAP.PA/profile/;FR;N/A;2024
-18947387;CAPGEMINI;EMPLOYEES;https://finance.yahoo.com/quote/CAP.PA/profile/;341118;N/A;2024
+18947387;CAPGEMINI;EMPLOYEES;https://en.wikipedia.org/wiki/Capgemini;336900;N/A;2024
 18947387;CAPGEMINI;TURNOVER;https://finance.yahoo.com/quote/CAP.PA/financials/;22096000000;EUR;2024
 18947387;CAPGEMINI;ASSETS;https://finance.yahoo.com/quote/CAP.PA/balance-sheet/;25660000000;EUR;2024
 18947387;CAPGEMINI;WEBSITE;https://finance.yahoo.com/quote/CAP.PA/profile/;capgemini.com;N/A;2024
 18947387;CAPGEMINI;ACTIVITY;https://finance.yahoo.com/quote/CAP.PA/profile/;J62;N/A;2024
 18953431;MERCK GROUP;COUNTRY;https://finance.yahoo.com/quote/MRK.DE/profile/;DE;N/A;2024
-18953431;MERCK GROUP;EMPLOYEES;https://finance.yahoo.com/quote/MRK.DE/profile/;62604;N/A;2024
+18953431;MERCK GROUP;EMPLOYEES;https://en.wikipedia.org/wiki/Merck_Group;62557;N/A;2024
 18953431;MERCK GROUP;TURNOVER;https://finance.yahoo.com/quote/MRK.DE/financials/;21156000000;EUR;2024
 18953431;MERCK GROUP;ASSETS;https://finance.yahoo.com/quote/MRK.DE/balance-sheet/;51567000000;EUR;2024
 18953431;MERCK GROUP;WEBSITE;https://finance.yahoo.com/quote/MRK.DE/profile/;https://www.merckgroup.com/en;N/A;2024
@@ -582,7 +582,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18959832;MOEVE;WEBSITE;https://en.wikipedia.org/wiki/Moeve;moeveglobal.com;N/A;2024
 18959832;MOEVE;ACTIVITY;https://en.wikipedia.org/wiki/Moeve;C19;N/A;2024
 18967691;GOODYEAR TIRE & RUBBER CO;COUNTRY;https://finance.yahoo.com/quote/GTR.F/profile/;US;N/A;2024
-18967691;GOODYEAR TIRE & RUBBER CO;EMPLOYEES;https://finance.yahoo.com/quote/GTR.F/profile/;68000;N/A;2024
+18967691;GOODYEAR TIRE & RUBBER CO;EMPLOYEES;https://en.wikipedia.org/wiki/Goodyear_Tire_and_Rubber_Company;68000;N/A;2024
 18967691;GOODYEAR TIRE & RUBBER CO;TURNOVER;https://finance.yahoo.com/quote/GTR.F/financials/;18878000000;USD;2024
 18967691;GOODYEAR TIRE & RUBBER CO;ASSETS;https://finance.yahoo.com/quote/GTR.F/balance-sheet/;20964000000;USD;2024
 18967691;GOODYEAR TIRE & RUBBER CO;WEBSITE;https://finance.yahoo.com/quote/GTR.F/profile/;goodyear.com;N/A;2024
@@ -598,7 +598,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18974095;UMICORE;TURNOVER;https://finance.yahoo.com/quote/NVJP.F/financials/;14853700000;EUR;2024
 18974095;UMICORE;ASSETS;https://finance.yahoo.com/quote/NVJP.F/balance-sheet/;9411500000;EUR;2024
 18974095;UMICORE;WEBSITE;https://finance.yahoo.com/quote/NVJP.F/profile/;umicore.com;N/A;2024
-18974095;UMICORE;ACTIVITY;https://finance.yahoo.com/quote/NVJP.F/profile/;E38;N/A;2024
+18974095;UMICORE;ACTIVITY;https://finance.yahoo.com/quote/NVJP.F/profile/;G46;N/A;2024
 18976475;KONE;COUNTRY;https://finance.yahoo.com/quote/KNEBV.HE/profile/;FI;N/A;2024
 18976475;KONE;EMPLOYEES;https://finance.yahoo.com/quote/KNEBV.HE/profile/;63852;N/A;2024
 18976475;KONE;TURNOVER;https://finance.yahoo.com/quote/KNEBV.HE/financials/;11098400000;EUR;2024
@@ -606,13 +606,13 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18976475;KONE;WEBSITE;https://finance.yahoo.com/quote/KNEBV.HE/profile/;kone.com;N/A;2024
 18976475;KONE;ACTIVITY;https://finance.yahoo.com/quote/KNEBV.HE/profile/;C33;N/A;2024
 18980415;MICROSOFT CORPORATION;COUNTRY;https://finance.yahoo.com/quote/MSF.DE/profile/;US;N/A;2024
-18980415;MICROSOFT CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/MSF.DE/profile/;228000;N/A;2024
+18980415;MICROSOFT CORPORATION;EMPLOYEES;https://en.wikipedia.org/wiki/Microsoft;228000;N/A;2024
 18980415;MICROSOFT CORPORATION;TURNOVER;https://finance.yahoo.com/quote/MSF.DE/financials/;245122000000;USD;2024
 18980415;MICROSOFT CORPORATION;ASSETS;https://finance.yahoo.com/quote/MSF.DE/balance-sheet/;512163000000;USD;2024
 18980415;MICROSOFT CORPORATION;WEBSITE;https://finance.yahoo.com/quote/MSF.DE/profile/;microsoft.com;N/A;2024
 18980415;MICROSOFT CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/MSF.DE/profile/;J62;N/A;2024
 18981199;GSK PLC;COUNTRY;https://finance.yahoo.com/quote/GSK/profile/;GB;N/A;2024
-18981199;GSK PLC;EMPLOYEES;https://finance.yahoo.com/quote/GSK/profile/;68629;N/A;2024
+18981199;GSK PLC;EMPLOYEES;https://en.wikipedia.org/wiki/GSK_plc;70000;N/A;2025
 18981199;GSK PLC;TURNOVER;https://finance.yahoo.com/quote/GSK/financials/;31376000000;GBP;2024
 18981199;GSK PLC;ASSETS;https://finance.yahoo.com/quote/GSK/balance-sheet/;59463000000;GBP;2024
 18981199;GSK PLC;WEBSITE;https://finance.yahoo.com/quote/GSK/profile/;gsk.com;N/A;2024
@@ -624,7 +624,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18984365;NOKIA;WEBSITE;https://finance.yahoo.com/quote/NOK/profile/;nokia.com;N/A;2024
 18984365;NOKIA;ACTIVITY;https://finance.yahoo.com/quote/NOK/profile/;J61;N/A;2024
 18984744;MONDELEZ INTERNATIONAL INC.;COUNTRY;https://finance.yahoo.com/quote/KTF.F/profile/;US;N/A;2024
-18984744;MONDELEZ INTERNATIONAL INC.;EMPLOYEES;https://finance.yahoo.com/quote/KTF.F/profile/;90000;N/A;2024
+18984744;MONDELEZ INTERNATIONAL INC.;EMPLOYEES;https://en.wikipedia.org/wiki/Mondelez_International;90000;N/A;2024
 18984744;MONDELEZ INTERNATIONAL INC.;TURNOVER;https://finance.yahoo.com/quote/KTF.F/financials/;36441000000;USD;2024
 18984744;MONDELEZ INTERNATIONAL INC.;ASSETS;https://finance.yahoo.com/quote/KTF.F/balance-sheet/;68497000000;USD;2024
 18984744;MONDELEZ INTERNATIONAL INC.;WEBSITE;https://finance.yahoo.com/quote/KTF.F/profile/;mondelezinternational.com;N/A;2024
@@ -636,13 +636,13 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18986164;TELEFONICA;WEBSITE;https://finance.yahoo.com/quote/TEF.MC/profile/;telefonica.com;N/A;2024
 18986164;TELEFONICA;ACTIVITY;https://finance.yahoo.com/quote/TEF.MC/profile/;J61;N/A;2024
 18987927;ENI S P A;COUNTRY;https://finance.yahoo.com/quote/E/profile/;IT;N/A;2024
-18987927;ENI S P A;EMPLOYEES;https://finance.yahoo.com/quote/E/profile/;32492;N/A;2024
+18987927;ENI S P A;EMPLOYEES;https://en.wikipedia.org/wiki/Eni;32492;N/A;2024
 18987927;ENI S P A;TURNOVER;https://finance.yahoo.com/quote/E/financials/;88797000000;EUR;2024
 18987927;ENI S P A;ASSETS;https://finance.yahoo.com/quote/E/balance-sheet/;146939000000;EUR;2024
 18987927;ENI S P A;WEBSITE;https://finance.yahoo.com/quote/E/profile/;eni.com;N/A;2024
 18987927;ENI S P A;ACTIVITY;https://finance.yahoo.com/quote/E/profile/;B06;N/A;2024
 18988574;ARCELORMITTAL;COUNTRY;https://finance.yahoo.com/quote/MT/profile/;LU;N/A;2024
-18988574;ARCELORMITTAL;EMPLOYEES;https://finance.yahoo.com/quote/MT/profile/;125416;N/A;2024
+18988574;ARCELORMITTAL;EMPLOYEES;https://en.wikipedia.org/wiki/ArcelorMittal;125416;N/A;2024
 18988574;ARCELORMITTAL;TURNOVER;https://finance.yahoo.com/quote/MT/financials/;62441000000;USD;2024
 18988574;ARCELORMITTAL;ASSETS;https://finance.yahoo.com/quote/MT/balance-sheet/;89385000000;USD;2024
 18988574;ARCELORMITTAL;WEBSITE;https://finance.yahoo.com/quote/MT/profile/;arcelormittal.com;N/A;2024
@@ -654,17 +654,17 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 18990015;HEIDELBERGCEMENT;WEBSITE;https://en.wikipedia.org/wiki/Heidelberg_Materials;heidelbergmaterials.com;N/A;2024
 18990015;HEIDELBERGCEMENT;ACTIVITY;https://en.wikipedia.org/wiki/Heidelberg_Materials;C23;N/A;2024
 18990928;INTERNATIONAL BUSINESS MACHINES CORP(IBM);COUNTRY;https://finance.yahoo.com/quote/IBM/profile/;US;N/A;2024
-18990928;INTERNATIONAL BUSINESS MACHINES CORP(IBM);EMPLOYEES;https://finance.yahoo.com/quote/IBM/profile/;270300;N/A;2024
+18990928;INTERNATIONAL BUSINESS MACHINES CORP(IBM);EMPLOYEES;https://en.wikipedia.org/wiki/IBM;270300;N/A;2024
 18990928;INTERNATIONAL BUSINESS MACHINES CORP(IBM);TURNOVER;https://finance.yahoo.com/quote/IBM/financials/;62753000000;USD;2024
 18990928;INTERNATIONAL BUSINESS MACHINES CORP(IBM);ASSETS;https://finance.yahoo.com/quote/IBM/balance-sheet/;137175000000;USD;2024
 18990928;INTERNATIONAL BUSINESS MACHINES CORP(IBM);WEBSITE;https://finance.yahoo.com/quote/IBM/profile/;ibm.com;N/A;2024
 18990928;INTERNATIONAL BUSINESS MACHINES CORP(IBM);ACTIVITY;https://finance.yahoo.com/quote/IBM/profile/;J62;N/A;2024
-18997891;MEDTRONIC PLC;COUNTRY;https://finance.yahoo.com/quote/MDT/profile/;IE;N/A;2024
-18997891;MEDTRONIC PLC;EMPLOYEES;https://finance.yahoo.com/quote/MDT/profile/;95000;N/A;2024
-18997891;MEDTRONIC PLC;TURNOVER;https://finance.yahoo.com/quote/MDT/financials/;32364000000;USD;2024
-18997891;MEDTRONIC PLC;ASSETS;https://finance.yahoo.com/quote/MDT/balance-sheet/;89981000000;USD;2024
-18997891;MEDTRONIC PLC;WEBSITE;https://finance.yahoo.com/quote/MDT/profile/;medtronic.com;N/A;2024
-18997891;MEDTRONIC PLC;ACTIVITY;https://finance.yahoo.com/quote/MDT/profile/;C28;N/A;2024
+18997891;MEDTRONIC PLC;COUNTRY;https://finance.yahoo.com/quote/MDT/profile/;IE;N/A;2025
+18997891;MEDTRONIC PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Medtronic;95000;N/A;2025
+18997891;MEDTRONIC PLC;TURNOVER;https://finance.yahoo.com/quote/MDT/financials/;33537000000;USD;2025
+18997891;MEDTRONIC PLC;ASSETS;https://finance.yahoo.com/quote/MDT/balance-sheet/;91680000000;USD;2025
+18997891;MEDTRONIC PLC;WEBSITE;https://finance.yahoo.com/quote/MDT/profile/;medtronic.com;N/A;2025
+18997891;MEDTRONIC PLC;ACTIVITY;https://finance.yahoo.com/quote/MDT/profile/;C28;N/A;2025
 19004631;NESTLE S.A.;COUNTRY;https://finance.yahoo.com/quote/NESM.F/profile/;CH;N/A;2024
 19004631;NESTLE S.A.;EMPLOYEES;https://finance.yahoo.com/quote/NESM.F/profile/;251786;N/A;2024
 19004631;NESTLE S.A.;TURNOVER;https://finance.yahoo.com/quote/NESM.F/financials/;91720000000;CHF;2024
@@ -707,20 +707,20 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19032544;RETHMANN;ASSETS;;;;
 19032544;RETHMANN;WEBSITE;https://en.wikipedia.org/wiki/Rethmann;rethmann-gruppe.de;N/A;2024
 19032544;RETHMANN;ACTIVITY;https://en.wikipedia.org/wiki/Rethmann;E38;N/A;2024
-19032847;MITSUI & CO LTD;COUNTRY;https://finance.yahoo.com/quote/MTS1.F/profile/;JP;N/A;2024
-19032847;MITSUI & CO LTD;EMPLOYEES;https://www.mitsui.com/jp/en/ir/library/online2024/pdf/en_ar2024_all_web.pdf;53602;N/A;2024
-19032847;MITSUI & CO LTD;TURNOVER;https://finance.yahoo.com/quote/MTS1.F/financials/;13324942000000;JPY;2024
-19032847;MITSUI & CO LTD;ASSETS;https://finance.yahoo.com/quote/MTS1.F/balance-sheet/;16899502000000;JPY;2024
-19032847;MITSUI & CO LTD;WEBSITE;https://finance.yahoo.com/quote/MTS1.F/profile/;mitsui.com;N/A;2024
-19032847;MITSUI & CO LTD;ACTIVITY;https://finance.yahoo.com/quote/MTS1.F/profile/;G46;N/A;2024
+19032847;MITSUI & CO LTD;COUNTRY;https://finance.yahoo.com/quote/MTS1.F/profile/;JP;N/A;2025
+19032847;MITSUI & CO LTD;EMPLOYEES;https://finance.yahoo.com/quote/MTS1.F/profile/;56400;N/A;2025
+19032847;MITSUI & CO LTD;TURNOVER;https://finance.yahoo.com/quote/MTS1.F/financials/;14662620000000;JPY;2025
+19032847;MITSUI & CO LTD;ASSETS;https://finance.yahoo.com/quote/MTS1.F/balance-sheet/;16811509000000;JPY;2025
+19032847;MITSUI & CO LTD;WEBSITE;https://finance.yahoo.com/quote/MTS1.F/profile/;mitsui.com;N/A;2025
+19032847;MITSUI & CO LTD;ACTIVITY;https://finance.yahoo.com/quote/MTS1.F/profile/;G46;N/A;2025
 19037620;JBS S.A.;COUNTRY;https://finance.yahoo.com/quote/JBSAY/profile/;BR;N/A;2024
-19037620;JBS S.A.;EMPLOYEES;https://finance.yahoo.com/quote/JBSAY/profile/;280000;N/A;2024
+19037620;JBS S.A.;EMPLOYEES;https://en.wikipedia.org/wiki/JBS_S.A.;270000;N/A;2024
 19037620;JBS S.A.;TURNOVER;https://finance.yahoo.com/quote/JBSAY/financials/;477057604752;BRL;2024
 19037620;JBS S.A.;ASSETS;https://finance.yahoo.com/quote/JBSAY/balance-sheet/;251472221975;BRL;2024
 19037620;JBS S.A.;WEBSITE;https://finance.yahoo.com/quote/JBSAY/profile/;jbs.com.br;N/A;2024
 19037620;JBS S.A.;ACTIVITY;https://finance.yahoo.com/quote/JBSAY/profile/;C10;N/A;2024
 19037648;H & M HENNES & MAURITZ;COUNTRY;https://finance.yahoo.com/quote/HMSB.F/profile/;SE;N/A;2024
-19037648;H & M HENNES & MAURITZ;EMPLOYEES;https://finance.yahoo.com/quote/HMSB.F/profile/;140000;N/A;2024
+19037648;H & M HENNES & MAURITZ;EMPLOYEES;https://en.wikipedia.org/wiki/H%26M;140000;N/A;2024
 19037648;H & M HENNES & MAURITZ;TURNOVER;https://finance.yahoo.com/quote/HMSB.F/financials/;234478000000;SEK;2024
 19037648;H & M HENNES & MAURITZ;ASSETS;https://finance.yahoo.com/quote/HMSB.F/balance-sheet/;180214000000;SEK;2024
 19037648;H & M HENNES & MAURITZ;WEBSITE;https://finance.yahoo.com/quote/HMSB.F/profile/;hmgroup.com;N/A;2024
@@ -732,49 +732,49 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19041196;MERCEDES-BENZ GROUP;WEBSITE;https://finance.yahoo.com/quote/MBG.DE/profile/;mercedes-benz.com;N/A;2024
 19041196;MERCEDES-BENZ GROUP;ACTIVITY;https://finance.yahoo.com/quote/MBG.DE/profile/;C29;N/A;2024
 19041914;PEPSICO INC;COUNTRY;https://finance.yahoo.com/quote/PEP.F/profile/;US;N/A;2024
-19041914;PEPSICO INC;EMPLOYEES;https://finance.yahoo.com/quote/PEP.F/profile/;319000;N/A;2024
+19041914;PEPSICO INC;EMPLOYEES;https://en.wikipedia.org/wiki/PepsiCo;318000;N/A;2024
 19041914;PEPSICO INC;TURNOVER;https://finance.yahoo.com/quote/PEP.F/financials/;91854000000;USD;2024
 19041914;PEPSICO INC;ASSETS;https://finance.yahoo.com/quote/PEP.F/balance-sheet/;99467000000;USD;2024
 19041914;PEPSICO INC;WEBSITE;https://finance.yahoo.com/quote/PEP.F/profile/;pepsico.com;N/A;2024
 19041914;PEPSICO INC;ACTIVITY;https://finance.yahoo.com/quote/PEP.F/profile/;C10;N/A;2024
 19042061;COMPASS GROUP PLC;COUNTRY;https://finance.yahoo.com/quote/XGR.F/profile/;GB;N/A;2024
-19042061;COMPASS GROUP PLC;EMPLOYEES;https://finance.yahoo.com/quote/XGR.F/profile/;580000;N/A;2024
+19042061;COMPASS GROUP PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Compass_Group;579126;N/A;2024
 19042061;COMPASS GROUP PLC;TURNOVER;https://finance.yahoo.com/quote/XGR.F/financials/;42002000000;USD;2024
 19042061;COMPASS GROUP PLC;ASSETS;https://finance.yahoo.com/quote/XGR.F/balance-sheet/;24349000000;USD;2024
 19042061;COMPASS GROUP PLC;WEBSITE;https://finance.yahoo.com/quote/XGR.F/profile/;compass-group.com;N/A;2024
 19042061;COMPASS GROUP PLC;ACTIVITY;https://finance.yahoo.com/quote/XGR.F/profile/;I56;N/A;2024
-19044103;ATOS SE;COUNTRY;https://en.wikipedia.org/wiki/Atos;FR;N/A;2024
-19044103;ATOS SE;EMPLOYEES;https://finance.yahoo.com/quote/ATO.PA/profile/;71279;N/A;2023
-19044103;ATOS SE;TURNOVER;https://finance.yahoo.com/quote/ATO.PA/financials/;10693000000;EUR;2023
-19044103;ATOS SE;ASSETS;https://finance.yahoo.com/quote/ATO.PA/balance-sheet/;11294000000;EUR;2023
-19044103;ATOS SE;WEBSITE;https://en.wikipedia.org/wiki/Atos;atos.net;N/A;2024
-19044103;ATOS SE;ACTIVITY;https://en.wikipedia.org/wiki/Atos;N77;N/A;2024
+19044103;ATOS SE;COUNTRY;https://finance.yahoo.com/quote/ATO.PA/profile/;FR;N/A;2024
+19044103;ATOS SE;EMPLOYEES;https://finance.yahoo.com/quote/ATO.PA/profile/;71279;N/A;2024
+19044103;ATOS SE;TURNOVER;https://finance.yahoo.com/quote/ATO.PA/financials/;9577000000;EUR;2024
+19044103;ATOS SE;ASSETS;https://finance.yahoo.com/quote/ATO.PA/balance-sheet/;8246000000;EUR;2024
+19044103;ATOS SE;WEBSITE;https://finance.yahoo.com/quote/ATO.PA/profile/;atos.net;N/A;2024
+19044103;ATOS SE;ACTIVITY;https://finance.yahoo.com/quote/ATO.PA/profile/;N77;N/A;2024
 19044732;VOLKSWAGEN;COUNTRY;https://finance.yahoo.com/quote/VOW3.DE/profile/;DE;N/A;2024
 19044732;VOLKSWAGEN;EMPLOYEES;https://finance.yahoo.com/quote/VOW3.DE/profile/;639608;N/A;2024
 19044732;VOLKSWAGEN;TURNOVER;https://finance.yahoo.com/quote/VOW3.DE/financials/;324655000000;EUR;2024
 19044732;VOLKSWAGEN;ASSETS;https://finance.yahoo.com/quote/VOW3.DE/balance-sheet/;632905000000;EUR;2024
 19044732;VOLKSWAGEN;WEBSITE;https://finance.yahoo.com/quote/VOW3.DE/profile/;volkswagen-group.com;N/A;2024
 19044732;VOLKSWAGEN;ACTIVITY;https://finance.yahoo.com/quote/VOW3.DE/profile/;C29;N/A;2024
-19045186;TOYOTA MOTOR CORPORATION;COUNTRY;https://finance.yahoo.com/quote/TM/profile/;JP;N/A;2024
-19045186;TOYOTA MOTOR CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/TM/profile/;383853;N/A;2024
-19045186;TOYOTA MOTOR CORPORATION;TURNOVER;https://finance.yahoo.com/quote/TM/financials/;45095325000000;JPY;2024
-19045186;TOYOTA MOTOR CORPORATION;ASSETS;https://finance.yahoo.com/quote/TM/balance-sheet/;90114296000000;JPY;2024
-19045186;TOYOTA MOTOR CORPORATION;WEBSITE;https://finance.yahoo.com/quote/TM/profile/;global.toyota;N/A;2024
-19045186;TOYOTA MOTOR CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/TM/profile/;C29;N/A;2024
+19045186;TOYOTA MOTOR CORPORATION;COUNTRY;https://finance.yahoo.com/quote/TM/profile/;JP;N/A;2025
+19045186;TOYOTA MOTOR CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/TM/profile/;383853;N/A;2025
+19045186;TOYOTA MOTOR CORPORATION;TURNOVER;https://finance.yahoo.com/quote/TM/financials/;48036704000000;JPY;2025
+19045186;TOYOTA MOTOR CORPORATION;ASSETS;https://finance.yahoo.com/quote/TM/balance-sheet/;93601350000000;JPY;2025
+19045186;TOYOTA MOTOR CORPORATION;WEBSITE;https://finance.yahoo.com/quote/TM/profile/;global.toyota;N/A;2025
+19045186;TOYOTA MOTOR CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/TM/profile/;C29;N/A;2025
 19050011;DEUTSCHE TELEKOM;COUNTRY;https://finance.yahoo.com/quote/DTEGY/profile/;DE;N/A;2024
 19050011;DEUTSCHE TELEKOM;EMPLOYEES;https://finance.yahoo.com/quote/DTEGY/profile/;198678;N/A;2024
 19050011;DEUTSCHE TELEKOM;TURNOVER;https://finance.yahoo.com/quote/DTEGY/financials/;115111000000;EUR;2024
 19050011;DEUTSCHE TELEKOM;ASSETS;https://finance.yahoo.com/quote/DTEGY/balance-sheet/;304934000000;EUR;2024
 19050011;DEUTSCHE TELEKOM;WEBSITE;https://finance.yahoo.com/quote/DTEGY/profile/;telekom.com;N/A;2024
 19050011;DEUTSCHE TELEKOM;ACTIVITY;https://finance.yahoo.com/quote/DTEGY/profile/;J61;N/A;2024
-19050406;ITOCHU CORPORATION;COUNTRY;https://finance.yahoo.com/quote/IOC.F/profile/;JP;N/A;2024
-19050406;ITOCHU CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/IOC.F/profile/;113733;N/A;2024
-19050406;ITOCHU CORPORATION;TURNOVER;https://finance.yahoo.com/quote/IOC.F/financials/;14029910000000;JPY;2024
-19050406;ITOCHU CORPORATION;ASSETS;https://finance.yahoo.com/quote/IOC.F/balance-sheet/;14489701000000;JPY;2024
-19050406;ITOCHU CORPORATION;WEBSITE;https://finance.yahoo.com/quote/IOC.F/profile/;itochu.co.jp;N/A;2024
-19050406;ITOCHU CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/IOC.F/profile/;G46;N/A;2024
+19050406;ITOCHU CORPORATION;COUNTRY;https://finance.yahoo.com/quote/IOC.F/profile/;JP;N/A;2025
+19050406;ITOCHU CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/IOC.F/profile/;113733;N/A;2025
+19050406;ITOCHU CORPORATION;TURNOVER;https://finance.yahoo.com/quote/IOC.F/financials/;14724234000000;JPY;2025
+19050406;ITOCHU CORPORATION;ASSETS;https://finance.yahoo.com/quote/IOC.F/balance-sheet/;15134264000000;JPY;2025
+19050406;ITOCHU CORPORATION;WEBSITE;https://finance.yahoo.com/quote/IOC.F/profile/;itochu.co.jp;N/A;2025
+19050406;ITOCHU CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/IOC.F/profile/;G46;N/A;2025
 19052995;ALSTOM;COUNTRY;https://finance.yahoo.com/quote/ALO.PA/profile/;FR;N/A;2025
-19052995;ALSTOM;EMPLOYEES;https://finance.yahoo.com/quote/ALO.PA/profile/;86039;N/A;2025
+19052995;ALSTOM;EMPLOYEES;https://en.wikipedia.org/wiki/Alstom;80000;N/A;2024
 19052995;ALSTOM;TURNOVER;https://finance.yahoo.com/quote/ALO.PA/financials/;18489000000;EUR;2025
 19052995;ALSTOM;ASSETS;https://finance.yahoo.com/quote/ALO.PA/balance-sheet/;34586000000;EUR;2025
 19052995;ALSTOM;WEBSITE;https://finance.yahoo.com/quote/ALO.PA/profile/;alstom.com;N/A;2025
@@ -786,17 +786,17 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19053695;DANONE;WEBSITE;https://finance.yahoo.com/quote/BN.PA/profile/;danone.com;N/A;2024
 19053695;DANONE;ACTIVITY;https://finance.yahoo.com/quote/BN.PA/profile/;C10;N/A;2024
 19057037;THERMO FISHER SCIENTIFIC INC.;COUNTRY;https://finance.yahoo.com/quote/TMO/profile/;US;N/A;2024
-19057037;THERMO FISHER SCIENTIFIC INC.;EMPLOYEES;https://finance.yahoo.com/quote/TMO/profile/;125000;N/A;2024
+19057037;THERMO FISHER SCIENTIFIC INC.;EMPLOYEES;https://en.wikipedia.org/wiki/Thermo_Fisher_Scientific;125000;N/A;2024
 19057037;THERMO FISHER SCIENTIFIC INC.;TURNOVER;https://finance.yahoo.com/quote/TMO/financials/;42879000000;USD;2024
 19057037;THERMO FISHER SCIENTIFIC INC.;ASSETS;https://finance.yahoo.com/quote/TMO/balance-sheet/;97321000000;USD;2024
 19057037;THERMO FISHER SCIENTIFIC INC.;WEBSITE;https://finance.yahoo.com/quote/TMO/profile/;thermofisher.com;N/A;2024
 19057037;THERMO FISHER SCIENTIFIC INC.;ACTIVITY;https://finance.yahoo.com/quote/TMO/profile/;M72;N/A;2024
-19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;COUNTRY;https://finance.yahoo.com/quote/NTT.F/profile/;JP;N/A;2024
-19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;EMPLOYEES;https://group.ntt/en/ir/library/annual/pdf/integrated_report_24e.pdf;350000;N/A;2024
-19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;TURNOVER;https://finance.yahoo.com/quote/NTT.F/financials/;13374569000000;JPY;2024
-19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;ASSETS;https://finance.yahoo.com/quote/NTT.F/balance-sheet/;29604223000000;JPY;2024
-19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;WEBSITE;https://finance.yahoo.com/quote/NTT.F/profile/;group.ntt;N/A;2024
-19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/NTT.F/profile/;J61;N/A;2024
+19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;COUNTRY;https://finance.yahoo.com/quote/NTT.F/profile/;JP;N/A;2025
+19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/NTT.F/profile/;341321;N/A;2025
+19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;TURNOVER;https://finance.yahoo.com/quote/NTT.F/financials/;13704727000000;JPY;2025
+19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;ASSETS;https://finance.yahoo.com/quote/NTT.F/balance-sheet/;30062483000000;JPY;2025
+19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;WEBSITE;https://finance.yahoo.com/quote/NTT.F/profile/;group.ntt;N/A;2025
+19060705;NIPPON TELEGRAPH AND TELEPHONE CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/NTT.F/profile/;J61;N/A;2025
 19061929;ZHEJIANG GEELY HOLDING GROUP CO LTD;COUNTRY;https://finance.yahoo.com/quote/GRU.F/profile/;HK;N/A;2024
 19061929;ZHEJIANG GEELY HOLDING GROUP CO LTD;EMPLOYEES;https://finance.yahoo.com/quote/GRU.F/profile/;64000;N/A;2024
 19061929;ZHEJIANG GEELY HOLDING GROUP CO LTD;TURNOVER;https://finance.yahoo.com/quote/GRU.F/financials/;240194270000;CNY;2024
@@ -810,7 +810,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19063169;DEUTSCHE POST;WEBSITE;https://finance.yahoo.com/quote/DHL.DE/profile/;dhl.com;N/A;2024
 19063169;DEUTSCHE POST;ACTIVITY;https://finance.yahoo.com/quote/DHL.DE/profile/;H53;N/A;2024
 19063238;ACCENTURE PLC;COUNTRY;https://finance.yahoo.com/quote/ACN/profile/;IE;N/A;2024
-19063238;ACCENTURE PLC;EMPLOYEES;https://finance.yahoo.com/quote/ACN/profile/;801000;N/A;2024
+19063238;ACCENTURE PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Accenture;742000;N/A;2024
 19063238;ACCENTURE PLC;TURNOVER;https://finance.yahoo.com/quote/ACN/financials/;64896464000;USD;2024
 19063238;ACCENTURE PLC;ASSETS;https://finance.yahoo.com/quote/ACN/balance-sheet/;55932363000;USD;2024
 19063238;ACCENTURE PLC;WEBSITE;https://finance.yahoo.com/quote/ACN/profile/;accenture.com;N/A;2024
@@ -852,7 +852,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19098069;EXXON MOBIL CORP;WEBSITE;https://finance.yahoo.com/quote/XOM/profile/;exxonmobil.com;N/A;2024
 19098069;EXXON MOBIL CORP;ACTIVITY;https://finance.yahoo.com/quote/XOM/profile/;B06;N/A;2024
 19098782;HENKEL KGAA;COUNTRY;https://finance.yahoo.com/quote/HEN3.DE/profile/;DE;N/A;2024
-19098782;HENKEL KGAA;EMPLOYEES;https://finance.yahoo.com/quote/HEN3.DE/profile/;47150;N/A;2024
+19098782;HENKEL KGAA;EMPLOYEES;https://en.wikipedia.org/wiki/Henkel;47150;N/A;2024
 19098782;HENKEL KGAA;TURNOVER;https://finance.yahoo.com/quote/HEN3.DE/financials/;21586000000;EUR;2024
 19098782;HENKEL KGAA;ASSETS;https://finance.yahoo.com/quote/HEN3.DE/balance-sheet/;35267000000;EUR;2024
 19098782;HENKEL KGAA;WEBSITE;https://finance.yahoo.com/quote/HEN3.DE/profile/;henkel.com;N/A;2024
@@ -894,7 +894,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19145378;ESSITY;WEBSITE;https://finance.yahoo.com/quote/ESWB.F/profile/;essity.com;N/A;2024
 19145378;ESSITY;ACTIVITY;https://finance.yahoo.com/quote/ESWB.F/profile/;G47;N/A;2024
 19149741;LEONARDO SOCIETA PER AZIONI;COUNTRY;https://finance.yahoo.com/quote/FMNB.F/profile/;IT;N/A;2024
-19149741;LEONARDO SOCIETA PER AZIONI;EMPLOYEES;https://finance.yahoo.com/quote/FMNB.F/profile/;60288;N/A;2024
+19149741;LEONARDO SOCIETA PER AZIONI;EMPLOYEES;https://en.wikipedia.org/wiki/Leonardo_(company);60468;N/A;2024
 19149741;LEONARDO SOCIETA PER AZIONI;TURNOVER;https://finance.yahoo.com/quote/FMNB.F/financials/;17763000000;EUR;2024
 19149741;LEONARDO SOCIETA PER AZIONI;ASSETS;https://finance.yahoo.com/quote/FMNB.F/balance-sheet/;33673000000;EUR;2024
 19149741;LEONARDO SOCIETA PER AZIONI;WEBSITE;https://finance.yahoo.com/quote/FMNB.F/profile/;leonardo.com;N/A;2024
@@ -906,7 +906,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19157606;BOSCH;WEBSITE;https://en.wikipedia.org/wiki/Bosch_(company);bosch.com;N/A;2024
 19157606;BOSCH;ACTIVITY;https://en.wikipedia.org/wiki/Bosch_(company);C28;N/A;2024
 19159067;DELL TECHNOLOGIES INC.;COUNTRY;https://finance.yahoo.com/quote/DELL/profile/;US;N/A;2025
-19159067;DELL TECHNOLOGIES INC.;EMPLOYEES;https://finance.yahoo.com/quote/DELL/profile/;108000;N/A;2025
+19159067;DELL TECHNOLOGIES INC.;EMPLOYEES;https://en.wikipedia.org/wiki/Dell_Technologies;108000;N/A;2025
 19159067;DELL TECHNOLOGIES INC.;TURNOVER;https://finance.yahoo.com/quote/DELL/financials/;95567000000;USD;2025
 19159067;DELL TECHNOLOGIES INC.;ASSETS;https://finance.yahoo.com/quote/DELL/balance-sheet/;79746000000;USD;2025
 19159067;DELL TECHNOLOGIES INC.;WEBSITE;https://finance.yahoo.com/quote/DELL/profile/;dell.com;N/A;2025
@@ -929,14 +929,14 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19187838;ALPHABET INC.;ASSETS;https://finance.yahoo.com/quote/ABEA.DE/balance-sheet/;450256000000;USD;2024
 19187838;ALPHABET INC.;WEBSITE;https://finance.yahoo.com/quote/ABEA.DE/profile/;abc.xyz;N/A;2024
 19187838;ALPHABET INC.;ACTIVITY;https://finance.yahoo.com/quote/ABEA.DE/profile/;J63;N/A;2024
-19191179;MARUBENI CORPORATION;COUNTRY;https://finance.yahoo.com/quote/MARA.F/profile/;JP;N/A;2024
+19191179;MARUBENI CORPORATION;COUNTRY;https://finance.yahoo.com/quote/MARA.F/profile/;JP;N/A;2025
 19191179;MARUBENI CORPORATION;EMPLOYEES;https://www.marubeni.com/en/ir/reports/integrated_report/pdf/2024_en_all.pdf;50000;N/A;2024
-19191179;MARUBENI CORPORATION;TURNOVER;https://finance.yahoo.com/quote/MARA.F/financials/;7250515000000;JPY;2024
-19191179;MARUBENI CORPORATION;ASSETS;https://finance.yahoo.com/quote/MARA.F/balance-sheet/;8923597000000;JPY;2024
-19191179;MARUBENI CORPORATION;WEBSITE;https://finance.yahoo.com/quote/MARA.F/profile/;marubeni.com;N/A;2024
-19191179;MARUBENI CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/MARA.F/profile/;G46;N/A;2024
+19191179;MARUBENI CORPORATION;TURNOVER;https://finance.yahoo.com/quote/MARA.F/financials/;7790168000000;JPY;2025
+19191179;MARUBENI CORPORATION;ASSETS;https://finance.yahoo.com/quote/MARA.F/balance-sheet/;9201974000000;JPY;2025
+19191179;MARUBENI CORPORATION;WEBSITE;https://finance.yahoo.com/quote/MARA.F/profile/;marubeni.com;N/A;2025
+19191179;MARUBENI CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/MARA.F/profile/;G46;N/A;2025
 19191444;RELX PLC;COUNTRY;https://finance.yahoo.com/quote/RELX/profile/;GB;N/A;2024
-19191444;RELX PLC;EMPLOYEES;https://finance.yahoo.com/quote/RELX/profile/;34580;N/A;2024
+19191444;RELX PLC;EMPLOYEES;https://en.wikipedia.org/wiki/RELX;36400;N/A;2024
 19191444;RELX PLC;TURNOVER;https://finance.yahoo.com/quote/RELX/financials/;9434000000;GBP;2024
 19191444;RELX PLC;ASSETS;https://finance.yahoo.com/quote/RELX/balance-sheet/;15133000000;GBP;2024
 19191444;RELX PLC;WEBSITE;https://finance.yahoo.com/quote/RELX/profile/;relx.com;N/A;2024
@@ -948,7 +948,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19191498;BOLLORE PARTICIPATIONS SE;WEBSITE;https://finance.yahoo.com/quote/BOL.PA/profile/;bollore.com;N/A;2024
 19191498;BOLLORE PARTICIPATIONS SE;ACTIVITY;https://finance.yahoo.com/quote/BOL.PA/profile/;J60;N/A;2024
 19192598;JOHNSON & JOHNSON;COUNTRY;https://finance.yahoo.com/quote/JNJ/profile/;US;N/A;2024
-19192598;JOHNSON & JOHNSON;EMPLOYEES;https://finance.yahoo.com/quote/JNJ/profile/;138100;N/A;2024
+19192598;JOHNSON & JOHNSON;EMPLOYEES;https://en.wikipedia.org/wiki/Johnson_%26_Johnson;138100;N/A;2024
 19192598;JOHNSON & JOHNSON;TURNOVER;https://finance.yahoo.com/quote/JNJ/financials/;88821000000;USD;2024
 19192598;JOHNSON & JOHNSON;ASSETS;https://finance.yahoo.com/quote/JNJ/balance-sheet/;180104000000;USD;2024
 19192598;JOHNSON & JOHNSON;WEBSITE;https://finance.yahoo.com/quote/JNJ/profile/;jnj.com;N/A;2024
@@ -971,18 +971,18 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19206259;SGS;ASSETS;https://finance.yahoo.com/quote/0QMI.IL/balance-sheet/;6749000000;CHF;2024
 19206259;SGS;WEBSITE;https://finance.yahoo.com/quote/0QMI.IL/profile/;sgs.com;N/A;2024
 19206259;SGS;ACTIVITY;https://finance.yahoo.com/quote/0QMI.IL/profile/;M71;N/A;2024
-19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;COUNTRY;https://en.wikipedia.org/wiki/Michelin;FR;N/A;2024
+19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;COUNTRY;https://dgaddcosprod.blob.core.windows.net/cxf-corporate/attachments/pzz7jxj9liqji7wszpdckpcn-financial-information-at-december-31-2024.pdf;FR;N/A;2024
 19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;EMPLOYEES;https://dgaddcosprod.blob.core.windows.net/cxf-corporate/attachments/pzz7jxj9liqji7wszpdckpcn-financial-information-at-december-31-2024.pdf;129800;N/A;2024
 19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;TURNOVER;https://finance.yahoo.com/quote/ML.PA/financials/;27193000000;EUR;2024
 19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;ASSETS;https://finance.yahoo.com/quote/ML.PA/balance-sheet/;37352000000;EUR;2024
-19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;WEBSITE;https://en.wikipedia.org/wiki/Michelin;michelin.com;N/A;2024
+19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;WEBSITE;https://dgaddcosprod.blob.core.windows.net/cxf-corporate/attachments/pzz7jxj9liqji7wszpdckpcn-financial-information-at-december-31-2024.pdf;michelin.com;N/A;2024
 19216371;COMPAGNIE GENERALE DES ETABLISSEMENTS MICHELIN;ACTIVITY;https://finance.yahoo.com/quote/ML.PA/profile/;C22;N/A;2024
-19217026;HITACHI LTD;COUNTRY;https://finance.yahoo.com/quote/HIA1.F/profile/;JP;N/A;2024
-19217026;HITACHI LTD;EMPLOYEES;https://en.wikipedia.org/wiki/Hitachi;268655;N/A;2024
-19217026;HITACHI LTD;TURNOVER;https://finance.yahoo.com/quote/HIA1.F/financials/;9728716000000;JPY;2024
-19217026;HITACHI LTD;ASSETS;https://finance.yahoo.com/quote/HIA1.F/balance-sheet/;12221284000000;JPY;2024
-19217026;HITACHI LTD;WEBSITE;https://finance.yahoo.com/quote/HIA1.F/profile/;hitachi.co.jp;N/A;2024
-19217026;HITACHI LTD;ACTIVITY;https://finance.yahoo.com/quote/HIA1.F/profile/;J62;N/A;2024
+19217026;HITACHI LTD;COUNTRY;https://finance.yahoo.com/quote/HIA1.F/profile/;JP;N/A;2025
+19217026;HITACHI LTD;EMPLOYEES;https://en.wikipedia.org/wiki/Hitachi;2024;N/A;2024
+19217026;HITACHI LTD;TURNOVER;https://finance.yahoo.com/quote/HIA1.F/financials/;9783370000000;JPY;2025
+19217026;HITACHI LTD;ASSETS;https://finance.yahoo.com/quote/HIA1.F/balance-sheet/;13284813000000;JPY;2025
+19217026;HITACHI LTD;WEBSITE;https://finance.yahoo.com/quote/HIA1.F/profile/;hitachi.co.jp;N/A;2025
+19217026;HITACHI LTD;ACTIVITY;https://finance.yahoo.com/quote/HIA1.F/profile/;J62;N/A;2025
 19226059;HOLCIM AG;COUNTRY;https://finance.yahoo.com/quote/HLBN.F/profile/;CH;N/A;2024
 19226059;HOLCIM AG;EMPLOYEES;https://finance.yahoo.com/quote/HLBN.F/profile/;62391;N/A;2024
 19226059;HOLCIM AG;TURNOVER;https://finance.yahoo.com/quote/HLBN.F/financials/;26407000000;CHF;2024
@@ -996,7 +996,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19231130;SCHNEIDER ELECTRIC SE;WEBSITE;https://finance.yahoo.com/quote/SU.PA/profile/;se.com;N/A;2024
 19231130;SCHNEIDER ELECTRIC SE;ACTIVITY;https://finance.yahoo.com/quote/SU.PA/profile/;K64;N/A;2024
 19233882;EUROFINS SCIENTIFIC;COUNTRY;https://finance.yahoo.com/quote/ERF.PA/profile/;LU;N/A;2024
-19233882;EUROFINS SCIENTIFIC;EMPLOYEES;https://finance.yahoo.com/quote/ERF.PA/profile/;62696;N/A;2024
+19233882;EUROFINS SCIENTIFIC;EMPLOYEES;https://en.wikipedia.org/wiki/Eurofins_Scientific;63000;N/A;2024
 19233882;EUROFINS SCIENTIFIC;TURNOVER;https://finance.yahoo.com/quote/ERF.PA/financials/;6951000000;EUR;2024
 19233882;EUROFINS SCIENTIFIC;ASSETS;https://finance.yahoo.com/quote/ERF.PA/balance-sheet/;10888400000;EUR;2024
 19233882;EUROFINS SCIENTIFIC;WEBSITE;https://finance.yahoo.com/quote/ERF.PA/profile/;eurofins.com;N/A;2024
@@ -1020,7 +1020,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19245907;SAMSUNG ELECTRONICS CO. LTD.;WEBSITE;https://finance.yahoo.com/quote/SMSN.IL/profile/;samsung.com;N/A;2024
 19245907;SAMSUNG ELECTRONICS CO. LTD.;ACTIVITY;https://finance.yahoo.com/quote/SMSN.IL/profile/;C26;N/A;2024
 19249932;NOVO NORDISK;COUNTRY;https://finance.yahoo.com/quote/NVO/profile/;DK;N/A;2024
-19249932;NOVO NORDISK;EMPLOYEES;https://finance.yahoo.com/quote/NVO/profile/;77406;N/A;2024
+19249932;NOVO NORDISK;EMPLOYEES;https://en.wikipedia.org/wiki/Novo_Nordisk;74156;N/A;2024
 19249932;NOVO NORDISK;TURNOVER;https://finance.yahoo.com/quote/NVO/financials/;290403000000;DKK;2024
 19249932;NOVO NORDISK;ASSETS;https://finance.yahoo.com/quote/NVO/balance-sheet/;465795000000;DKK;2024
 19249932;NOVO NORDISK;WEBSITE;https://finance.yahoo.com/quote/NVO/profile/;novonordisk.com;N/A;2024
@@ -1038,7 +1038,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19258448;BERTELSMANN STIFTUNG;WEBSITE;https://en.wikipedia.org/wiki/Bertelsmann_Stiftung;bertelsmann-stiftung.de;N/A;2024
 19258448;BERTELSMANN STIFTUNG;ACTIVITY;https://en.wikipedia.org/wiki/Bertelsmann_Stiftung;S94;N/A;2024
 19261077;ASTRAZENECA PLC;COUNTRY;https://finance.yahoo.com/quote/ZEGA.F/profile/;GB;N/A;2024
-19261077;ASTRAZENECA PLC;EMPLOYEES;https://finance.yahoo.com/quote/ZEGA.F/profile/;94300;N/A;2024
+19261077;ASTRAZENECA PLC;EMPLOYEES;https://en.wikipedia.org/wiki/AstraZeneca;89900;N/A;2025
 19261077;ASTRAZENECA PLC;TURNOVER;https://finance.yahoo.com/quote/ZEGA.F/financials/;54073000000;USD;2024
 19261077;ASTRAZENECA PLC;ASSETS;https://finance.yahoo.com/quote/ZEGA.F/balance-sheet/;104035000000;USD;2024
 19261077;ASTRAZENECA PLC;WEBSITE;https://finance.yahoo.com/quote/ZEGA.F/profile/;astrazeneca.com;N/A;2024
@@ -1067,12 +1067,12 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19276100;YARA INTERNATIONAL ASA;ASSETS;https://finance.yahoo.com/quote/IU2.F/balance-sheet/;14994000000;USD;2024
 19276100;YARA INTERNATIONAL ASA;WEBSITE;https://finance.yahoo.com/quote/IU2.F/profile/;yara.com;N/A;2024
 19276100;YARA INTERNATIONAL ASA;ACTIVITY;https://finance.yahoo.com/quote/IU2.F/profile/;C20;N/A;2024
-19286023;MITSUBISHI CORPORATION;COUNTRY;https://finance.yahoo.com/quote/MITT.VI/profile/;JP;N/A;2024
-19286023;MITSUBISHI CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/MITT.VI/profile/;62062;N/A;2024
-19286023;MITSUBISHI CORPORATION;TURNOVER;https://finance.yahoo.com/quote/MITT.VI/financials/;19567601000000;JPY;2024
-19286023;MITSUBISHI CORPORATION;ASSETS;https://finance.yahoo.com/quote/MITT.VI/balance-sheet/;23459572000000;JPY;2024
-19286023;MITSUBISHI CORPORATION;WEBSITE;https://finance.yahoo.com/quote/MITT.VI/profile/;mitsubishicorp.com;N/A;2024
-19286023;MITSUBISHI CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/MITT.VI/profile/;C29;N/A;2024
+19286023;MITSUBISHI CORPORATION;COUNTRY;https://finance.yahoo.com/quote/MITT.VI/profile/;JP;N/A;2025
+19286023;MITSUBISHI CORPORATION;EMPLOYEES;https://finance.yahoo.com/quote/MITT.VI/profile/;62062;N/A;2025
+19286023;MITSUBISHI CORPORATION;TURNOVER;https://finance.yahoo.com/quote/MITT.VI/financials/;18617601000000;JPY;2025
+19286023;MITSUBISHI CORPORATION;ASSETS;https://finance.yahoo.com/quote/MITT.VI/balance-sheet/;21496104000000;JPY;2025
+19286023;MITSUBISHI CORPORATION;WEBSITE;https://finance.yahoo.com/quote/MITT.VI/profile/;mitsubishicorp.com;N/A;2025
+19286023;MITSUBISHI CORPORATION;ACTIVITY;https://finance.yahoo.com/quote/MITT.VI/profile/;D35;N/A;2025
 19287986;ZF FRIEDRICHSHAFEN;COUNTRY;https://en.wikipedia.org/wiki/ZF_Friedrichshafen;DE;N/A;2024
 19287986;ZF FRIEDRICHSHAFEN;EMPLOYEES;https://en.wikipedia.org/wiki/ZF_Friedrichshafen;161631;N/A;2022
 19287986;ZF FRIEDRICHSHAFEN;TURNOVER;https://en.wikipedia.org/wiki/ZF_Friedrichshafen;41400000000;EUR;2024
@@ -1086,7 +1086,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19297963;KRKA TOVARNA ZDRAVIL DD NOVO MESTO;WEBSITE;https://en.wikipedia.org/wiki/Krka_(company);http://www.krka.biz/;N/A;2024
 19297963;KRKA TOVARNA ZDRAVIL DD NOVO MESTO;ACTIVITY;https://en.wikipedia.org/wiki/Krka_(company);C21;N/A;2024
 19300811;PRYSMIAN S.P.A.;COUNTRY;https://finance.yahoo.com/quote/PRY.VI/profile/;IT;N/A;2024
-19300811;PRYSMIAN S.P.A.;EMPLOYEES;https://finance.yahoo.com/quote/PRY.VI/profile/;33740;N/A;2024
+19300811;PRYSMIAN S.P.A.;EMPLOYEES;https://en.wikipedia.org/wiki/Prysmian_Group;33161;N/A;2024
 19300811;PRYSMIAN S.P.A.;TURNOVER;https://finance.yahoo.com/quote/PRY.VI/financials/;17026000000;EUR;2024
 19300811;PRYSMIAN S.P.A.;ASSETS;https://finance.yahoo.com/quote/PRY.VI/balance-sheet/;18202000000;EUR;2024
 19300811;PRYSMIAN S.P.A.;WEBSITE;https://finance.yahoo.com/quote/PRY.VI/profile/;prysmian.com;N/A;2024
@@ -1098,7 +1098,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19312144;CANON INCORPORATED;WEBSITE;https://finance.yahoo.com/quote/CNNA.F/profile/;global.canon;N/A;2024
 19312144;CANON INCORPORATED;ACTIVITY;https://finance.yahoo.com/quote/CNNA.F/profile/;C26;N/A;2024
 19313683;STANLEY BLACK & DECKER INC.;COUNTRY;https://finance.yahoo.com/quote/SWK/profile/;US;N/A;2024
-19313683;STANLEY BLACK & DECKER INC.;EMPLOYEES;https://finance.yahoo.com/quote/SWK/profile/;48000;N/A;2024
+19313683;STANLEY BLACK & DECKER INC.;EMPLOYEES;https://en.wikipedia.org/wiki/Stanley_Black_%26_Decker;48500;N/A;2024
 19313683;STANLEY BLACK & DECKER INC.;TURNOVER;https://finance.yahoo.com/quote/SWK/financials/;15365700000;USD;2024
 19313683;STANLEY BLACK & DECKER INC.;ASSETS;https://finance.yahoo.com/quote/SWK/balance-sheet/;21848900000;USD;2024
 19313683;STANLEY BLACK & DECKER INC.;WEBSITE;https://finance.yahoo.com/quote/SWK/profile/;stanleyblackanddecker.com;N/A;2024
@@ -1116,7 +1116,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19331837;EDIZIONE;WEBSITE;https://fr.wikipedia.org/wiki/Edizione_Holding;edizione.com;N/A;2024
 19331837;EDIZIONE;ACTIVITY;https://fr.wikipedia.org/wiki/Edizione_Holding;C15;N/A;2024
 19340550;VINCI;COUNTRY;https://finance.yahoo.com/quote/DG.PA/profile/;FR;N/A;2024
-19340550;VINCI;EMPLOYEES;https://finance.yahoo.com/quote/DG.PA/profile/;282481;N/A;2024
+19340550;VINCI;EMPLOYEES;https://en.wikipedia.org/wiki/Vinci_SA;280000;N/A;2024
 19340550;VINCI;TURNOVER;https://finance.yahoo.com/quote/DG.PA/financials/;72768000000;EUR;2024
 19340550;VINCI;ASSETS;https://finance.yahoo.com/quote/DG.PA/balance-sheet/;129491000000;EUR;2024
 19340550;VINCI;WEBSITE;https://finance.yahoo.com/quote/DG.PA/profile/;vinci.com;N/A;2024
@@ -1140,7 +1140,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 19414796;ATLAS UK BIDCO LIMITED;WEBSITE;https://en.wikipedia.org/wiki/Norton_Motorcycle_Company;nortonmotorcycles.com;N/A;2024
 19414796;ATLAS UK BIDCO LIMITED;ACTIVITY;https://en.wikipedia.org/wiki/Norton_Motorcycle_Company;C29;N/A;2024
 20016646;UNILEVER PLC;COUNTRY;https://finance.yahoo.com/quote/UL/profile/;GB;N/A;2024
-20016646;UNILEVER PLC;EMPLOYEES;https://finance.yahoo.com/quote/UL/profile/;115964;N/A;2024
+20016646;UNILEVER PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Unilever;128000;N/A;2025
 20016646;UNILEVER PLC;TURNOVER;https://finance.yahoo.com/quote/UL/financials/;60761000000;EUR;2024
 20016646;UNILEVER PLC;ASSETS;https://finance.yahoo.com/quote/UL/balance-sheet/;79750000000;EUR;2024
 20016646;UNILEVER PLC;WEBSITE;https://finance.yahoo.com/quote/UL/profile/;unilever.com;N/A;2024
@@ -1152,7 +1152,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 20029695;PROSEGUR;WEBSITE;https://finance.yahoo.com/quote/PRHA.F/profile/;prosegur.com;N/A;2024
 20029695;PROSEGUR;ACTIVITY;https://finance.yahoo.com/quote/PRHA.F/profile/;N80;N/A;2024
 20083504;EATON CORPORATION PLC;COUNTRY;https://finance.yahoo.com/quote/ETN/profile/;IE;N/A;2024
-20083504;EATON CORPORATION PLC;EMPLOYEES;https://finance.yahoo.com/quote/ETN/profile/;94443;N/A;2024
+20083504;EATON CORPORATION PLC;EMPLOYEES;https://en.wikipedia.org/wiki/Eaton_Corporation;94000;N/A;2024
 20083504;EATON CORPORATION PLC;TURNOVER;https://finance.yahoo.com/quote/ETN/financials/;24878000000;USD;2024
 20083504;EATON CORPORATION PLC;ASSETS;https://finance.yahoo.com/quote/ETN/balance-sheet/;38381000000;USD;2024
 20083504;EATON CORPORATION PLC;WEBSITE;https://finance.yahoo.com/quote/ETN/profile/;https://www.eaton.com;N/A;2024
@@ -1176,7 +1176,7 @@ ID;NAME;VARIABLE;SRC;VALUE;CURRENCY;REFYEAR
 20344223;ELECTRICITE DE FRANCE;WEBSITE;https://en.wikipedia.org/wiki/%C3%89lectricit%C3%A9_de_France;edf.fr;N/A;2024
 20344223;ELECTRICITE DE FRANCE;ACTIVITY;https://en.wikipedia.org/wiki/%C3%89lectricit%C3%A9_de_France;D35;N/A;2024
 20345723;A.P. MOLLER - MAERSK;COUNTRY;https://finance.yahoo.com/quote/MAERSK-B.CO/profile/;DK;N/A;2024
-20345723;A.P. MOLLER - MAERSK;EMPLOYEES;https://finance.yahoo.com/quote/MAERSK-B.CO/profile/;100000;N/A;2024
+20345723;A.P. MOLLER - MAERSK;EMPLOYEES;https://en.wikipedia.org/wiki/Maersk;108160;N/A;2024
 20345723;A.P. MOLLER - MAERSK;TURNOVER;https://finance.yahoo.com/quote/MAERSK-B.CO/financials/;55482000000;USD;2024
 20345723;A.P. MOLLER - MAERSK;ASSETS;https://finance.yahoo.com/quote/MAERSK-B.CO/balance-sheet/;87697000000;USD;2024
 20345723;A.P. MOLLER - MAERSK;WEBSITE;https://finance.yahoo.com/quote/MAERSK-B.CO/profile/;https://www.maersk.com;N/A;2024

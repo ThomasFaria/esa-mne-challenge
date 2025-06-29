@@ -197,11 +197,11 @@ ID;NAME;TYPE;SRC;REFYEAR
 18665236;APTIV PLC;OTHER;https://finance.yahoo.com/quote/APTV/balance-sheet/;2024
 18665236;APTIV PLC;OTHER;https://en.wikipedia.org/wiki/Aptiv;2024
 18665236;APTIV PLC;OTHER;;
-18673760;WPP PLC;FIN_REP;https://www.wpp.com/wp-content/uploads/2024/03/WPP-Integrated-Annual-Report-2023.pdf;2023
-18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/profile/;2023
-18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/financials/;2023
-18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/balance-sheet/;2023
-18673760;WPP PLC;OTHER;https://en.wikipedia.org/wiki/WPP_plc;2023
+18673760;WPP PLC;FIN_REP;https://www.wpp.com/en/-/media/project/wpp/files/investors/2025/annual-report/wpp_annual_report_2024.pdf;2024
+18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/profile/;2024
+18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/financials/;2024
+18673760;WPP PLC;OTHER;https://finance.yahoo.com/quote/WPP/balance-sheet/;2024
+18673760;WPP PLC;OTHER;https://en.wikipedia.org/wiki/WPP_plc;2024
 18673760;WPP PLC;OTHER;;
 18685228;GI GROUP;FIN_REP;https://www.gigroup.it/Marketing/Annual%20Report%202023_ITA-protetto.pdf;2023
 18685228;GI GROUP;OTHER;https://en.wikipedia.org/wiki/Gi_Group_Spa;2023
@@ -300,10 +300,10 @@ ID;NAME;TYPE;SRC;REFYEAR
 18754669;VODAFONE GROUP PLC;OTHER;https://en.wikipedia.org/wiki/Vodafone;2024
 18754669;VODAFONE GROUP PLC;OTHER;;
 18755204;HBIS GROUP CO. LTD.;FIN_REP;https://www.hkexnews.hk/listedco/listconews/sehk/2025/0429/2025042905248.pdf;2024
-18755204;HBIS GROUP CO. LTD.;OTHER;https://finance.yahoo.com/quote/HBIS/profile/;2024
-18755204;HBIS GROUP CO. LTD.;OTHER;https://finance.yahoo.com/quote/HBIS/financials/;2024
-18755204;HBIS GROUP CO. LTD.;OTHER;https://finance.yahoo.com/quote/HBIS/balance-sheet/;2024
-18755204;HBIS GROUP CO. LTD.;OTHER;https://en.wikipedia.org/wiki/Hesteel_Group;2024
+18755204;HBIS GROUP CO. LTD.;OTHER;https://finance.yahoo.com/quote/000709.SZ/profile/;2024
+18755204;HBIS GROUP CO. LTD.;OTHER;https://finance.yahoo.com/quote/000709.SZ/financials/;2024
+18755204;HBIS GROUP CO. LTD.;OTHER;https://finance.yahoo.com/quote/000709.SZ/balance-sheet/;2024
+18755204;HBIS GROUP CO. LTD.;OTHER;https://en.wikipedia.org/wiki/List_of_steel_producers;2024
 18755204;HBIS GROUP CO. LTD.;OTHER;;
 18761094;MOL HUNGARIAN OIL AND GAS;FIN_REP;https://molgroup.info/en/show/publications/annual_reports/2024/integrated-annual-report-2024-eng.pdf;2024
 18761094;MOL HUNGARIAN OIL AND GAS;OTHER;https://finance.yahoo.com/quote/MOL.BD/profile/;2024
@@ -348,7 +348,7 @@ ID;NAME;TYPE;SRC;REFYEAR
 18774867;SANOFI;OTHER;https://en.wikipedia.org/wiki/Sanofi;2024
 18774867;SANOFI;OTHER;https://annuaire-entreprises.data.gouv.fr/entreprise/395030844;2024
 18778752;WURTH;FIN_REP;https://www.wuerth.com/downloads/pdf/Gesch%C3%A4ftsbericht/2024/W%C3%BCrth-Group-Annual-Report-2024.pdf;2024
-18778752;WURTH;OTHER;https://en.wikipedia.org/wiki/W%C3%BCrth;2024
+18778752;WURTH;OTHER;https://en.wikipedia.org/wiki/Wurth;2024
 18778752;WURTH;OTHER;;
 18778752;WURTH;OTHER;;
 18778752;WURTH;OTHER;;
@@ -443,12 +443,12 @@ ID;NAME;TYPE;SRC;REFYEAR
 18854880;BMW;OTHER;https://finance.yahoo.com/quote/BMW.DE/balance-sheet/;2024
 18854880;BMW;OTHER;https://en.wikipedia.org/wiki/BMW;2024
 18854880;BMW;OTHER;;
-18858533;THALES;FIN_REP;https://www2.thalesgroup.com/2024/rapport-integre/files/thales-integrated-report-2023-en.pdf;2023
-18858533;THALES;OTHER;https://finance.yahoo.com/quote/HO.PA/profile/;2023
-18858533;THALES;OTHER;https://finance.yahoo.com/quote/HO.PA/financials/;2023
-18858533;THALES;OTHER;https://finance.yahoo.com/quote/HO.PA/balance-sheet/;2023
-18858533;THALES;OTHER;https://en.wikipedia.org/wiki/Thales_Group;2023
-18858533;THALES;OTHER;https://annuaire-entreprises.data.gouv.fr/entreprise/552059024;2023
+18858533;THALES;FIN_REP;https://www.thalesgroup.com/sites/default/files/prezly/documents/Thales%20-%20Consolidated%20Financial%20Statements%20at%2031%20December%202024.pdf;2024
+18858533;THALES;OTHER;https://finance.yahoo.com/quote/HO.PA/profile/;2024
+18858533;THALES;OTHER;https://finance.yahoo.com/quote/HO.PA/financials/;2024
+18858533;THALES;OTHER;https://finance.yahoo.com/quote/HO.PA/balance-sheet/;2024
+18858533;THALES;OTHER;https://en.wikipedia.org/wiki/Thales_Group;2024
+18858533;THALES;OTHER;https://annuaire-entreprises.data.gouv.fr/entreprise/552059024;2024
 18860034;SIGNIFY NV;FIN_REP;https://www.signify.com/static/2024/signify-annual-report-2024.pdf;2024
 18860034;SIGNIFY NV;OTHER;https://finance.yahoo.com/quote/LGHT.VI/profile/;2024
 18860034;SIGNIFY NV;OTHER;https://finance.yahoo.com/quote/LGHT.VI/financials/;2024
@@ -539,11 +539,11 @@ ID;NAME;TYPE;SRC;REFYEAR
 18940840;ABB LTD;OTHER;https://finance.yahoo.com/quote/ABJ.DE/balance-sheet/;2024
 18940840;ABB LTD;OTHER;https://en.wikipedia.org/wiki/ABB;2024
 18940840;ABB LTD;OTHER;;
-18942704;HP INC.;FIN_REP;https://s203.q4cdn.com/918857832/files/doc_financials/2023/ar/combined-2023-annual-report-and-2024-proxy.pdf;2023
-18942704;HP INC.;OTHER;https://finance.yahoo.com/quote/HPQ/profile/;2023
-18942704;HP INC.;OTHER;https://finance.yahoo.com/quote/HPQ/financials/;2023
-18942704;HP INC.;OTHER;https://finance.yahoo.com/quote/HPQ/balance-sheet/;2023
-18942704;HP INC.;OTHER;https://en.wikipedia.org/wiki/HP_Inc.;2023
+18942704;HP INC.;FIN_REP;https://s203.q4cdn.com/918857832/files/doc_financials/2024/ar/2024-Form-10-K.pdf;2024
+18942704;HP INC.;OTHER;https://finance.yahoo.com/quote/HPQ/profile/;2024
+18942704;HP INC.;OTHER;https://finance.yahoo.com/quote/HPQ/financials/;2024
+18942704;HP INC.;OTHER;https://finance.yahoo.com/quote/HPQ/balance-sheet/;2024
+18942704;HP INC.;OTHER;https://en.wikipedia.org/wiki/HP_Inc.;2024
 18942704;HP INC.;OTHER;;
 18947387;CAPGEMINI;FIN_REP;https://reports.capgemini.com/2024/en/assets/files/Capgemini-2024-Integrated-Annual-Report.pdf;2024
 18947387;CAPGEMINI;OTHER;https://finance.yahoo.com/quote/CAP.PA/profile/;2024
