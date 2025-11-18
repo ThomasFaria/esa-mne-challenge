@@ -28,7 +28,7 @@ class AnnualReportFetcher:
         self,
         searcher: Union[WebSearch, List[WebSearch]],
         llm_client: AsyncOpenAI,
-        model: str = "gemma3:27b",
+        model: str = "mistral-small3.2:latest",
     ):
         self.client = llm_client
         self.model = model
@@ -94,8 +94,17 @@ class AnnualReportFetcher:
         search_tasks = [searcher.search(query) for searcher in self.searchers]
         results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
+        # Filter out exceptions and only process successful results
+        successful_results = []
+        for result in results:
+            if isinstance(result, Exception):
+                # Log the error if needed
+                print(f"Search error: {type(result).__name__}: {result}")
+                continue
+            successful_results.append(result)
+        
         # Return search results and handle deduplication (2 identical URLs are given once)
-        return list({item.url: item for sublist in results for item in sublist}.values())
+        return list({item.url: item for sublist in successful_results for item in sublist}.values())
 
     async def get_url_responses(self, urls: List[str]) -> List[requests.Response]:
         """

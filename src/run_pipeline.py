@@ -60,13 +60,13 @@ wiki = WikipediaFetcher()
 # Annual report fetcher using web search + LLM
 ar_fetcher = AnnualReportFetcher(
     searcher=[GoogleSearch(max_results=6), DuckDuckGoSearch(max_results=6)],
-    model="gemma3:27b",
+    model="mistral-small3.2:latest",
     llm_client=llm_client,
 )
 
 # Data extractors
 yahoo_extractor = YahooExtractor(yahoo)
-classifier = NACEClassifier(llm_client=llm_client, model="gemma3:27b")
+classifier = NACEClassifier(llm_client=llm_client, model="mistral-small3.2:latest")
 
 
 async def main():
@@ -76,7 +76,7 @@ async def main():
     async with httpx.AsyncClient() as client:
         # PDF and Wikipedia data extractors
         wiki_extractor = WikipediaExtractor(fetcher=wiki, client=client)
-        pdf_extractor = PDFExtractor(client=client, llm_client=llm_client, model="gemma3:27b")
+        pdf_extractor = PDFExtractor(client=client, llm_client=llm_client, model="mistral-small3.2:latest")
 
         extractions_results = []
         discovery_results = []

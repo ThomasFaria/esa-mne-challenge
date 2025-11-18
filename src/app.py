@@ -14,7 +14,7 @@ from rdflib.namespace import SKOS
 from streamlit_javascript import st_javascript
 
 import config
-from common.websearch.google import GoogleSearch
+from common.websearch.duckduckgo import DuckDuckGoSearch
 from extractors.pdf import PDFExtractor
 from extractors.utils import deduplicate_by_latest_year, merge_extracted_infos
 from extractors.wikipedia import WikipediaExtractor
@@ -42,7 +42,7 @@ def init_services():
     yahoo = YahooFetcher()
     official_register = OfficialRegisterFetcher()
     ar_fetcher = AnnualReportFetcher(
-        searcher=[GoogleSearch(max_results=6)],
+        searcher=[DuckDuckGoSearch(max_results=6)],
         model=os.getenv("GENERATION_MODEL"),
         llm_client=llm_client,
     )

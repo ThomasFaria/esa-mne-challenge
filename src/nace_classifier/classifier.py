@@ -15,7 +15,7 @@ class NACEClassifier:
     def __init__(
         self,
         llm_client: AsyncOpenAI,
-        model: str = "gemma3:27b",
+        model: str = "mistral-small3.2:latest",
     ):
         self.client = llm_client
         self.model = model
