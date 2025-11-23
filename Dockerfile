@@ -1,4 +1,4 @@
-FROM inseefrlab/onyxia-vscode-python:py3.12.9
+FROM inseefrlab/onyxia-vscode-python:py3.13.8
 
 # Set working directory
 WORKDIR /app

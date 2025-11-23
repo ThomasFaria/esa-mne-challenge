@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: mne-ui
-          image: thomasfaria/esa-mne-challenge:v0.0.4
+          image: thomasfaria/esa-mne-challenge:v0.0.5
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8501
