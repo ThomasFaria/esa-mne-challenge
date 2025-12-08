@@ -1,4 +1,5 @@
 import logging
+import os
 
 from langchain_community.document_loaders import DataFrameLoader
 
@@ -20,7 +21,7 @@ def build_vector_db():
 
     docs = DataFrameLoader(labels, page_content_column="LABEL").load()
 
-    emb_model = get_embedding_model("Qwen/Qwen3-Embedding-8B")
+    emb_model = get_embedding_model(os.getenv("EMBEDDING_MODEL"))
 
     _ = create_vector_db(docs, emb_model)
 

@@ -1,7 +1,7 @@
 import logging
 import os
 
-from langchain_openai import OpenAIEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 
@@ -41,13 +41,11 @@ def get_embedding_model_name(client: QdrantClient, collection_name: str) -> str:
         raise RuntimeError(f"Error retrieving embedding model: {e}")
 
 
-def get_embedding_model(model_name: str) -> OpenAIEmbeddings:
+def get_embedding_model(model_name: str) -> OllamaEmbeddings:
     """Initialize the embedding model."""
-    return OpenAIEmbeddings(
+    return OllamaEmbeddings(
         model=model_name,
-        openai_api_base=os.getenv("URL_EMBEDDING_API"),
-        openai_api_key="EMPTY",
-        tiktoken_enabled=False,
+        base_url="http://ollama.ollama:11434",
     )
 
 
