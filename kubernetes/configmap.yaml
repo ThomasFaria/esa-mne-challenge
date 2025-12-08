@@ -10,5 +10,5 @@ data:
   LANGFUSE_HOST: https://langfuse.lab.sspcloud.fr
   OPENAI_API_BASE_URL: https://llm.lab.sspcloud.fr/api
   QDRANT_URL: https://user-tfaria-qdrant.user.lab.sspcloud.fr/
-  EMBEDDING_MODEL: Qwen/Qwen3-Embedding-8B
+  EMBEDDING_MODEL: qwen3-embedding:8b
   GENERATION_MODEL: mistral-small3.2:latest
