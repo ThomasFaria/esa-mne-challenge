@@ -11,4 +11,4 @@ data:
   OPENAI_API_BASE_URL: https://llm.lab.sspcloud.fr/api
   QDRANT_URL: https://user-tfaria-qdrant.user.lab.sspcloud.fr/
   EMBEDDING_MODEL: qwen3-embedding:8b
-  GENERATION_MODEL: mistral-small3.2:latest
+  GENERATION_MODEL: gpt-oss:120b
